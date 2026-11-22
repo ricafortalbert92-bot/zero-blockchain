@@ -12,9 +12,10 @@ nav{display:flex;justify-content:space-between;align-items:center;padding:20px 5
 .logo span{color:#22d3ee}
 .nav-links{display:flex;gap:25px}
 .nav-links a{color:#cbd5e1;text-decoration:none;font-size:14px}
-.btn{padding:10px 20px;border-radius:999px;text-decoration:none;font-weight:700;font-size:14px;display:inline-block}
+.btn{padding:12px 22px;border-radius:999px;text-decoration:none;font-weight:700;font-size:14px;display:inline-block}
 .btn-cyan{background:#22d3ee;color:#020617}
 .btn-outline{border:1px solid #334155;color:white}
+.btn-green{background:#25D366;color:#020617}
 .hero{min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:120px 20px 60px;background:radial-gradient(circle at 50% 0%,#0e7490 0%,transparent 50%)}
 .badge{border:1px solid #22d3ee;color:#22d3ee;padding:6px 14px;border-radius:999px;font-size:12px;letter-spacing:1px;margin-bottom:20px}
 .hero h1{font-size:clamp(48px,10vw,110px);line-height:.9;font-weight:900}
@@ -35,6 +36,11 @@ nav{display:flex;justify-content:space-between;align-items:center;padding:20px 5
 .card .icon{font-size:32px;margin-bottom:15px}
 .how{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:20px;text-align:center}
 .how div{background:#0f172a;padding:25px;border-radius:16px;border:1px solid #1e293b}
+.wallet-box{background:linear-gradient(135deg,#0e7490,#22d3ee);color:#020617;border-radius:24px;padding:40px 25px;text-align:center}
+.wallet-box h2{font-size:32px;margin-bottom:12px}
+.wallet-box p{margin-bottom:20px;line-height:1.6;opacity:.9}
+.wallet-box .steps{display:flex;gap:12px;flex-wrap:wrap;justify-content:center;margin:20px 0}
+.wallet-box .steps span{background:rgba(2,6,23,.9);color:white;padding:10px 16px;border-radius:999px;font-size:13px;font-weight:700}
 .cta{background:#22d3ee;color:#020617;border-radius:24px;padding:50px 20px;text-align:center;margin:20px 5%}
 .cta h2{font-size:36px;margin-bottom:15px}
 .cta p{margin-bottom:25px;opacity:.8}
@@ -46,7 +52,7 @@ footer{text-align:center;padding:40px;color:#64748b;font-size:13px}
 <body>
 <nav>
 <div class="logo">ZERO<span>.</span></div>
-<div class="nav-links"><a href="#features">Features</a><a href="#how">How It Works</a><a href="#token">Token</a></div>
+<div class="nav-links"><a href="#features">Features</a><a href="#wallet">ZERO Wallet</a><a href="#how">How It Works</a><a href="#token">Token</a></div>
 <a class="btn btn-cyan" href="https://www.facebook.com/share/1CQ8HWxmbM/" target="_blank">Connect Wallet</a>
 </nav>
 <div class="hero">
@@ -55,7 +61,7 @@ footer{text-align:center;padding:40px;color:#64748b;font-size:13px}
 <p><b style="color:white">Zero Hack • Zero Nakaw • Zero Daya.</b><br>Ang unang blockchain na ginawa para sa Pilipino. Mabilis, mura, at 100% transparent. Walang daya, walang tago.</p>
 <div class="hero-btns">
 <a class="btn btn-cyan" href="https://www.facebook.com/share/1CQ8HWxmbM/" target="_blank">Buy ZERO →</a>
-<a class="btn btn-outline" href="https://www.facebook.com/share/1CQ8HWxmbM/" target="_blank">Join Waitlist on Messenger</a>
+<a class="btn btn-outline" href="#wallet">Create ZERO Wallet</a>
 </div>
 <div class="stats">
 <div class="stat"><b>0.01s</b><span>Transaction Speed</span></div>
@@ -64,6 +70,18 @@ footer{text-align:center;padding:40px;color:#64748b;font-size:13px}
 <div class="stat"><b>1B</b><span>Total Supply</span></div>
 </div>
 </div>
+
+<div class="section" id="wallet">
+<div class="wallet-box">
+<div style="font-size:48px">👛</div>
+<h2>ZERO WALLET on Messenger</h2>
+<p><b>Wala ka pang wallet? Walang problema.</b><br>Hindi mo kailangan mag-download. Sa Messenger lang, gagawa kami ng ZERO Wallet para sayo — LIBRE!</p>
+<div class="steps"><span>1. Pindutin sa Baba</span><span>2. I-type: WALLET</span><span>3. Receive Wallet Address</span></div>
+<a href="https://www.facebook.com/share/1CQ8HWxmbM/" target="_blank" style="background:#020617;color:white;padding:16px 30px;border-radius:999px;text-decoration:none;font-weight:800;display:inline-block;font-size:16px">Create My ZERO Wallet on Messenger →</a>
+<p style="font-size:13px;margin-top:15px">100% Free • No App Needed • 1 Minute Lang</p>
+</div>
+</div>
+
 <div class="section" id="features">
 <h2>Bakit ZERO?</h2>
 <p class="sub">Hindi kami katulad ng iba. Walang pangako, may patunay.</p>
@@ -77,14 +95,14 @@ footer{text-align:center;padding:40px;color:#64748b;font-size:13px}
 <h2>Paano Gumagana?</h2>
 <p class="sub">3 steps lang, pasok ka na.</p>
 <div class="how">
-<div><h3>1. Connect</h3><p>I-connect ang wallet mo sa Messenger ng ZERO</p></div>
+<div><h3>1. Connect</h3><p>I-click Create Wallet at mag-message sa Messenger</p></div>
 <div><h3>2. Buy</h3><p>Bumili ng ZERO gamit GCash / Bank</p></div>
 <div><h3>3. Earn</h3><p>Mag-stake at kumita araw-araw</p></div>
 </div>
 </div>
 <div class="section" id="token">
 <h2>ZERO Tokenomics</h2>
-<p class="sub">Total Supply: 1,000,000,000 ZERO</p>
+<p class="sub">Total Supply: 1,000,000,000 ZERO • Soon on pump.fun</p>
 <div class="grid">
 <div class="card"><h3>40% Community</h3><p>Para sa airdrop, rewards at sa community ng Pilipinas.</p></div>
 <div class="card"><h3>30% Ecosystem</h3><p>Para sa developers, apps, at pagpapalago ng ZERO.</p></div>
