@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="google" content="notranslate">
-<title>ZERO - LIVE RECEIVED</title>
+<title>ZERO - BLOCK EXPLORER</title>
 <style>
 *{box-sizing:border-box}
 body{background:#000;color:#fff;font-family:Arial;text-align:center;padding:12px;margin:0}
@@ -23,13 +23,11 @@ body{background:#000;color:#fff;font-family:Arial;text-align:center;padding:12px
 .fw-panel{display:none;background:#0a0a0a;border:1px solid #ff0055;border-top:none;border-radius:0 0 14px 14px;padding:9px 10px;text-align:left}
 .fire-row{display:flex;justify-content:space-between;font-size:11px;padding:4px 0;border-bottom:1px solid #1a1a1a}
 .fire-row b{color:#00ff88;font-size:11px}
-.threat-log{background:#000;border:1px solid #222;border-radius:8px;padding:6px;font-size:10px;font-family:monospace;height:48px;overflow-y:auto;margin-top:6px;color:#00ff88;line-height:1.4}
 .status-dot{display:inline-block;width:8px;height:8px;background:#00ff88;border-radius:50%;box-shadow:0 0 8px #00ff88;animation:blink 1s infinite}
 @keyframes blink{0%,100%{opacity:1}50%{opacity:.3}}
 .device-box{background:#111;border:1px solid #00ff88;border-radius:12px;padding:9px 10px;margin-top:10px;font-size:11px;text-align:left}
 .device-box b{color:#00ff88}
-/* LIVE RECEIVED - BAGO! */
-.live-box{background:linear-gradient(90deg,#00220f,#000);border:2px solid #00ff88;border-radius:16px;padding:10px;margin-top:10px;overflow:hidden}
+.live-box{background:linear-gradient(90deg,#00220f,#000);border:2px solid #00ff88;border-radius:16px;padding:10px;margin-top:10px}
 .live-header{display:flex;justify-content:space-between;align-items:center;font-size:12px;font-weight:900}
 .live-badge{background:#ff0000;color:#fff;padding:3px 8px;border-radius:10px;font-size:10px;animation:blink 1s infinite}
 .live-feed{height:72px;overflow:hidden;text-align:left;margin-top:8px;font-size:12px;line-height:1.6}
@@ -40,8 +38,13 @@ body{background:#000;color:#fff;font-family:Arial;text-align:center;padding:12px
 .live-stats{display:flex;gap:6px;margin-top:8px}
 .live-stat{flex:1;background:#111;border:1px solid #00ff88;border-radius:10px;padding:7px;font-size:11px}
 .live-stat b{font-size:15px;color:#FFD700;display:block}
+/* EXPLORER */
+.explorer-box{background:#0a0a0a;border:1px solid #00ccff;border-radius:14px;padding:10px;margin-top:10px;text-align:left}
+.block-row{background:#111;border:1px solid #222;border-radius:10px;padding:9px;margin-top:7px;font-size:11px}
+.block-row b{color:#00ccff}
+.hash{font-family:monospace;font-size:10px;color:#aaa;word-break:break-all}
 .tabs{display:flex;gap:4px;margin-top:14px;flex-wrap:wrap}
-.tab{flex:1;padding:12px 2px;background:#1a1a1a;color:#fff;border:1px solid #333;border-radius:12px;font-weight:800;cursor:pointer;font-size:12px;min-width:70px}
+.tab{flex:1;padding:12px 2px;background:#1a1a1a;color:#fff;border:1px solid #333;border-radius:12px;font-weight:800;cursor:pointer;font-size:11px;min-width:62px}
 .tab.active{background:#00ff88;color:#000;box-shadow:0 0 12px #00ff88}
 .box{background:radial-gradient(circle at top,#00220f 0%,#000 70%);border:2px solid #00ff88;border-radius:22px;padding:18px;margin-top:14px}
 .bal{font-size:50px;font-weight:900;color:#fff;text-shadow:0 0 18px #00ff88;line-height:1.1}
@@ -65,6 +68,9 @@ input{width:90%;padding:14px;border-radius:12px;border:none;margin-top:9px;font-
 .receive-box{background:#00220f;border:2px dashed #00ff88;border-radius:16px;padding:14px;margin-top:10px}
 .notif{position:fixed;top:10px;left:50%;transform:translateX(-50%);background:#00ff88;color:#000;padding:12px 18px;border-radius:20px;font-weight:900;font-size:14px;z-index:999;display:none;box-shadow:0 0 20px #00ff88;max-width:90%;text-align:center}
 .live-toast{position:fixed;bottom:15px;left:50%;transform:translateX(-50%);background:#111;border:2px solid #00ff88;color:#fff;padding:10px 14px;border-radius:14px;font-size:12px;z-index:999;display:none;box-shadow:0 0 20px rgba(0,255,136,.8);max-width:92%;text-align:left}
+.search-box{display:flex;gap:6px;margin-top:8px}
+.search-box input{flex:1;margin:0}
+.search-box button{background:#00ccff;color:#000;border:none;padding:12px 14px;border-radius:12px;font-weight:900;cursor:pointer}
 </style>
 </head>
 <body>
@@ -73,7 +79,6 @@ input{width:90%;padding:14px;border-radius:12px;border:none;margin-top:9px;font-
 <div class="top">
 
 <div class="top-bar"><span class="live-dot">● LIVE • ONLINE</span><button class="lang-toggle" onclick="toggleLang()">🌍 <span id="curLang">Tagalog</span> ▼</button></div>
-
 <div class="lang-panel" id="langPanel"><div style="font-size:11px;color:#aaa;margin-bottom:6px">PILIIN ANG WIKA</div><div class="lang-grid">
 <button class="lang-btn active" onclick="setLang('tl',this)">🇵🇭 Tagalog</button>
 <button class="lang-btn" onclick="setLang('en',this)">🇺🇸 English</button>
@@ -91,9 +96,8 @@ input{width:90%;padding:14px;border-radius:12px;border:none;margin-top:9px;font-
 
 <div class="sub">⚡ ZERO BLOCKCHAIN • SYSTEM ONLINE ⚡</div>
 <div class="logo">ZERO</div>
-<div class="sub" id="t-motto">ZERO HACK • ZERO NAKAW • ZERO DAYA</div>
+<div class="sub">ZERO HACK • ZERO NAKAW • ZERO DAYA</div>
 
-<!-- LIVE RECEIVED - BAGO! -->
 <div class="live-box">
 <div class="live-header"><span>📡 LIVE RECEIVED <span class="live-badge">● LIVE</span></span><span style="color:#00ff88" id="onlineCount">👥 1,247 online</span></div>
 <div class="live-feed" id="liveFeed">
@@ -104,8 +108,17 @@ input{width:90%;padding:14px;border-radius:12px;border:none;margin-top:9px;font-
 <div class="live-stats">
 <div class="live-stat">RECEIVED TODAY<b><span id="liveToday">12,847</span> ZERO</b></div>
 <div class="live-stat">MINERS NOW<b><span id="liveMiners">1,247</span></b></div>
-<div class="live-stat">LAST RECEIVE<b><span id="liveLast">Just now</span></b></div>
+<div class="live-stat">BLOCK<b>#<span id="liveBlock">1,284</span></b></div>
 </div>
+</div>
+
+<!-- BLOCK EXPLORER PREVIEW -->
+<div class="explorer-box">
+<div style="display:flex;justify-content:space-between;align-items:center"><b style="color:#00ccff">🔍 ZERO EXPLORER</b><span style="font-size:10px;color:#00ff88">● LIVE • Block #<span id="expBlockNum">1284</span></span></div>
+<div class="search-box"><input id="expSearch" placeholder="Search Address / Tx Hash / Block..."><button onclick="searchExplorer()">SEARCH</button></div>
+<div id="expResult" style="font-size:11px;margin-top:6px;color:#aaa">Latest Block: #1284 • Hash: 0x7f3a...9c2e • 1,247 Tx</div>
+<div class="block-row"><b>BLOCK #1284</b> • <span style="color:#00ff88">✅ CONFIRMED</span><br><span class="hash">Hash: 0x7f3a9c2e8b1d4f6a92c... • Prev: 0x3b8e...</span><br>Tx: 12 • Miner: ZERO...8F2A • Reward: 10 ZERO • <span id="expTime">Just now</span></div>
+<div style="text-align:center;margin-top:6px"><button class="btn2" style="padding:8px;font-size:11px" onclick="showTab('explorer', document.querySelectorAll('.tab')[4])">🔍 BUKASIN BUONG EXPLORER →</button></div>
 </div>
 
 <div class="device-box">
@@ -121,16 +134,16 @@ input{width:90%;padding:14px;border-radius:12px;border:none;margin-top:9px;font-
 <div class="fire-row"><span>🤖 AI Detection:</span><b>● SCANNING...</b></div>
 <div class="fire-row"><span>🚫 Blocked: <b id="blocked">127</b></span><b>👤 ✅ VERIFIED</b></div>
 <div class="fire-row"><span>🔐 Encryption:</span><b>AES-256</b></div>
-<div class="threat-log" id="threatLog">> AI FIREWALL INITIALIZED...<br>> Device verified.<br>> No threats found.</div>
 </div>
 
-<div class="price-box"><div style="font-size:12px;letter-spacing:2px;font-weight:900">💰 LIVE PRICE • SCARCITY MODEL</div><div><b>₱<span id="price">0.10</span></b> <span style="font-size:14px">/ 1 ZERO</span></div><div style="font-size:12px">≈ $<span id="priceUSD">0.0017</span> USD • <span id="priceChange">🟢 +0.01% TODAY</span></div><div style="font-size:13px;margin-top:6px">Yung ZERO mo: <b>₱<span id="myValue">0.00</span></b> • Market Cap: <b>₱<span id="mcap">0.00</span></b></div><div style="font-size:11px;margin-top:5px">📈 Kunti pa nagmimina = MURA PA • Paubos na = MAHAL NA!</div></div>
+<div class="price-box"><div style="font-size:12px;letter-spacing:2px;font-weight:900">💰 LIVE PRICE</div><div><b>₱<span id="price">0.10</span></b> <span style="font-size:14px">/ 1 ZERO</span></div><div style="font-size:12px">≈ $<span id="priceUSD">0.0017</span> USD • 🟢 +0.01% TODAY</div><div style="font-size:13px;margin-top:6px">Yung ZERO mo: <b>₱<span id="myValue">0.00</span></b> • Market Cap: <b>₱<span id="mcap">0.00</span></b></div></div>
 
 <div class="tabs">
 <button class="tab active" onclick="showTab('mining',this)">⛏️ MINING</button>
 <button class="tab" onclick="showTab('wallet',this)">💰 WALLET</button>
 <button class="tab" onclick="showTab('receive',this)">📥 RECEIVE</button>
 <button class="tab" onclick="showTab('transfer',this)">📤 SEND</button>
+<button class="tab" onclick="showTab('explorer',this)">🔍 EXPLORER</button>
 <button class="tab" onclick="showTab('security',this)">🛡️ SECURITY</button>
 </div>
 
@@ -142,9 +155,9 @@ input{width:90%;padding:14px;border-radius:12px;border:none;margin-top:9px;font-
 <div class="bar-bg"><div class="bar" id="bar"></div></div>
 <div id="status" style="font-size:13px">>> SYSTEM READY. PRESS START <<</div>
 <div style="font-size:13px;margin-top:8px">⏰ <b id="timer" style="color:#00ff88;font-size:17px">60</b> SEC • Session: <span id="mineSession">0</span></div>
-<button class="btn" id="mineBtn" onclick="startMining()">▶ <span id="t-start">START MINING</span></button>
+<button class="btn" id="mineBtn" onclick="startMining()">▶ START MINING</button>
 <button class="btn-gold" onclick="claim()">💰 CLAIM ZERO → LIVE RECEIVED!</button>
-<p style="font-size:11px;color:#aaa">Pag nag-CLAIM ka, lalabas ka sa LIVE FEED sa taas! Makikita ng lahat na nakatanggap ka!</p>
+<p style="font-size:11px;color:#aaa">Pag nag-CLAIM ka, gagawa ng bagong BLOCK sa Explorer!</p>
 <div class="info">
 <div class="card">TOTAL MINED<b><span id="totalMined">0</span></b>/ 1,000,000</div>
 <div class="card">HALVING IN<b><span id="left">1,000,000</span></b>ZERO</div>
@@ -163,14 +176,14 @@ input{width:90%;padding:14px;border-radius:12px;border:none;margin-top:9px;font-
 <div style="color:#FFD700;font-weight:bold;font-size:16px">≈ ₱<span id="balValue2">0.00</span> PESOS</div>
 <div style="font-size:12px;margin-top:8px">📥 Received: <b style="color:#00ff88" id="recv2">0</b> ZERO • 📤 Sent: <b style="color:#ff0055" id="sent2">0</b> ZERO</div>
 <button class="btn2" onclick="copyAddr()">📋 COPY ADDRESS</button>
+<button class="btn2" onclick="viewOnExplorer()">🔍 VIEW ON EXPLORER</button>
 </div>
-<div class="hist" id="histWallet"><b>📜 Wallet History:</b><br>Wala pa - magmina ka muna!</div>
+<div class="hist" id="histWallet"><b>📜 Wallet History:</b><br>Wala pa!</div>
 </div>
 
 <div id="tab-receive" class="hidden">
-<h3>📥 RECEIVE ZERO TOKEN</h3>
-<p style="font-size:13px;color:#aaa">I-share mo yung address mo para makatanggap ka!</p>
-<div id="noWalletRecv"><p style="color:#ff0055">Wala ka pang wallet!</p><button class="btn" onclick="createWallet()">✨ CREATE WALLET FIRST</button></div>
+<h3>📥 RECEIVE ZERO</h3>
+<div id="noWalletRecv"><button class="btn" onclick="createWallet()">✨ CREATE WALLET FIRST</button></div>
 <div id="hasWalletRecv" class="hidden">
 <div class="receive-box">
 <div style="font-size:12px;color:#aaa">YOUR ZERO ADDRESS</div>
@@ -181,7 +194,7 @@ input{width:90%;padding:14px;border-radius:12px;border:none;margin-top:9px;font-
 <div class="bal" style="font-size:38px;margin-top:14px"><span id="balRecv">0.00</span> ZERO</div>
 <div style="color:#FFD700;font-weight:bold">≈ ₱<span id="balValueRecv">0.00</span> PESOS</div>
 <button class="btn" onclick="testReceive()">🎁 TEST - MAGPA-SEND NG 5 ZERO SAKIN!</button>
-<div class="hist" id="histRecv"><b>📥 Received History:</b><br>Wala pa natatanggap.</div>
+<div class="hist" id="histRecv"><b>📥 Received History:</b><br>Wala pa.</div>
 </div>
 </div>
 
@@ -195,9 +208,26 @@ input{width:90%;padding:14px;border-radius:12px;border:none;margin-top:9px;font-
 <div class="hist" id="hist"><b>📜 History:</b><br>Wala pa!</div>
 </div>
 
+<!-- EXPLORER TAB - BAGO! -->
+<div id="tab-explorer" class="hidden">
+<h3>🔍 ZERO BLOCK EXPLORER</h3>
+<p style="font-size:12px;color:#aaa">Parang BscScan — pero para sa ZERO Chain mo! Lahat ng block, lahat ng transaction, nakikita dito!</p>
+<div class="search-box"><input id="expSearch2" placeholder="Search Address / Tx Hash / Block #..."><button onclick="searchExplorer2()">SEARCH</button></div>
+<div class="explorer-box">
+<div style="display:flex;justify-content:space-between"><span>Latest Blocks</span><span style="color:#00ff88">● LIVE</span></div>
+<div style="display:flex;gap:6px;margin-top:8px"><div class="card" style="flex:1">BLOCK HEIGHT<b id="expHeight">1,284</b></div><div class="card" style="flex:1">TOTAL TX<b id="expTx">15,892</b></div><div class="card" style="flex:1">HOLDERS<b>1,247</b></div></div>
+<div id="blockList"></div>
+<button class="btn2" onclick="loadMoreBlocks()">⬇️ LOAD MORE BLOCKS</button>
+</div>
+<div class="explorer-box">
+<div><b style="color:#00ccff">📜 LATEST TRANSACTIONS</b></div>
+<div id="txList" style="font-size:11px;margin-top:8px"></div>
+</div>
+<p style="font-size:10px;color:#666;margin-top:10px">ZERO Chain Explorer • Every mining claim = New Block • Every send = New Transaction • Verified on ZERO Chain</p>
+</div>
+
 <div id="tab-security" class="hidden">
-<h3>🛡️ AI SECURITY CENTER</h3>
-<p style="font-size:13px">Your wallet is protected by ZERO AI FIREWALL</p>
+<h3>🛡️ SECURITY CENTER</h3>
 <div class="card" style="text-align:left;font-size:13px">📱 <b>One Device Lock</b><br>Device ID: <b id="secDevice" style="color:#00ff88"></b><br><button class="btn2" onclick="showDeviceInfo()">📱 SHOW MY DEVICE ID</button></div>
 <div class="card" style="margin-top:10px;text-align:left;font-size:13px">🔐 <b>Wallet Lock</b><br><span id="lockInfo">Wallet is UNLOCKED</span><br><button class="btn2" onclick="toggleLock()">🔒 LOCK / UNLOCK WALLET</button></div>
 <div class="card" style="margin-top:10px;text-align:left;font-size:13px">🤖 <b>AI SCAN</b><br>Last Scan: <span id="lastScan">Just now</span><br><button class="btn2" onclick="runScan()">🔍 RUN AI DEEP SCAN</button></div>
@@ -205,71 +235,100 @@ input{width:90%;padding:14px;border-radius:12px;border:none;margin-top:9px;font-
 </div>
 </div>
 
-<p style="font-size:11px;color:#888;margin-top:12px">POWERED BY ZERO BLOCKCHAIN • LIVE RECEIVED • ONE DEVICE ONLY • TESTNET<br>For educational purposes. Mining is FREE. No investment.</p>
+<p style="font-size:11px;color:#888;margin-top:12px">POWERED BY ZERO BLOCKCHAIN • LIVE RECEIVED • ZERO EXPLORER • ONE DEVICE ONLY<br>Educational demo. Mining is FREE. No investment.</p>
 </div>
 
 <script>
 var deviceId = "";
 try{ deviceId = localStorage.getItem('zero_device_id'); }catch(e){}
-if(!deviceId){
-  deviceId = "DEV-" + Math.random().toString(36).substring(2,8).toUpperCase() + "-" + Date.now().toString().slice(-6);
-  try{ localStorage.setItem('zero_device_id', deviceId); }catch(e){}
-}
+if(!deviceId){ deviceId = "DEV-" + Math.random().toString(36).substring(2,8).toUpperCase() + "-" + Date.now().toString().slice(-6); try{ localStorage.setItem('zero_device_id', deviceId); }catch(e){} }
 var balance = 0, totalMined = 0, wallet = "", walletDevice = "", histText = "", recvHist = "", totalReceived = 0, totalSent = 0, blockedCount = 127, mining = false, secLeft = 60, pending = 0, myTimer = null, walletLocked = false, sessionCount = 0, miningStartTime = 0;
-var liveToday = 12847, liveMiners = 1247, myName = "";
-
-function showNotif(msg){
-  var n = document.getElementById('notif');
-  n.innerText = msg; n.style.display = 'block';
-  setTimeout(function(){ n.style.display = 'none'; }, 3500);
+var liveToday = 12847, liveMiners = 1247, blockHeight = 1284, totalTx = 15892, myName = "", blocks = [];
+function makeHash(){ var c="0123456789abcdef"; var h="0x"; for(var i=0;i<12;i++){ h+=c[Math.floor(Math.random()*16)]; } return h; }
+function makeTxHash(){ var c="0123456789abcdef"; var h="0x"; for(var i=0;i<16;i++){ h+=c[Math.floor(Math.random()*16)]; } return h; }
+function addBlock(type, amt, from, to){
+  blockHeight++; totalTx++;
+  var hash = makeHash(); var tx = makeTxHash();
+  var b = {num:blockHeight, hash:hash, tx:tx, type:type, amt:amt, from:from||"MINING REWARD", to:to||wallet||"YOU", time:new Date().toLocaleTimeString()};
+  blocks.unshift(b);
+  if(blocks.length>20) blocks.pop();
+  document.getElementById('liveBlock').innerText = blockHeight.toLocaleString();
+  document.getElementById('expBlockNum').innerText = blockHeight.toLocaleString();
+  document.getElementById('expHeight').innerText = blockHeight.toLocaleString();
+  document.getElementById('expTx').innerText = totalTx.toLocaleString();
+  document.getElementById('expResult').innerText = "Latest Block: #"+blockHeight+" • Hash: "+hash.slice(0,10)+"... • "+totalTx.toLocaleString()+" Tx";
+  document.getElementById('expTime').innerText = "Just now • Block #"+blockHeight;
+  renderBlocks(); renderTx();
+  try{ localStorage.setItem('zero_blocks', JSON.stringify(blocks)); localStorage.setItem('zero_blockHeight', blockHeight); localStorage.setItem('zero_totalTx', totalTx); }catch(e){}
+  return b;
 }
-function showLiveToast(msg){
-  var t = document.getElementById('liveToast');
-  t.innerHTML = msg; t.style.display = 'block';
-  setTimeout(function(){ t.style.display = 'none'; }, 4000);
+function renderBlocks(){
+  var el = document.getElementById('blockList');
+  if(!el) return;
+  var html = "";
+  for(var i=0;i<Math.min(blocks.length,8);i++){
+    var b = blocks[i];
+    html += '<div class="block-row"><b>BLOCK #'+b.num+'</b> • <span style="color:#00ff88">✅ CONFIRMED</span> • '+b.time+'<br><span class="hash">Hash: '+b.hash+'...</span><br>'+b.type+': <b style="color:#FFD700">+'+b.amt+' ZERO</b> • To: '+b.to.slice(0,12)+'...<br><span class="hash">Tx: '+b.tx+'</span></div>';
+  }
+  if(html=="") html = '<div class="block-row"><b>BLOCK #1284</b> • ✅ CONFIRMED<br><span class="hash">Hash: 0x7f3a9c2e8b1d...</span><br>Mining Reward: <b style="color:#FFD700">+10 ZERO</b></div><div class="block-row"><b>BLOCK #1283</b> • ✅ CONFIRMED<br><span class="hash">Hash: 0x3b8e2f1a9c4d...</span><br>Transfer: <b style="color:#FFD700">+5 ZERO</b></div>';
+  el.innerHTML = html;
 }
-// ===== LIVE RECEIVED FEED =====
+function renderTx(){
+  var el = document.getElementById('txList');
+  if(!el) return;
+  var html = "";
+  for(var i=0;i<Math.min(blocks.length,5);i++){
+    var b = blocks[i];
+    html += '✅ <b>'+b.tx.slice(0,10)+'...</b> • '+b.type+' +'+b.amt+' ZERO • Block #'+b.num+' • '+b.time+'<br>';
+  }
+  if(html=="") html = '✅ 0x7f3a9c2e... • Mining +10 ZERO • Block #1284<br>✅ 0x3b8e2f1a... • Transfer +5 ZERO • Block #1283<br>';
+  el.innerHTML = html;
+}
+function loadMoreBlocks(){
+  for(var i=0;i<3;i++){ blockHeight++; var b={num:blockHeight, hash:makeHash(), tx:makeTxHash(), type:"Mining Reward", amt:10, from:"MINING REWARD", to:"ZERO..."+Math.random().toString(36).substring(2,6).toUpperCase(), time:new Date().toLocaleTimeString()}; blocks.push(b); }
+  renderBlocks(); alert("Loaded 3 more blocks! Total Blocks: "+blockHeight);
+}
+function searchExplorer(){
+  var q = document.getElementById('expSearch').value;
+  if(!q){ alert("Lagyan mo ng Address / Tx Hash / Block #!"); return; }
+  if(wallet && q.toLowerCase().includes(wallet.toLowerCase().slice(0,6))){ document.getElementById('expResult').innerText = "✅ FOUND! Address: "+wallet+" • Balance: "+balance.toFixed(2)+" ZERO • Block #"+blockHeight; alert("✅ FOUND SA EXPLORER!\n\nAddress: "+wallet+"\nBalance: "+balance.toFixed(2)+" ZERO\nBlock: #"+blockHeight); }
+  else { document.getElementById('expResult').innerText = "🔍 Searching: "+q+" • Found in Block #"+blockHeight+" • Hash: "+makeHash(); alert("🔍 SEARCH RESULT:\n\n"+q+"\n\nFound in Block #"+blockHeight+"\nStatus: ✅ CONFIRMED\nTx: "+makeTxHash()); }
+}
+function searchExplorer2(){
+  var q = document.getElementById('expSearch2').value;
+  if(!q){ alert("Lagyan mo!"); return; }
+  alert("🔍 EXPLORER RESULT:\n\n"+q+"\n\nBlock: #"+blockHeight+"\nStatus: ✅ CONFIRMED\nBalance: "+balance.toFixed(2)+" ZERO");
+}
+function viewOnExplorer(){
+  if(!wallet){ alert("Gawa ka muna ng wallet!"); return; }
+  showTab('explorer', document.querySelectorAll('.tab')[4]);
+  alert("🔍 Nasa Explorer ka na!\n\nAddress mo: "+wallet+"\nBalance: "+balance.toFixed(2)+" ZERO\n\nMakikita mo yung blocks mo dito!");
+}
+function showNotif(msg){ var n=document.getElementById('notif'); n.innerText=msg; n.style.display='block'; setTimeout(function(){ n.style.display='none'; },3500); }
+function showLiveToast(msg){ var t=document.getElementById('liveToast'); t.innerHTML=msg; t.style.display='block'; setTimeout(function(){ t.style.display='none'; },4000); }
 var names = ["Juan D.","Maria S.","Jose R.","Ana L.","Mark T.","Sarah G.","Kevin P.","Jessa M.","Carlo B.","Angel R.","Paolo V.","Rosa C.","Miguel A.","Liza K.","Dennis O.","Grace N.","Ryan F.","Ella H.","Bryan J.","Nina Q."];
 var places = ["Quezon City","Manila","Cebu","Davao","Baguio","Iloilo","Batangas","Pampanga","Laguna","Bacolod"];
 function addLiveFeed(name, amt, isMe){
-  var feed = document.getElementById('liveFeed');
-  var div = document.createElement('div');
-  div.className = 'live-item';
-  var place = places[Math.floor(Math.random()*places.length)];
-  if(isMe){
-    div.innerHTML = '🔥 <b style="color:#FFD700">IKAW! (' + name + ')</b> received <span class="amt">+' + amt.toFixed(2) + ' ZERO</span> • LIVE • ' + place;
-    div.style.background = '#00220f';
-    div.style.border = '1px solid #00ff88';
-    div.style.borderRadius = '8px';
-    div.style.padding = '4px 6px';
-  } else {
-    div.innerHTML = '🟢 <b>' + name + '</b> received <span class="amt">+' + amt + ' ZERO</span> • Just now • ' + place;
-  }
+  var feed=document.getElementById('liveFeed');
+  var div=document.createElement('div'); div.className='live-item';
+  var place=places[Math.floor(Math.random()*places.length)];
+  if(isMe){ div.innerHTML='🔥 <b style="color:#FFD700">IKAW! ('+name+')</b> received <span class="amt">+'+amt.toFixed(2)+' ZERO</span> • LIVE • '+place; div.style.background='#00220f'; div.style.border='1px solid #00ff88'; div.style.borderRadius='8px'; div.style.padding='4px 6px'; }
+  else { div.innerHTML='🟢 <b>'+name+'</b> received <span class="amt">+'+amt+' ZERO</span> • Just now • '+place; }
   feed.insertBefore(div, feed.firstChild);
-  while(feed.children.length > 3){ feed.removeChild(feed.lastChild); }
-  liveToday = liveToday + amt;
-  document.getElementById('liveToday').innerText = liveToday.toLocaleString();
-  document.getElementById('liveLast').innerText = 'Just now';
-  document.getElementById('liveMiners').innerText = liveMiners.toLocaleString();
+  while(feed.children.length>3){ feed.removeChild(feed.lastChild); }
+  liveToday=liveToday+amt;
+  document.getElementById('liveToday').innerText=liveToday.toLocaleString();
 }
 function randomLiveReceive(){
-  var n = names[Math.floor(Math.random()*names.length)];
-  var amt = [5,10,10,10,15][Math.floor(Math.random()*5)];
+  var n=names[Math.floor(Math.random()*names.length)];
+  var amt=[5,10,10,10,15][Math.floor(Math.random()*5)];
   addLiveFeed(n, amt, false);
-  // Random toast sa baba - parang may nag-receive live!
-  if(Math.random() > 0.5){
-    showLiveToast('📡 LIVE: <b>' + n + '</b> just received <b style="color:#FFD700">+' + amt + ' ZERO</b>! 🔥<br><span style="font-size:11px;color:#aaa">Ikaw din! Magmina ka na para makatanggap ka din!</span>');
-  }
-  // Random online count
-  liveMiners = 1200 + Math.floor(Math.random()*100);
-  document.getElementById('onlineCount').innerText = '👥 ' + liveMiners.toLocaleString() + ' online';
+  if(Math.random()>0.5){ showLiveToast('📡 LIVE: <b>'+n+'</b> just received <b style="color:#FFD700">+'+amt+' ZERO</b>! 🔥<br><span style="font-size:11px;color:#aaa">Block #'+(blockHeight+1)+' confirmed!</span>'); }
+  liveMiners=1200+Math.floor(Math.random()*100);
+  document.getElementById('onlineCount').innerText='👥 '+liveMiners.toLocaleString()+' online';
+  document.getElementById('liveMiners').innerText=liveMiners.toLocaleString();
 }
 setInterval(randomLiveReceive, 7000);
-setInterval(function(){
-  var t = document.getElementById('liveLast');
-  if(t) t.innerText = 'Just now';
-}, 30000);
-
 function saveAll(){
   try{
     localStorage.setItem('zero_bal', balance);
@@ -285,245 +344,174 @@ function saveAll(){
     localStorage.setItem('zero_pending', pending);
     localStorage.setItem('zero_live_today', liveToday);
     if(mining){ localStorage.setItem('zero_mining_start', miningStartTime); } else { localStorage.removeItem('zero_mining_start'); }
-    var s = document.getElementById('saveStatus');
-    if(s) s.innerText = "💾 Last Save: " + new Date().toLocaleTimeString() + " • Saved!";
+    var s=document.getElementById('saveStatus'); if(s) s.innerText="💾 Last Save: "+new Date().toLocaleTimeString()+" • Saved!";
   }catch(e){}
 }
 function loadAll(){
   try{
-    balance = parseFloat(localStorage.getItem('zero_bal') || 0);
-    totalMined = parseInt(localStorage.getItem('zero_total') || 0);
-    wallet = localStorage.getItem('zero_wallet') || "";
-    walletDevice = localStorage.getItem('zero_wallet_device') || "";
-    histText = localStorage.getItem('zero_hist') || "";
-    recvHist = localStorage.getItem('zero_recv_hist') || "";
-    totalReceived = parseFloat(localStorage.getItem('zero_total_recv') || 0);
-    totalSent = parseFloat(localStorage.getItem('zero_total_sent') || 0);
-    blockedCount = parseInt(localStorage.getItem('zero_blocked') || 127);
-    sessionCount = parseInt(localStorage.getItem('zero_session') || 0);
-    pending = parseFloat(localStorage.getItem('zero_pending') || 0);
-    liveToday = parseInt(localStorage.getItem('zero_live_today') || 12847);
-    var oldStart = parseInt(localStorage.getItem('zero_mining_start') || 0);
-    if(oldStart > 0){
-      var elapsed = Math.floor((Date.now() - oldStart) / 1000);
-      if(elapsed < 60){
-        secLeft = 60 - elapsed; miningStartTime = oldStart; mining = true;
-        setTimeout(function(){ resumeMining(); }, 500);
-      } else {
-        balance = balance + 10; totalMined = totalMined + 10; totalReceived = totalReceived + 10;
-        recvHist = recvHist + "✅ +10 ZERO - Mining auto-completed<br>";
-        pending = 0; localStorage.removeItem('zero_mining_start');
-        setTimeout(function(){ showNotif("🎉 +10 ZERO RECEIVED! Habang naka-close ka!"); }, 800);
-        saveAll();
-      }
+    balance=parseFloat(localStorage.getItem('zero_bal')||0);
+    totalMined=parseInt(localStorage.getItem('zero_total')||0);
+    wallet=localStorage.getItem('zero_wallet')||"";
+    walletDevice=localStorage.getItem('zero_wallet_device')||"";
+    histText=localStorage.getItem('zero_hist')||"";
+    recvHist=localStorage.getItem('zero_recv_hist')||"";
+    totalReceived=parseFloat(localStorage.getItem('zero_total_recv')||0);
+    totalSent=parseFloat(localStorage.getItem('zero_total_sent')||0);
+    blockedCount=parseInt(localStorage.getItem('zero_blocked')||127);
+    sessionCount=parseInt(localStorage.getItem('zero_session')||0);
+    pending=parseFloat(localStorage.getItem('zero_pending')||0);
+    liveToday=parseInt(localStorage.getItem('zero_live_today')||12847);
+    blockHeight=parseInt(localStorage.getItem('zero_blockHeight')||1284);
+    totalTx=parseInt(localStorage.getItem('zero_totalTx')||15892);
+    try{ blocks=JSON.parse(localStorage.getItem('zero_blocks')||"[]"); }catch(e){ blocks=[]; }
+    var oldStart=parseInt(localStorage.getItem('zero_mining_start')||0);
+    if(oldStart>0){
+      var elapsed=Math.floor((Date.now()-oldStart)/1000);
+      if(elapsed<60){ secLeft=60-elapsed; miningStartTime=oldStart; mining=true; setTimeout(function(){ resumeMining(); },500); }
+      else { balance=balance+10; totalMined=totalMined+10; totalReceived=totalReceived+10; recvHist=recvHist+"✅ +10 ZERO - Mining auto-completed<br>"; pending=0; localStorage.removeItem('zero_mining_start'); setTimeout(function(){ showNotif("🎉 +10 ZERO RECEIVED!"); },800); saveAll(); }
     }
   }catch(e){}
 }
-function toggleLang(){
-  var p = document.getElementById('langPanel');
-  p.style.display = (p.style.display === 'block') ? 'none' : 'block';
-}
-function toggleFw(){
-  var p = document.getElementById('fwPanel');
-  var a = document.getElementById('fwArrow');
-  if(p.style.display === 'block'){ p.style.display = 'none'; a.innerText = '▼'; } else { p.style.display = 'block'; a.innerText = '▲'; }
-}
+function toggleLang(){ var p=document.getElementById('langPanel'); p.style.display=(p.style.display==='block')?'none':'block'; }
+function toggleFw(){ var p=document.getElementById('fwPanel'); var a=document.getElementById('fwArrow'); if(p.style.display==='block'){ p.style.display='none'; a.innerText='▼'; } else { p.style.display='block'; a.innerText='▲'; } }
 function showTab(n, el){
-  var ids = ['mining','wallet','receive','transfer','security'];
-  for(var i=0;i<ids.length;i++){ document.getElementById('tab-'+ids[i]).style.display = 'none'; }
-  document.getElementById('tab-'+n).style.display = 'block';
-  var tabs = document.querySelectorAll('.tab');
+  var ids=['mining','wallet','receive','transfer','explorer','security'];
+  for(var i=0;i<ids.length;i++){ document.getElementById('tab-'+ids[i]).style.display='none'; }
+  document.getElementById('tab-'+n).style.display='block';
+  var tabs=document.querySelectorAll('.tab');
   for(var j=0;j<tabs.length;j++){ tabs[j].classList.remove('active'); }
   if(el) el.classList.add('active');
 }
-function getPrice(){ return 0.10 + (totalMined / 1000000) * 99.90; }
+function getPrice(){ return 0.10 + (totalMined/1000000)*99.90; }
 function update(){
-  var price = getPrice(); var myVal = balance * price;
-  document.getElementById('price').innerText = price.toFixed(2);
-  document.getElementById('priceUSD').innerText = (price / 58).toFixed(4);
-  document.getElementById('price3').innerText = price.toFixed(2);
-  document.getElementById('myValue').innerText = myVal.toFixed(2);
-  document.getElementById('mcap').innerText = (totalMined * price).toFixed(2);
-  document.getElementById('bal1').innerText = balance.toFixed(2);
-  document.getElementById('bal2').innerText = balance.toFixed(2);
-  document.getElementById('bal3').innerText = balance.toFixed(2);
-  document.getElementById('balRecv').innerText = balance.toFixed(2);
-  document.getElementById('walletBal1').innerText = balance.toFixed(2);
-  document.getElementById('balValue1').innerText = myVal.toFixed(2);
-  document.getElementById('balValue2').innerText = myVal.toFixed(2);
-  document.getElementById('balValue3').innerText = myVal.toFixed(2);
-  document.getElementById('balValueRecv').innerText = myVal.toFixed(2);
-  document.getElementById('totalMined').innerText = totalMined;
-  document.getElementById('left').innerText = (1000000 - totalMined).toLocaleString();
-  document.getElementById('blocked').innerText = blockedCount;
-  document.getElementById('deviceIdShow').innerText = deviceId;
-  document.getElementById('secDevice').innerText = deviceId;
-  document.getElementById('mineSession').innerText = sessionCount;
-  document.getElementById('totalReceived').innerText = totalReceived.toFixed(2) + " ZERO";
-  document.getElementById('recv2').innerText = totalReceived.toFixed(2);
-  document.getElementById('sent2').innerText = totalSent.toFixed(2);
-  document.getElementById('liveToday').innerText = liveToday.toLocaleString();
+  var price=getPrice(); var myVal=balance*price;
+  document.getElementById('price').innerText=price.toFixed(2);
+  document.getElementById('priceUSD').innerText=(price/58).toFixed(4);
+  document.getElementById('price3').innerText=price.toFixed(2);
+  document.getElementById('myValue').innerText=myVal.toFixed(2);
+  document.getElementById('mcap').innerText=(totalMined*price).toFixed(2);
+  document.getElementById('bal1').innerText=balance.toFixed(2);
+  document.getElementById('bal2').innerText=balance.toFixed(2);
+  document.getElementById('bal3').innerText=balance.toFixed(2);
+  document.getElementById('balRecv').innerText=balance.toFixed(2);
+  document.getElementById('walletBal1').innerText=balance.toFixed(2);
+  document.getElementById('balValue1').innerText=myVal.toFixed(2);
+  document.getElementById('balValue2').innerText=myVal.toFixed(2);
+  document.getElementById('balValue3').innerText=myVal.toFixed(2);
+  document.getElementById('balValueRecv').innerText=myVal.toFixed(2);
+  document.getElementById('totalMined').innerText=totalMined;
+  document.getElementById('left').innerText=(1000000-totalMined).toLocaleString();
+  document.getElementById('blocked').innerText=blockedCount;
+  document.getElementById('deviceIdShow').innerText=deviceId;
+  document.getElementById('secDevice').innerText=deviceId;
+  document.getElementById('mineSession').innerText=sessionCount;
+  document.getElementById('totalReceived').innerText=totalReceived.toFixed(2)+" ZERO";
+  document.getElementById('recv2').innerText=totalReceived.toFixed(2);
+  document.getElementById('sent2').innerText=totalSent.toFixed(2);
+  document.getElementById('liveToday').innerText=liveToday.toLocaleString();
+  document.getElementById('liveBlock').innerText=blockHeight.toLocaleString();
+  document.getElementById('expBlockNum').innerText=blockHeight.toLocaleString();
   if(wallet){
-    document.getElementById('noWallet').style.display = 'none';
-    document.getElementById('hasWallet').style.display = 'block';
-    document.getElementById('noWalletRecv').style.display = 'none';
-    document.getElementById('hasWalletRecv').style.display = 'block';
-    document.getElementById('myAddr').innerText = wallet;
-    document.getElementById('myAddrRecv').innerText = wallet;
-    document.getElementById('walletDevice').innerText = walletDevice || deviceId;
+    document.getElementById('noWallet').style.display='none';
+    document.getElementById('hasWallet').style.display='block';
+    document.getElementById('noWalletRecv').style.display='none';
+    document.getElementById('hasWalletRecv').style.display='block';
+    document.getElementById('myAddr').innerText=wallet;
+    document.getElementById('myAddrRecv').innerText=wallet;
+    document.getElementById('walletDevice').innerText=walletDevice||deviceId;
   }
-  if(histText){
-    document.getElementById('hist').innerHTML = "<b>📜 History:</b><br>" + histText;
-    document.getElementById('histWallet').innerHTML = "<b>📜 Wallet History:</b><br>" + histText + (recvHist ? "<br>" + recvHist : "");
-  }
-  if(recvHist){ document.getElementById('histRecv').innerHTML = "<b>📥 Received History:</b><br>" + recvHist; }
+  if(histText){ document.getElementById('hist').innerHTML="<b>📜 History:</b><br>"+histText; document.getElementById('histWallet').innerHTML="<b>📜 Wallet History:</b><br>"+histText+(recvHist?"<br>"+recvHist:""); }
+  if(recvHist){ document.getElementById('histRecv').innerHTML="<b>📥 Received History:</b><br>"+recvHist; }
+  renderBlocks(); renderTx();
 }
-function checkOneDevice(){
-  if(wallet && walletDevice && walletDevice !== deviceId){
-    alert("🚫 BLOCKED! ONE DEVICE ONLY!");
-    return false;
-  }
-  return true;
-}
+function checkOneDevice(){ if(wallet && walletDevice && walletDevice!==deviceId){ alert("🚫 BLOCKED! ONE DEVICE ONLY!"); return false; } return true; }
 function startMining(){
   if(!checkOneDevice()) return;
-  if(!wallet){
-    if(confirm("Wala ka pang wallet boss! Gawa ka muna para ma-receive mo! Gawa na?")){ createWallet(); }
-  }
+  if(!wallet){ if(confirm("Wala ka pang wallet boss! Gawa ka muna para ma-receive mo! Gawa na?")){ createWallet(); } }
   if(mining){ alert("Nagmi-mina ka na boss!"); return; }
-  mining = true; sessionCount++; secLeft = 60; pending = 0; miningStartTime = Date.now();
-  saveAll();
-  var btn = document.getElementById('mineBtn');
-  btn.disabled = true; btn.innerText = "⛏️ MINING...";
-  document.getElementById('status').innerText = ">> MINING... +0.00 ZERO";
+  mining=true; sessionCount++; secLeft=60; pending=0; miningStartTime=Date.now(); saveAll();
+  var btn=document.getElementById('mineBtn'); btn.disabled=true; btn.innerText="⛏️ MINING...";
+  document.getElementById('status').innerText=">> MINING... +0.00 ZERO";
   runTimer();
 }
-function resumeMining(){
-  if(!mining) return;
-  var btn = document.getElementById('mineBtn');
-  btn.disabled = true; btn.innerText = "⛏️ MINING... (RESUMED)";
-  document.getElementById('status').innerText = ">> MINING RESUMED! Hindi nawala!";
-  runTimer();
-}
+function resumeMining(){ if(!mining) return; var btn=document.getElementById('mineBtn'); btn.disabled=true; btn.innerText="⛏️ MINING... (RESUMED)"; document.getElementById('status').innerText=">> MINING RESUMED! Hindi nawala!"; runTimer(); }
 function runTimer(){
   if(myTimer) clearInterval(myTimer);
-  myTimer = setInterval(function(){
-    secLeft = secLeft - 1;
-    pending = 10 * (60 - secLeft) / 60;
-    document.getElementById('timer').innerText = secLeft;
-    document.getElementById('bar').style.width = ((60 - secLeft) / 60 * 100) + "%";
-    document.getElementById('status').innerText = ">> MINING... +" + pending.toFixed(2) + " ZERO";
-    if(secLeft % 5 === 0) saveAll();
-    if(secLeft <= 0){
-      clearInterval(myTimer); mining = false;
-      var btn = document.getElementById('mineBtn');
-      btn.disabled = false; btn.innerText = "▶ MINE AGAIN";
-      document.getElementById('status').innerText = ">> COMPLETE! PINDUTIN MO CLAIM!";
-      saveAll();
-      showNotif("✅ MINING DONE! Pindutin mo CLAIM para ma-receive LIVE!");
-    }
-  }, 1000);
+  myTimer=setInterval(function(){
+    secLeft=secLeft-1; pending=10*(60-secLeft)/60;
+    document.getElementById('timer').innerText=secLeft;
+    document.getElementById('bar').style.width=((60-secLeft)/60*100)+"%";
+    document.getElementById('status').innerText=">> MINING... +"+pending.toFixed(2)+" ZERO";
+    if(secLeft%5===0) saveAll();
+    if(secLeft<=0){ clearInterval(myTimer); mining=false; var btn=document.getElementById('mineBtn'); btn.disabled=false; btn.innerText="▶ MINE AGAIN"; document.getElementById('status').innerText=">> COMPLETE! PINDUTIN MO CLAIM!"; saveAll(); showNotif("✅ MINING DONE! Pindutin mo CLAIM!"); }
+  },1000);
 }
 function claim(){
   if(!checkOneDevice()) return;
-  if(pending <= 0){ alert("Magmina ka muna boss!"); return; }
-  var claimed = pending;
-  balance = balance + claimed;
-  totalMined = totalMined + Math.floor(claimed);
-  totalReceived = totalReceived + claimed;
-  var myDisplay = wallet ? wallet.substring(0,8) : "YOU";
-  if(!myName){
-    myName = prompt("Anong pangalan mo boss? Lalabas ka sa LIVE FEED! (Ex: Juan)") || "YOU";
-  }
-  recvHist = recvHist + "✅ +" + claimed.toFixed(2) + " ZERO - CLAIMED • LIVE • " + new Date().toLocaleTimeString() + "<br>";
-  histText = histText + "✅ RECEIVED +" + claimed.toFixed(2) + " ZERO - Mining Claim • LIVE<br>";
-  pending = 0;
-  document.getElementById('bar').style.width = "0%";
-  document.getElementById('timer').innerText = "60";
+  if(pending<=0){ alert("Magmina ka muna boss!"); return; }
+  var claimed=pending;
+  balance=balance+claimed; totalMined=totalMined+Math.floor(claimed); totalReceived=totalReceived+claimed;
+  if(!myName){ myName=prompt("Anong pangalan mo boss? Lalabas ka sa LIVE FEED! (Ex: Juan)")||"YOU"; }
+  recvHist=recvHist+"✅ +"+claimed.toFixed(2)+" ZERO - CLAIMED • Block #"+(blockHeight+1)+" • "+new Date().toLocaleTimeString()+"<br>";
+  histText=histText+"✅ RECEIVED +"+claimed.toFixed(2)+" ZERO - Mining Claim • Block #"+(blockHeight+1)+"<br>";
+  pending=0; document.getElementById('bar').style.width="0%"; document.getElementById('timer').innerText="60";
+  var b=addBlock("Mining Reward", claimed, "MINING REWARD", wallet||"YOU");
   saveAll(); update();
-  // LIVE FEED - IKAW NA YUNG LALABAS!
   addLiveFeed(myName, claimed, true);
-  showNotif("🎉 LIVE RECEIVED +" + claimed.toFixed(2) + " ZERO! Nasa LIVE FEED ka na!");
-  showLiveToast('🔥 LIVE: <b>IKAW (' + myName + ')</b> just received <b style="color:#FFD700">+' + claimed.toFixed(2) + ' ZERO</b>! 🎉<br><span style="font-size:11px">Nakita ka ng lahat sa LIVE FEED!</span>');
-  alert("🎉 LIVE RECEIVED!\n\n+" + claimed.toFixed(2) + " ZERO\n\nNasa LIVE FEED ka na boss! Makikita ng lahat na nakatanggap ka!\nWallet mo: " + balance.toFixed(2) + " ZERO");
+  showNotif("🎉 LIVE RECEIVED +"+claimed.toFixed(2)+" ZERO! Block #"+b.num+" CONFIRMED!");
+  showLiveToast('🔥 LIVE: <b>IKAW ('+myName+')</b> just received <b style="color:#FFD700">+'+claimed.toFixed(2)+' ZERO</b>! Block #'+b.num+'<br><span class="hash">Tx: '+b.tx+'</span>');
+  alert("🎉 LIVE RECEIVED!\n\n+"+claimed.toFixed(2)+" ZERO\nBlock #"+b.num+" CONFIRMED!\nTx Hash: "+b.tx+"\n\nNasa EXPLORER ka na boss! Check mo sa EXPLORER tab!");
 }
 function createWallet(){
-  if(wallet){ alert("Wallet mo na: " + wallet); return; }
-  wallet = "ZERO" + Math.random().toString(36).substring(2,10).toUpperCase() + Math.random().toString(36).substring(2,8).toUpperCase();
-  walletDevice = deviceId;
-  if(!myName){ myName = prompt("Anong pangalan mo boss?") || "YOU"; }
-  alert("🚀 WALLET CREATED!\n\n" + wallet + "\n\nNgayon makaka-receive ka na ng token LIVE!");
+  if(wallet){ alert("Wallet mo na: "+wallet); return; }
+  wallet="ZERO"+Math.random().toString(36).substring(2,10).toUpperCase()+Math.random().toString(36).substring(2,8).toUpperCase();
+  walletDevice=deviceId;
+  if(!myName){ myName=prompt("Anong pangalan mo boss?")||"YOU"; }
+  alert("🚀 WALLET CREATED!\n\n"+wallet+"\n\nNgayon makaka-receive ka na!");
   saveAll(); update();
-  addLiveFeed(myName, 0, true);
 }
-function copyAddr(){
-  if(!wallet){ alert("Gawa ka muna ng wallet!"); return; }
-  showNotif("📋 Address na-copy: " + wallet);
-  alert("Na-copy na: " + wallet);
-}
-function shareAddr(){
-  if(!wallet){ alert("Gawa ka muna ng wallet!"); return; }
-  var text = "Sendan mo ko ng ZERO! ⛏️💰\nMy ZERO Address: " + wallet + "\nMine ka din dito: https://ricafortalbert92-bot.github.io/zero-blockchain/";
-  if(navigator.share){ navigator.share({text: text}); } else { alert(text); }
-}
+function copyAddr(){ if(!wallet){ alert("Gawa ka muna ng wallet!"); return; } showNotif("📋 Address na-copy: "+wallet); alert("Na-copy na: "+wallet); }
+function shareAddr(){ if(!wallet){ alert("Gawa ka muna ng wallet!"); return; } var text="Sendan mo ko ng ZERO! ⛏️💰\nMy ZERO Address: "+wallet+"\nMine ka din dito: https://ricafortalbert92-bot.github.io/zero-blockchain/"; if(navigator.share){ navigator.share({text:text}); } else { alert(text); } }
 function testReceive(){
   if(!wallet){ alert("Gawa ka muna ng wallet!"); return; }
-  var amt = 5;
-  balance = balance + amt; totalReceived = totalReceived + amt;
-  recvHist = recvHist + "🎁 +5 ZERO - TEST RECEIVE • LIVE<br>";
-  histText = histText + "🎁 RECEIVED +5 ZERO - Test Receive • LIVE<br>";
+  var amt=5; balance=balance+amt; totalReceived=totalReceived+amt;
+  var b=addBlock("Receive", amt, "ZERO TEAM", wallet);
+  recvHist=recvHist+"🎁 +5 ZERO - Receive • Block #"+b.num+"<br>";
+  histText=histText+"🎁 RECEIVED +5 ZERO - Receive • Block #"+b.num+"<br>";
   saveAll(); update();
-  if(!myName) myName = "YOU";
+  if(!myName) myName="YOU";
   addLiveFeed(myName, amt, true);
-  showNotif("🎁 LIVE RECEIVED +5 ZERO! Nasa LIVE FEED ka!");
-  alert("🎁 LIVE RECEIVED +5 ZERO!\n\nNasa LIVE FEED ka na! Tignan mo sa taas!");
+  showNotif("🎁 LIVE RECEIVED +5 ZERO! Block #"+b.num);
+  alert("🎁 LIVE RECEIVED +5 ZERO!\nBlock #"+b.num+"\nTx: "+b.tx+"\n\nNasa EXPLORER ka na!");
 }
 function sendZero(){
   if(!checkOneDevice()) return;
-  var to = document.getElementById('toAddr').value;
-  var amt = parseFloat(document.getElementById('amount').value);
-  if(!to || !amt){ alert("Lagyan mo address at amount!"); return; }
-  if(amt > balance){ alert("Kulang balance!"); return; }
-  balance = balance - amt; totalSent = totalSent + amt;
-  histText = histText + "📤 SENT -" + amt + " ZERO kay " + to + " • LIVE<br>";
+  var to=document.getElementById('toAddr').value;
+  var amt=parseFloat(document.getElementById('amount').value);
+  if(!to||!amt){ alert("Lagyan mo address at amount!"); return; }
+  if(amt>balance){ alert("Kulang balance!"); return; }
+  balance=balance-amt; totalSent=totalSent+amt;
+  var b=addBlock("Transfer", amt, wallet, to);
+  histText=histText+"📤 SENT -"+amt+" ZERO kay "+to+" • Block #"+b.num+" • Tx: "+b.tx+"<br>";
   saveAll(); update();
-  showNotif("📤 SENT " + amt + " ZERO! LIVE!");
-  alert("SUCCESS! Nag-send ka ng " + amt + " ZERO! LIVE na-receive na nung pinadalhan mo!");
+  showNotif("📤 SENT "+amt+" ZERO! Block #"+b.num+" CONFIRMED!");
+  alert("SUCCESS!\n\nNag-send ka ng "+amt+" ZERO!\nBlock #"+b.num+"\nTx: "+b.tx+"\n\nNasa EXPLORER na yan!");
 }
-function toggleLock(){
-  walletLocked = !walletLocked;
-  document.getElementById('lockInfo').innerText = walletLocked ? "Wallet is LOCKED 🔒" : "Wallet is UNLOCKED";
-  alert(walletLocked ? "🔒 LOCKED!" : "🔓 UNLOCKED!");
-}
-function runScan(){
-  document.getElementById('lastScan').innerText = "Scanning...";
-  setTimeout(function(){ document.getElementById('lastScan').innerText = new Date().toLocaleTimeString(); alert("✅ SCAN COMPLETE! 100% SECURE!"); }, 1000);
-}
-function showDeviceInfo(){ alert("📱 YOUR DEVICE ID:\n\n" + deviceId); }
-function resetAll(){
-  if(!confirm("Sigurado ka? Mabubura LAHAT!")) return;
-  if(!confirm("LAST WARNING! Tuloy mo ba?")) return;
-  try{ localStorage.clear(); }catch(e){}
-  alert("Na-reset na. Refresh mo.");
-  location.reload();
-}
+function toggleLock(){ walletLocked=!walletLocked; document.getElementById('lockInfo').innerText=walletLocked?"Wallet is LOCKED 🔒":"Wallet is UNLOCKED"; alert(walletLocked?"🔒 LOCKED!":"🔓 UNLOCKED!"); }
+function runScan(){ document.getElementById('lastScan').innerText="Scanning..."; setTimeout(function(){ document.getElementById('lastScan').innerText=new Date().toLocaleTimeString(); alert("✅ SCAN COMPLETE! 100% SECURE!"); },1000); }
+function showDeviceInfo(){ alert("📱 YOUR DEVICE ID:\n\n"+deviceId); }
+function resetAll(){ if(!confirm("Sigurado ka? Mabubura LAHAT!")) return; if(!confirm("LAST WARNING! Tuloy mo ba?")) return; try{ localStorage.clear(); }catch(e){} alert("Na-reset na. Refresh mo."); location.reload(); }
 function setLang(l, el){
-  var names = {tl:"Tagalog",en:"English",ceb:"Cebuano",es:"Español",zh:"中文",ja:"日本語",ko:"한국어",ar:"العربية",fr:"Français",hi:"हिन्दी",pt:"Português",de:"Deutsch"};
-  var mottos = {tl:"ZERO HACK • ZERO NAKAW • ZERO DAYA",en:"ZERO HACK • ZERO THEFT • ZERO CHEAT",ceb:"ZERO HACK • ZERO KAWAT • ZERO LIMBONG",es:"ZERO HACK • ZERO ROBO • ZERO TRAMPA",zh:"零黑客 • 零盗窃 • 零作弊",ja:"ゼロハック • ゼロ盗難 • ゼロ不正",ko:"제로 해킹 • 제로 도둑 • 제로 부정",ar:"صفر اختراق • صفر سرقة • صفر غش",fr:"ZÉRO HACK • ZÉRO VOL • ZÉRO TRICHE",hi:"ज़ीरो हैक • ज़ीरो चोरी • ज़ीरो धोखा",pt:"ZERO HACK • ZERO ROUBO • ZERO TRAPAÇA",de:"ZERO HACK • ZERO DIEBSTAHL • ZERO BETRUG"};
-  document.getElementById('curLang').innerText = names[l] || "Tagalog";
-  document.getElementById('t-motto').innerText = mottos[l] || mottos.tl;
-  document.getElementById('langPanel').style.display = 'none';
-  var btns = document.querySelectorAll('.lang-btn');
-  for(var i=0;i<btns.length;i++){ btns[i].classList.remove('active'); }
-  if(el) el.classList.add('active');
+  var names={tl:"Tagalog",en:"English",ceb:"Cebuano",es:"Español",zh:"中文",ja:"日本語",ko:"한국어",ar:"العربية",fr:"Français",hi:"हिन्दी",pt:"Português",de:"Deutsch"};
+  document.getElementById('curLang').innerText=names[l]||"Tagalog";
+  document.getElementById('langPanel').style.display='none';
+  var btns=document.querySelectorAll('.lang-btn'); for(var i=0;i<btns.length;i++){ btns[i].classList.remove('active'); } if(el) el.classList.add('active');
 }
-setInterval(function(){ if(balance > 0 || mining) saveAll(); }, 3000);
+setInterval(function(){ if(balance>0||mining) saveAll(); },3000);
 loadAll();
 update();
-if(balance > 0){
-  setTimeout(function(){ showNotif("👋 WELCOME BACK! Wallet mo: " + balance.toFixed(2) + " ZERO - LIVE pa din!"); }, 1000);
-}
-setTimeout(function(){ showLiveToast('📡 LIVE: <b>Juan D.</b> just received <b style="color:#FFD700">+10 ZERO</b>! Ikaw na next! Magmina ka na!'); }, 3000);
+if(balance>0){ setTimeout(function(){ showNotif("👋 WELCOME BACK! Wallet mo: "+balance.toFixed(2)+" ZERO"); },1000); }
+setTimeout(function(){ showLiveToast('📡 LIVE: <b>Juan D.</b> just received <b style="color:#FFD700">+10 ZERO</b>! Block #'+(blockHeight+1)+' confirmed!'); },3000);
 </script>
 </body>
 </html>
