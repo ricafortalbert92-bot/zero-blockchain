@@ -9,6 +9,9 @@ body{background:#000;color:#fff;font-family:Arial;text-align:center;padding:12px
 .top{max-width:430px;margin:auto}
 .logo{font-size:50px;font-weight:900;color:#00ff88;text-shadow:0 0 25px #00ff88;letter-spacing:5px;margin:2px;line-height:1}
 .sub{font-size:12px;letter-spacing:2px;color:#aaa;font-weight:bold}
+.lang-bar{display:flex;gap:6px;justify-content:center;margin:10px 0;flex-wrap:wrap}
+.lang-btn{background:#111;border:1px solid #333;color:#fff;padding:8px 10px;border-radius:20px;font-size:12px;cursor:pointer}
+.lang-btn.active{background:#00ff88;color:#000;border-color:#00ff88;font-weight:900}
 .tabs{display:flex;gap:7px;margin-top:14px}
 .tab{flex:1;padding:14px 4px;background:#1a1a1a;color:#fff;border:1px solid #333;border-radius:14px;font-weight:800;cursor:pointer;font-size:14px}
 .tab.active{background:#00ff88;color:#000;border-color:#00ff88;box-shadow:0 0 12px #00ff88}
@@ -42,211 +45,105 @@ input{width:90%;padding:14px;border-radius:12px;border:none;margin-top:9px;font-
 <div class="top">
 <div class="sub">⚡ ZERO BLOCKCHAIN • SYSTEM ONLINE ⚡</div>
 <div class="logo">ZERO</div>
-<div class="sub">ZERO HACK • ZERO NAKAW • ZERO DAYA</div>
+<div class="sub" id="t-motto">ZERO HACK • ZERO NAKAW • ZERO DAYA</div>
+
+<!-- ALL LANGUAGE BAGO! -->
+<div style="font-size:12px;color:#aaa;margin-top:8px">🌍 <span id="t-choose">PILIIN ANG WIKA / CHOOSE LANGUAGE</span></div>
+<div class="lang-bar">
+<button class="lang-btn active" onclick="setLang('tl',this)">🇵🇭 Tagalog</button>
+<button class="lang-btn" onclick="setLang('en',this)">🇺🇸 English</button>
+<button class="lang-btn" onclick="setLang('ceb',this)">🇵🇭 Cebuano</button>
+<button class="lang-btn" onclick="setLang('es',this)">🇪🇸 Español</button>
+<button class="lang-btn" onclick="setLang('zh',this)">🇨🇳 中文</button>
+<button class="lang-btn" onclick="setLang('ja',this)">🇯🇵 日本語</button>
+<button class="lang-btn" onclick="setLang('ko',this)">🇰🇷 한국어</button>
+<button class="lang-btn" onclick="setLang('ar',this)">🇸🇦 العربية</button>
+<button class="lang-btn" onclick="setLang('fr',this)">🇫🇷 Français</button>
+<button class="lang-btn" onclick="setLang('hi',this)">🇮🇳 हिन्दी</button>
+</div>
 
 <div class="firewall">
 <div class="shield">🛡️🤖</div>
-<h3>ZERO AI FIREWALL v9.9 • <span class="status-dot"></span> ACTIVE</h3>
-<div class="fire-row"><span>🛡️ Firewall:</span><b>● PROTECTED</b></div>
-<div class="fire-row"><span>🤖 AI Detection:</span><b>● SCANNING...</b></div>
-<div class="fire-row"><span>🚫 Blocked:</span><b id="blocked">127</b></div>
-<div class="fire-row"><span>👤 Device:</span><b>✅ VERIFIED HUMAN</b></div>
-<div class="fire-row"><span>🔐 Encryption:</span><b>AES-256 + SHA-512</b></div>
+<h3>ZERO AI FIREWALL v9.9 • <span class="status-dot"></span> <span id="t-active">ACTIVE</span></h3>
+<div class="fire-row"><span>🛡️ <span id="t-fw">Firewall:</span></span><b>● PROTECTED</b></div>
+<div class="fire-row"><span>🤖 <span id="t-ai">AI Detection:</span></span><b>● SCANNING...</b></div>
+<div class="fire-row"><span>🚫 <span id="t-blocked">Blocked:</span></span><b id="blocked">127</b></div>
+<div class="fire-row"><span>👤 <span id="t-device">Device:</span></span><b>✅ VERIFIED HUMAN</b></div>
+<div class="fire-row"><span>🔐 <span id="t-enc">Encryption:</span></span><b>AES-256 + SHA-512</b></div>
 <div class="fire-row"><span>🌐 DDoS:</span><b>● ON</b></div>
 <div class="fire-row"><span>⚡ Anti-Bot:</span><b id="botStatus">● CLEAN</b></div>
 <div class="threat-log" id="threatLog">> AI FIREWALL INITIALIZED...<br>> Scanning network...<br>> No threats found. System secure.</div>
 </div>
 
 <div class="price-box">
-<div style="font-size:12px;letter-spacing:2px;font-weight:900">💰 LIVE PRICE • SCARCITY MODEL</div>
+<div style="font-size:12px;letter-spacing:2px;font-weight:900"><span id="t-priceTitle">💰 LIVE PRICE • SCARCITY MODEL</span></div>
 <div><b>₱<span id="price">0.10</span></b> <span style="font-size:14px">/ 1 ZERO</span></div>
 <div style="font-size:12px">≈ $<span id="priceUSD">0.0017</span> USD • <span id="priceChange" style="font-weight:bold">🟢 +0.01% TODAY</span></div>
-<div style="font-size:13px;margin-top:6px">Yung ZERO mo: <b>₱<span id="myValue">0.00</span></b> • Market Cap: <b>₱<span id="mcap">1.00</span></b></div>
-<div style="font-size:11px;margin-top:5px">📈 Kunti pa nagmimina = MURA PA • Paubos na = MAHAL NA!</div>
+<div style="font-size:13px;margin-top:6px"><span id="t-yourZero">Yung ZERO mo:</span> <b>₱<span id="myValue">0.00</span></b> • <span id="t-mcap">Market Cap:</span> <b>₱<span id="mcap">1.00</span></b></div>
+<div style="font-size:11px;margin-top:5px" id="t-scarcity">📈 Kunti pa nagmimina = MURA PA • Paubos na = MAHAL NA!</div>
 </div>
 
 <div class="tabs">
-<button class="tab active" onclick="showTab('mining',this)">⛏️ MINING</button>
-<button class="tab" onclick="showTab('wallet',this)">💰 WALLET</button>
-<button class="tab" onclick="showTab('transfer',this)">📤 TRANSFER</button>
-<button class="tab" onclick="showTab('security',this)">🛡️ SECURITY</button>
+<button class="tab active" onclick="showTab('mining',this)"><span id="t-tabMine">⛏️ MINING</span></button>
+<button class="tab" onclick="showTab('wallet',this)"><span id="t-tabWallet">💰 WALLET</span></button>
+<button class="tab" onclick="showTab('transfer',this)"><span id="t-tabTrans">📤 TRANSFER</span></button>
+<button class="tab" onclick="showTab('security',this)"><span id="t-tabSec">🛡️ SECURITY</span></button>
 </div>
 
 <div class="box">
 <div id="tab-mining">
-<div><span class="rate">EPOCH 1 • <span id="rate">10 ZERO / MIN</span></span></div>
+<div><span class="rate"><span id="t-epoch">EPOCH 1</span> • <span id="rate">10 ZERO / MIN</span></span></div>
 <div class="bal"><span id="bal1">0.00</span> <span style="font-size:20px;color:#00ff88">ZERO</span></div>
 <div style="font-size:13px;color:#FFD700;font-weight:bold">≈ ₱<span id="balValue1">0.00</span> PESOS</div>
 <div class="bar-bg"><div class="bar" id="bar"></div></div>
 <div id="status" style="font-size:13px">>> SYSTEM READY. PRESS START <<</div>
-<div style="font-size:13px;margin-top:8px">⏰ <b id="timer" style="color:#00ff88;font-size:17px">60</b> SEC</div>
-<button class="btn" id="mineBtn" onclick="startMining()">▶ START MINING</button>
-<button class="btn2" onclick="claim()">💰 CLAIM ZERO</button>
+<div style="font-size:13px;margin-top:8px">⏰ <b id="timer" style="color:#00ff88;font-size:17px">60</b> <span id="t-sec">SEC</span></div>
+<button class="btn" id="mineBtn" onclick="startMining()">▶ <span id="t-start">START MINING</span></button>
+<button class="btn2" onclick="claim()">💰 <span id="t-claim">CLAIM ZERO</span></button>
 <div class="info">
-<div class="card">TOTAL MINED<b><span id="totalMined">0</span></b>/ 1,000,000</div>
-<div class="card">HALVING IN<b><span id="left">1,000,000</span></b>ZERO</div>
-<div class="card">HASH POWER<b>⚡ 1.2 TH/s</b>FUTURE RIG</div>
-<div class="card">NEXT HALVING<b>5 ZERO</b>EPOCH 2</div>
+<div class="card"><span id="t-total">TOTAL MINED</span><b><span id="totalMined">0</span></b>/ 1,000,000</div>
+<div class="card"><span id="t-halving">HALVING IN</span><b><span id="left">1,000,000</span></b>ZERO</div>
+<div class="card"><span id="t-hash">HASH POWER</span><b>⚡ 1.2 TH/s</b>FUTURE RIG</div>
+<div class="card"><span id="t-next">NEXT HALVING</span><b>5 ZERO</b><span id="t-epoch2">EPOCH 2</span></div>
 </div>
 </div>
 
 <div id="tab-wallet" class="hidden">
-<h3 style="font-size:20px">💰 FUTURE WALLET</h3>
-<div id="noWallet"><button class="btn" onclick="createWallet()">✨ CREATE MY WALLET</button></div>
+<h3 style="font-size:20px">💰 <span id="t-walletTitle">FUTURE WALLET</span></h3>
+<div id="noWallet"><button class="btn" onclick="createWallet()">✨ <span id="t-create">CREATE MY WALLET</span></button></div>
 <div id="hasWallet" class="hidden">
 <div class="wallet" id="myAddr"></div>
 <div class="bal" style="font-size:38px"><span id="bal2">0.00</span> ZERO</div>
 <div style="color:#FFD700;font-weight:bold;font-size:16px">≈ ₱<span id="balValue2">0.00</span> PESOS</div>
-<button class="btn2" onclick="copyAddr()">📋 COPY ADDRESS</button>
+<button class="btn2" onclick="copyAddr()">📋 <span id="t-copy">COPY ADDRESS</span></button>
 </div>
 </div>
 
 <div id="tab-transfer" class="hidden">
-<h3 style="font-size:20px">📤 TRANSFER ZERO</h3>
+<h3 style="font-size:20px">📤 <span id="t-transTitle">TRANSFER ZERO</span></h3>
 <div class="bal" style="font-size:38px"><span id="bal3">0.00</span> ZERO</div>
-<div style="color:#FFD700;font-size:13px">≈ ₱<span id="balValue3">0.00</span> • Price: ₱<span id="price3">0.10</span>/ZERO</div>
+<div style="color:#FFD700;font-size:13px">≈ ₱<span id="balValue3">0.00</span> • <span id="t-price2">Price:</span> ₱<span id="price3">0.10</span>/ZERO</div>
 <input id="toAddr" placeholder="Wallet address ng papadalhan">
 <input id="amount" type="number" placeholder="Ilan ZERO? Ex: 5">
-<button class="btn" onclick="sendZero()">🚀 SEND ZERO</button>
+<button class="btn" onclick="sendZero()">🚀 <span id="t-send">SEND ZERO</span></button>
 <div class="hist" id="hist"><b>📜 History:</b><br>Wala pa</div>
 </div>
 
 <div id="tab-security" class="hidden">
-<h3 style="font-size:20px">🛡️ AI SECURITY CENTER</h3>
-<p style="font-size:13px">Your wallet is protected by ZERO AI FIREWALL</p>
-<div class="card" style="text-align:left;font-size:13px">🔐 <b>Wallet Lock</b><br><span id="lockInfo">Wallet is UNLOCKED - Normal Mode</span><br><button class="btn2" onclick="toggleLock()">🔒 LOCK / UNLOCK WALLET</button></div>
-<div class="card" style="margin-top:10px;text-align:left;font-size:13px">🤖 <b>AI SCAN RESULT</b><br>Last Scan: <span id="lastScan">Just now</span><br>Threats: <b style="color:#00ff88">0 FOUND</b><br><button class="btn2" onclick="runScan()">🔍 RUN AI DEEP SCAN</button></div>
-<div class="card" style="margin-top:10px;text-align:left;font-size:13px">📜 <b>SECURITY LOG</b><div class="threat-log" id="threatLog2">> System secure...</div></div>
+<h3 style="font-size:20px">🛡️ <span id="t-secTitle">AI SECURITY CENTER</span></h3>
+<p style="font-size:13px" id="t-secDesc">Your wallet is protected by ZERO AI FIREWALL</p>
+<div class="card" style="text-align:left;font-size:13px">🔐 <b id="t-lockTitle">Wallet Lock</b><br><span id="lockInfo">Wallet is UNLOCKED - Normal Mode</span><br><button class="btn2" onclick="toggleLock()">🔒 <span id="t-lockBtn">LOCK / UNLOCK WALLET</span></button></div>
+<div class="card" style="margin-top:10px;text-align:left;font-size:13px">🤖 <b id="t-scanTitle">AI SCAN RESULT</b><br><span id="t-lastScan">Last Scan:</span> <span id="lastScan">Just now</span><br><span id="t-threats">Threats:</span> <b style="color:#00ff88">0 FOUND</b><br><button class="btn2" onclick="runScan()">🔍 <span id="t-scanBtn">RUN AI DEEP SCAN</span></button></div>
+<div class="card" style="margin-top:10px;text-align:left;font-size:13px">📜 <b id="t-logTitle">SECURITY LOG</b><div class="threat-log" id="threatLog2">> System secure...</div></div>
 </div>
 </div>
 
-<p style="font-size:11px;color:#888;margin-top:12px">POWERED BY ZERO BLOCKCHAIN • AI FIREWALL PROTECTED • 2099 PROTOCOL • TESTNET<br>For educational purposes. Mining is FREE. No investment.</p>
+<p style="font-size:11px;color:#888;margin-top:12px">POWERED BY ZERO BLOCKCHAIN • AI FIREWALL PROTECTED • 2099 PROTOCOL • TESTNET<br><span id="t-footer">For educational purposes. Mining is FREE. No investment.</span></p>
 </div>
 
 <script>
-var balance = parseFloat(localStorage.getItem('zero_bal') || 0);
-var totalMined = parseInt(localStorage.getItem('zero_total') || 0);
-var wallet = localStorage.getItem('zero_wallet_addr');
-var hist = JSON.parse(localStorage.getItem('zero_hist') || '[]');
-var blockedCount = parseInt(localStorage.getItem('zero_blocked') || 127);
-var mining = false, sec = 60, pending = 0, interval = null;
-var lastClaim = 0, walletLocked = false, clickCount = 0;
-function getPrice(){ return 0.10 + (totalMined / 1000000) * 99.90; }
-function logThreat(msg){
-  var el = document.getElementById('threatLog');
-  var el2 = document.getElementById('threatLog2');
-  var t = "> " + new Date().toLocaleTimeString() + " - " + msg + "<br>";
-  if(el) el.innerHTML = t + el.innerHTML;
-  if(el2) el2.innerHTML = t + el2.innerHTML;
-}
-function aiCheck(action){
-  clickCount++;
-  if(clickCount > 15){ blockedCount++; localStorage.setItem('zero_blocked', blockedCount); document.getElementById('blocked').innerText = blockedCount; document.getElementById('botStatus').innerText = "⚠️ SUSPICIOUS"; logThreat("⚠️ BOT DETECTED! Rapid clicking blocked."); alert("🛡️ AI FIREWALL: Masyado kang mabilis! Na-detect ka as BOT. Hintay muna!"); clickCount = 0; return false; }
-  if(walletLocked && action !== 'unlock'){ alert("🔒 WALLET LOCKED! I-unlock mo muna sa SECURITY tab!"); return false; }
-  return true;
-}
-function showTab(n, el){
-  document.getElementById('tab-mining').classList.add('hidden');
-  document.getElementById('tab-wallet').classList.add('hidden');
-  document.getElementById('tab-transfer').classList.add('hidden');
-  document.getElementById('tab-security').classList.add('hidden');
-  document.getElementById('tab-'+n).classList.remove('hidden');
-  var tabs = document.querySelectorAll('.tab');
-  for(var i=0;i<tabs.length;i++) tabs[i].classList.remove('active');
-  el.classList.add('active');
-  update();
-}
-function getRate(){ if(totalMined < 1000000) return 10; return 5; }
-function update(){
-  var price = getPrice(); var myVal = balance * price; var mcap = totalMined * price;
-  document.getElementById('price').innerText = price.toFixed(2);
-  document.getElementById('priceUSD').innerText = (price/58).toFixed(4);
-  document.getElementById('price3').innerText = price.toFixed(2);
-  document.getElementById('myValue').innerText = myVal.toFixed(2);
-  document.getElementById('mcap').innerText = mcap.toLocaleString(undefined,{maximumFractionDigits:2});
-  document.getElementById('priceChange').innerText = "🟢 +" + (totalMined/10000).toFixed(2) + "% SINCE START";
-  document.getElementById('blocked').innerText = blockedCount;
-  document.getElementById('bal1').innerText = balance.toFixed(2);
-  document.getElementById('bal2').innerText = balance.toFixed(2);
-  document.getElementById('bal3').innerText = balance.toFixed(2);
-  document.getElementById('balValue1').innerText = myVal.toFixed(2);
-  document.getElementById('balValue2').innerText = myVal.toFixed(2);
-  document.getElementById('balValue3').innerText = myVal.toFixed(2);
-  document.getElementById('rate').innerText = getRate() + " ZERO / MIN";
-  document.getElementById('totalMined').innerText = totalMined.toLocaleString();
-  document.getElementById('left').innerText = Math.max(0,1000000-totalMined).toLocaleString();
-  if(wallet){ document.getElementById('noWallet').classList.add('hidden'); document.getElementById('hasWallet').classList.remove('hidden'); document.getElementById('myAddr').innerText = wallet; }
-  if(hist.length>0) document.getElementById('hist').innerHTML = "<b>📜 History:</b><br>" + hist.join("<br>");
-}
-function startMining(){
-  if(!aiCheck('mining')) return;
-  if(mining) return; mining=true; sec=60; pending=0;
-  document.getElementById('mineBtn').disabled=true;
-  document.getElementById('mineBtn').innerText="⛏️ MINING...";
-  document.getElementById('status').innerText=">> MINING IN PROGRESS... FIREWALL ACTIVE";
-  logThreat("✅ Mining started - AI Verified Human");
-  interval=setInterval(function(){
-    sec=sec-1; pending=(getRate()*(60-sec)/60);
-    document.getElementById('timer').innerText=sec;
-    document.getElementById('bar').style.width=((60-sec)/60*100)+"%";
-    document.getElementById('status').innerText=">> MINING +"+pending.toFixed(2)+" ZERO | FIREWALL: SAFE";
-    if(sec<=0){ clearInterval(interval); mining=false; document.getElementById('mineBtn').disabled=false; document.getElementById('mineBtn').innerText="▶ MINE AGAIN"; document.getElementById('status').innerText=">> COMPLETE. CLAIM NOW!"; }
-  },1000);
-}
-function claim(){
-  if(!aiCheck('claim')) return;
-  var now = Date.now();
-  if(now - lastClaim < 5000){ alert("🛡️ AI FIREWALL: Masyado kang mabilis mag-claim! Hintay 5 sec."); logThreat("🚫 Double-claim attempt blocked!"); return; }
-  if(pending<=0){ alert("Magmina ka muna boss!"); return; }
-  lastClaim = now;
-  balance=balance+pending; totalMined=totalMined+Math.floor(pending);
-  localStorage.setItem('zero_bal',balance); localStorage.setItem('zero_total',totalMined);
-  alert("🚀 CLAIM SUCCESS! +"+pending.toFixed(2)+" ZERO! Presyo ngayon ₱"+getPrice().toFixed(2)+"!"); pending=0;
-  document.getElementById('bar').style.width="0%"; document.getElementById('timer').innerText="60";
-  update();
-}
-function createWallet(){
-  if(!aiCheck('wallet')) return;
-  if(wallet){ alert("Wallet mo na to: "+wallet); return; }
-  var r='ZERO'+Math.random().toString(36).substring(2,10).toUpperCase()+Math.random().toString(36).substring(2,10).toUpperCase();
-  localStorage.setItem('zero_wallet_addr',r); wallet=r; alert("🚀 WALLET CREATED: "+r+" | Protected by AI Firewall"); logThreat("✅ New wallet created & encrypted"); update();
-}
-function copyAddr(){ navigator.clipboard.writeText(wallet); alert("Na-copy na!"); }
-function sendZero(){
-  if(!aiCheck('send')) return;
-  var to=document.getElementById('toAddr').value; var amt=parseFloat(document.getElementById('amount').value);
-  if(!to||!amt){ alert("Lagyan mo address at amount!"); return; }
-  if(!to.startsWith('ZERO')){ alert("🛡️ AI FIREWALL: Invalid wallet! Dapat nagsisimula sa ZERO! Blocked!"); logThreat("🚫 Fake wallet blocked: " + to.substring(0,10)); blockedCount++; localStorage.setItem('zero_blocked', blockedCount); update(); return; }
-  if(amt>balance){ alert("Kulang balance! Magmina ka muna!"); return; }
-  balance=balance-amt; localStorage.setItem('zero_bal',balance);
-  var val = (amt*getPrice()).toFixed(2);
-  hist.push("✅ Nag-send ka ng "+amt+" ZERO (₱"+val+") kay "+to.substring(0,10)+"...");
-  localStorage.setItem('zero_hist',JSON.stringify(hist));
-  alert("SUCCESS! Na-send mo "+amt+" ZERO (≈ ₱"+val+")! AI Verified!"); logThreat("✅ Transfer verified: "+amt+" ZERO sent"); update();
-}
-function toggleLock(){
-  walletLocked = !walletLocked;
-  document.getElementById('lockInfo').innerText = walletLocked ? "Wallet is LOCKED 🔒 - No transfers allowed" : "Wallet is UNLOCKED - Normal Mode";
-  logThreat(walletLocked ? "🔒 Wallet locked by user" : "🔓 Wallet unlocked by user");
-  alert(walletLocked ? "🔒 WALLET LOCKED! Safe na!" : "🔓 WALLET UNLOCKED!");
-}
-function runScan(){
-  document.getElementById('lastScan').innerText = "Scanning...";
-  logThreat("🔍 AI Deep Scan started...");
-  setTimeout(function(){
-    document.getElementById('lastScan').innerText = new Date().toLocaleTimeString();
-    logThreat("✅ Deep Scan Complete: 0 threats, 0 malware, 100% Secure");
-    alert("✅ AI SCAN COMPLETE! 100% SECURE! Walang virus, walang hacker!");
-  }, 1500);
-}
-setInterval(function(){
-  var attacks = ["DDoS attack blocked", "Bot double-claim blocked", "Fake wallet injection blocked", "SQL injection blocked", "Brute force login blocked", "Suspicious IP banned"];
-  var a = attacks[Math.floor(Math.random()*attacks.length)];
-  if(Math.random() > 0.5){ blockedCount++; localStorage.setItem('zero_blocked', blockedCount); document.getElementById('blocked').innerText = blockedCount; logThreat("🚫 " + a); }
-}, 15000);
-setInterval(function(){ clickCount = 0; }, 5000);
-update();
-setTimeout(function(){ logThreat("✅ AI Firewall: All systems operational"); }, 1000);
-</script>
-</body>
-</html>
+var LANG = {
+tl:{motto:"ZERO HACK • ZERO NAKAW • ZERO DAYA",choose:"PILIIN ANG WIKA / CHOOSE LANGUAGE",active:"ACTIVE",fw:"Firewall:",ai:"AI Detection:",blocked:"Blocked:",device:"Device:",enc:"Encryption:",priceTitle:"💰 LIVE PRICE • SCARCITY MODEL",yourZero:"Yung ZERO mo:",mcap:"Market Cap:",scarcity:"📈 Kunti pa nagmimina = MURA PA • Paubos na = MAHAL NA!",tabMine:"⛏️ MINING",tabWallet:"💰 WALLET",tabTrans:"📤 TRANSFER",tabSec:"🛡️ SECURITY",epoch:"EPOCH 1",sec:"SEC",start:"START MINING",claim:"CLAIM ZERO",total:"TOTAL MINED",halving:"HALVING IN",hash:"HASH POWER",next:"NEXT HALVING",epoch2:"EPOCH 2",walletTitle:"FUTURE WALLET",create:"CREATE MY WALLET",copy:"COPY ADDRESS",transTitle:"TRANSFER ZERO",price2:"Price:",send:"SEND ZERO",secTitle:"AI SECURITY CENTER",secDesc:"Your wallet is protected by ZERO AI FIREWALL",lockTitle:"Wallet Lock",lockBtn:"LOCK / UNLOCK WALLET",scanTitle:"AI SCAN RESULT",lastScan:"Last Scan:",threats:"Threats:",scanBtn:"RUN AI DEEP SCAN",logTitle:"SECURITY LOG",footer:"For educational purposes. Mining is FREE. No investment."},
+en:{motto:"ZERO HACK • ZERO THEFT • ZERO CHEAT",choose:"CHOOSE LANGUAGE",active:"ACTIVE",fw:"Firewall:",ai:"AI Detection:",blocked:"Blocked:",device:"Device:",enc:"Encryption:",priceTitle:"💰 LIVE PRICE • SCARCITY MODEL",yourZero:"Your ZERO:",mcap:"Market Cap:",scarcity:"📈 Few miners = CHEAP • Almost gone = EXPENSIVE!",tabMine:"⛏️ MINING",tabWallet:"💰 WALLET",tabTrans:"📤 TRANSFER",tabSec:"🛡️ SECURITY",epoch:"EPOCH 1",sec:"SEC",start:"START MINING",claim:"CLAIM ZERO",total:"TOTAL MINED",halving:"HALVING IN",hash:"HASH POWER",next:"NEXT HALVING",epoch2:"EPOCH 2",walletTitle:"FUTURE WALLET",create:"CREATE MY WALLET",copy:"COPY ADDRESS",transTitle:"TRANSFER ZERO",price2:"Price:",send:"SEND ZERO",secTitle:"AI SECURITY CENTER",secDesc:"Your wallet is protected by ZERO AI FIREWALL",lockTitle:"Wallet Lock",lockBtn:"LOCK / UNLOCK WALLET",scanTitle:"AI SCAN RESULT",lastScan:"Last Scan:",threats:"Threats:",scanBtn:"RUN AI DEEP SCAN",logTitle:"SECURITY LOG",footer:"For educational purposes. Mining is FREE. No investment."},
+ceb:{motto:"ZERO HACK • ZERO KAWAT • ZERO LIMBONG",choose:"PILI-A ANG PINULUNGAN",active:"ACTIVE",fw:"Firewall:",ai:"AI Detection:",blocked:"Gibabagan:",device:"Device:",enc:"Encryption:",priceTitle:"💰 LIVE PRICE • SCARCITY MODEL",yourZero:"Imong ZERO:",mcap:"Market Cap:",scarcity:"📈 Gamay pa miner = BARATO • Hapit na mahurot = MAHAL!",tabMine:"⛏️ MINING",tabWallet:"💰 WALLET",tabTrans:"📤 TRANSFER",tabSec:"🛡️ SECURITY",epoch:"EPOCH 1",sec:"SEC",start:"START MINING",claim:"CLAIM ZERO",total:"TOTAL MINED",halving:"HALVING IN",hash:"HASH POWER",next:"NEXT HALVING",epoch2:"EPOCH 2",walletTitle:"FUTURE WALLET",create:"HIMO A AKONG WALLET",copy:"COPY ADDRESS",transTitle:"TRANSFER ZERO",price2:"Presyo:",send:"SEND ZERO",secTitle:"AI SECURITY CENTER",secDesc:"Giprotektahan ka sa ZERO AI FIREWALL",lockTitle:"Wallet Lock",lockBtn:"LOCK / UNLOCK WALLET",scanTitle:"AI SCAN RESULT",lastScan:"Last Scan:",threats:"Threats:",scanBtn:"RUN AI DEEP SCAN",logTitle:"SECURITY LOG",footer:"For educational purposes. Mining is FREE. No investment."},
+es:{motto:"ZERO HACK • ZERO ROBO • ZERO TRAMPA",choose:"ELIGE IDIOMA",active:"ACTIVO",fw:"Firewall:",ai:"Detección IA:",blocked:"Bloqueados:",device:"Dispositivo:",enc:"Cifrado:",priceTitle:"💰 PRECIO EN VIVO • ESCASEZ",yourZero:"Tu ZERO:",mcap:"Capitalización:",scarcity:"📈 Pocos mineros = BARATO • Casi agotado = CARO!",tabMine:"⛏️ MINERÍA",tabWallet:"💰 CARTERA",tabTrans:"📤 TRANSFERIR",tabSec:"🛡️ SEGURIDAD",epoch:"ÉPOCA 1",sec:"SEG",start:"EMPEZAR MINERÍA",claim:"RECLAMAR ZERO",total:"TOTAL MINADO",halving:"HALVING EN",hash:"POTENCIA",next:"PRÓXIMO HALVING",epoch2:"ÉPOCA 2",walletTitle:"CARTERA FUTURA",create:"CREAR MI CARTERA",copy:"COPIAR DIRECCIÓN",transTitle:"TRANSFERIR ZERO",price2:"Precio:",send:"ENVIAR ZERO",secTitle:"CENTRO DE SEGURIDAD IA",secDesc:"Tu cartera está protegida por ZERO AI FIREWALL",lockTitle:"Bloqueo de Cartera",lockBtn:"BLOQUEAR / DESBLOQUEAR",scanTitle:"RESULTADO DE ESCANEO",lastScan:"Último escaneo:",threats:"Amen
