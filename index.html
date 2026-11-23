@@ -3,98 +3,70 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<title>ZERO</title>
+<title>ZERO - FUTURES AI</title>
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
-body{background:#0a0a0f;color:#fff;font-family:Arial,sans-serif;padding:0}
+body{background:#0a0a0f;color:#fff;font-family:Arial,sans-serif}
 .phone{max-width:430px;margin:auto;background:#000;min-height:100vh;padding:22px 18px 30px}
-/* ZERO LOGO - TULAD SA PICTURE */
 .logo{text-align:center;font-size:72px;font-weight:900;color:#3dff6e;letter-spacing:2px;text-shadow:0 0 20px rgba(61,255,110,.6);line-height:1;margin:22px 0 20px}
-/* LIVE PRICE - GOLD BOX TULAD SA PICTURE */
 .price-box{background:#FFD700;border-radius:18px;padding:20px 18px;display:flex;align-items:center;gap:14px;margin-bottom:14px}
 .price-dot{width:16px;height:16px;background:#2ecc71;border-radius:50%;flex-shrink:0;box-shadow:0 0 10px #2ecc71}
-.price-text{color:#111;text-align:left}
-.price-text .label{font-size:19px;font-weight:900;letter-spacing:.3px}
-.price-text .val{font-size:32px;font-weight:900;line-height:1.1}
-.price-text .usd{font-size:12px;font-weight:700;color:#333;margin-top:3px}
-/* BALANCE - DARK GREEN BOX */
+.price-text{color:#111;text-align:left}.price-text .label{font-size:19px;font-weight:900}.price-text .val{font-size:32px;font-weight:900;line-height:1.1}.price-text .usd{font-size:12px;font-weight:700;color:#333;margin-top:3px}
 .bal-box{background:#0a2e16;border-radius:18px;padding:22px 16px;text-align:center;margin-bottom:18px}
-.bal-box .label{color:#3dff6e;font-size:15px;letter-spacing:.5px;font-weight:700}
-.bal-box .val{font-size:62px;font-weight:900;line-height:1.1;margin-top:4px}
-.bal-box .val span{font-size:62px}
-.bal-box .myval{color:#FFD700;font-size:13px;font-weight:700;margin-top:6px}
-.bal-box .incoming{color:#FFD700;font-size:12px;margin-top:4px}
-/* GRID BUTTONS - TULAD SA PICTURE */
+.bal-box .label{color:#3dff6e;font-size:15px;font-weight:700}.bal-box .val{font-size:62px;font-weight:900;line-height:1.1;margin-top:4px}.bal-box .myval{color:#FFD700;font-size:13px;font-weight:700;margin-top:6px}.bal-box .incoming{color:#FFD700;font-size:12px;margin-top:4px}
 .grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
-.gbtn{background:#23262e;border:none;border-radius:20px;padding:28px 10px 22px;color:#fff;cursor:pointer;text-align:center;transition:.15s}
-.gbtn:active{transform:scale(.97);background:#2e323d}
-.gbtn.active{background:#2e323d;border:2px solid #3dff6e}
-.gbtn .icon{font-size:52px;line-height:1;display:block;margin-bottom:14px}
-.gbtn .txt{font-size:17px;font-weight:900;letter-spacing:.5px}
-/* SHARE LINK - PURPLE GRADIENT */
+.gbtn{background:#23262e;border:none;border-radius:20px;padding:28px 10px 22px;color:#fff;cursor:pointer;text-align:center}.gbtn:active{transform:scale(.97)}.gbtn.active{background:#2e323d;border:2px solid #3dff6e}.gbtn .icon{font-size:52px;line-height:1;display:block;margin-bottom:14px}.gbtn .txt{font-size:17px;font-weight:900;letter-spacing:.5px}
+.gbtn.ai{background:linear-gradient(135deg,#1a0a2e,#3b0764);border:2px solid #a855f7}
 .share-btn{grid-column:span 2;background:linear-gradient(90deg,#7c3aed,#c084fc);border:none;border-radius:18px;padding:22px;color:#fff;font-size:21px;font-weight:900;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:10px;margin-top:14px}
-.share-btn:active{transform:scale(.98)}
-/* CONTENT BOXES */
-.box{background:#111;border:2px solid #3dff6e;border-radius:20px;padding:18px;margin-top:16px}
-.box.share{border-color:#a855f7}
-.hidden{display:none}
-h3{font-size:18px;margin-bottom:6px}
-p.small{font-size:13px;color:#aaa;line-height:1.5}
+.box{background:#111;border:2px solid #3dff6e;border-radius:20px;padding:18px;margin-top:16px}.box.share{border-color:#a855f7}.box.futures{border-color:#a855f7;background:linear-gradient(180deg,#1a0a2e,#111)}
+.hidden{display:none}h3{font-size:18px;margin-bottom:6px}p.small{font-size:13px;color:#aaa;line-height:1.5}
 .btn{background:linear-gradient(90deg,#00ff88,#00ccff);color:#000;border:none;padding:17px;font-size:17px;font-weight:900;border-radius:50px;width:100%;cursor:pointer;margin-top:12px}
 .btn-gold{background:linear-gradient(90deg,#FFD700,#FFA500);color:#000;border:none;padding:16px;font-size:16px;font-weight:900;border-radius:50px;width:100%;cursor:pointer;margin-top:12px}
 .btn2{background:transparent;color:#00ff88;border:2px solid #00ff88;padding:14px;font-size:14px;font-weight:bold;border-radius:50px;width:100%;cursor:pointer;margin-top:10px}
 .btn-purple{background:linear-gradient(90deg,#a855f7,#c084fc);color:#fff;border:none;padding:16px;font-size:16px;font-weight:900;border-radius:50px;width:100%;cursor:pointer;margin-top:12px}
+.btn-long{background:linear-gradient(90deg,#00ff88,#00cc66);color:#000;border:none;padding:17px;font-size:17px;font-weight:900;border-radius:50px;width:48%;cursor:pointer}
+.btn-short{background:linear-gradient(90deg,#ff0055,#ff3366);color:#fff;border:none;padding:17px;font-size:17px;font-weight:900;border-radius:50px;width:48%;cursor:pointer}
+.btn-close{background:#ff0055;color:#fff;border:none;padding:15px;font-size:15px;font-weight:900;border-radius:50px;width:100%;cursor:pointer;margin-top:10px}
 input{width:100%;padding:15px;border-radius:12px;border:none;margin-top:10px;font-size:15px;color:#000;text-align:center}
 .addr{font-size:12px;word-break:break-all;color:#00ccff;background:#000;padding:12px;border-radius:10px;border:1px dashed #00ccff;margin-top:10px}
 .share-input{width:100%;background:#000;color:#fff;border:1px solid #a855f7;padding:13px;font-size:11px;border-radius:12px;margin-top:10px}
 .hist{text-align:left;font-size:13px;background:#000;padding:12px;border-radius:12px;margin-top:12px;line-height:1.7}
-.bar-bg{background:#222;height:18px;border-radius:20px;overflow:hidden;margin:14px 0}
-.bar{background:linear-gradient(90deg,#00ff88,#00ccff);height:100%;width:0%}
+.bar-bg{background:#222;height:18px;border-radius:20px;overflow:hidden;margin:14px 0}.bar{background:linear-gradient(90deg,#00ff88,#00ccff);height:100%;width:0%}
 .notif{position:fixed;top:10px;left:50%;transform:translateX(-50%);background:#00ff88;color:#000;padding:12px 18px;border-radius:20px;font-weight:900;font-size:14px;z-index:999;display:none;max-width:90%;text-align:center}
 .toast{position:fixed;bottom:15px;left:50%;transform:translateX(-50%);background:#111;border:2px solid #00ff88;color:#fff;padding:12px;border-radius:14px;font-size:13px;z-index:999;display:none;max-width:92%}
+.ai-box{background:#000;border:2px solid #a855f7;border-radius:16px;padding:14px;margin-top:12px;text-align:center}
+.ai-signal{font-size:28px;font-weight:900;margin:6px 0}
+.ai-long{color:#00ff88}.ai-short{color:#ff0055}
+.lev-row{display:flex;gap:8px;margin-top:10px}.lev-btn{flex:1;padding:12px;background:#222;border:1px solid #444;color:#fff;border-radius:12px;font-weight:900;cursor:pointer}.lev-btn.active{background:#a855f7;color:#fff;border-color:#a855f7}
+.pos-box{background:#000;border:2px solid #FFD700;border-radius:16px;padding:14px;margin-top:12px;text-align:left}
+.chart{height:70px;background:#000;border-radius:12px;position:relative;overflow:hidden;margin-top:10px;border:1px solid #333;display:flex;align-items:flex-end;gap:2px;padding:6px}
+.chart-bar{flex:1;background:#00ff88;border-radius:3px 3px 0 0;min-height:8px}
 </style>
 </head>
 <body>
 <div class="notif" id="notif"></div><div class="toast" id="toast"></div>
 <div class="phone">
 <div class="logo">ZERO</div>
+<div class="price-box"><div class="price-dot"></div><div class="price-text"><div class="label">LIVE PRICE NI ZERO</div><div class="val">₱<span id="livePrice">0.10</span> per 1 ZERO</div><div class="usd">≈ $<span id="livePriceUSD">0.0017</span> USD • <span id="priceChange">🟢 LIVE</span> • Market Cap: ₱<span id="mcap">0.00</span></div></div></div>
+<div class="bal-box"><div class="label">YOUR ZERO BALANCE</div><div class="val"><span id="balTop">0.00</span> ZERO</div><div class="myval">Yung ZERO mo: ₱<span id="myValue">0.00</span> • Futures PNL: <span id="totalFutPNL" style="color:#00ff88">+0.00</span></div><div class="incoming" id="incomingStatus">Checking incoming...</div></div>
 
-<!-- LIVE PRICE - GOLD BOX -->
-<div class="price-box">
-<div class="price-dot"></div>
-<div class="price-text">
-<div class="label">LIVE PRICE NI ZERO</div>
-<div class="val">₱<span id="livePrice">0.10</span> per 1 ZERO</div>
-<div class="usd">≈ $<span id="livePriceUSD">0.0017</span> USD • <span id="priceChange">🟢 LIVE</span> • Market Cap: ₱<span id="mcap">0.00</span></div>
-</div>
-</div>
-
-<!-- BALANCE - DARK GREEN -->
-<div class="bal-box">
-<div class="label">YOUR ZERO BALANCE</div>
-<div class="val"><span id="balTop">0.00</span> ZERO</div>
-<div class="myval">Yung ZERO mo: ₱<span id="myValue">0.00</span></div>
-<div class="incoming" id="incomingStatus">Checking incoming...</div>
-</div>
-
-<!-- 4 BUTTONS + SHARE LINK - TULAD SA PICTURE -->
+<!-- 6 BUTTONS NA - MAY FUTURES AI NA! -->
 <div class="grid">
 <button class="gbtn active" id="btn-mining" onclick="showTab('mining')"><span class="icon">⛏️</span><span class="txt">MINING</span></button>
 <button class="gbtn" id="btn-wallet" onclick="showTab('wallet')"><span class="icon">💼</span><span class="txt">WALLET</span></button>
 <button class="gbtn" id="btn-transfer" onclick="showTab('transfer')"><span class="icon">📤</span><span class="txt">SEND</span></button>
 <button class="gbtn" id="btn-receive" onclick="showTab('receive')"><span class="icon">📥</span><span class="txt">RECEIVED</span></button>
+<button class="gbtn ai" id="btn-futures" onclick="showTab('futures')" style="grid-column:span 2"><span class="icon">🤖</span><span class="txt">FUTURES AI • LONG / SHORT</span><div style="font-size:11px;color:#c084fc;margin-top:4px" id="aiMiniSignal">AI: ANALYZING...</div></button>
 </div>
 <button class="share-btn" onclick="showTab('share')">↗ SHARE LINK</button>
 
 <!-- MINING -->
 <div class="box" id="tab-mining">
-<h3>⛏️ MINING</h3>
-<p class="small">10 ZERO / 60 SEC • LIBRE LANG!<br>LIVE PRICE: ₱<span class="livePriceMini">0.10</span> / ZERO</p>
+<h3>⛏️ MINING</h3><p class="small">10 ZERO / 60 SEC • LIBRE LANG!<br>LIVE PRICE: ₱<span class="livePriceMini">0.10</span> / ZERO</p>
 <div style="font-size:40px;font-weight:900;margin-top:10px"><span id="bal1">0.00</span> <span style="font-size:18px;color:#00ff88">ZERO</span></div>
-<div class="bar-bg"><div class="bar" id="bar"></div></div>
-<div id="status" style="font-size:13px">>> READY. PRESS START <<</div>
+<div class="bar-bg"><div class="bar" id="bar"></div></div><div id="status" style="font-size:13px">>> READY. PRESS START <<</div>
 <div style="margin-top:8px">⏰ <b id="timer" style="color:#00ff88;font-size:20px">60</b> SEC • Session: <span id="mineSession">0</span></div>
 <button class="btn" id="mineBtn" onclick="startMining()">▶ START MINING</button>
 <button class="btn-gold" onclick="claim()">💰 CLAIM ZERO!</button>
@@ -103,10 +75,8 @@ input{width:100%;padding:15px;border-radius:12px;border:none;margin-top:10px;fon
 
 <!-- WALLET -->
 <div class="box hidden" id="tab-wallet">
-<h3>💰 WALLET</h3>
-<p class="small">YOUR ADDRESS - TAP PARA MA-COPY 👇</p>
-<div class="addr" id="myAddr" onclick="copyAddr()"></div>
-<input id="addrInput" readonly onclick="this.select();copyAddr()" value="">
+<h3>💰 WALLET</h3><p class="small">YOUR ADDRESS - TAP PARA MA-COPY 👇</p>
+<div class="addr" id="myAddr" onclick="copyAddr()"></div><input id="addrInput" readonly onclick="this.select();copyAddr()" value="">
 <div style="font-size:36px;font-weight:900;margin-top:10px"><span id="bal2">0.00</span> ZERO</div>
 <div style="font-size:13px;color:#FFD700;font-weight:bold">≈ ₱<span id="balValue2">0.00</span> • LIVE PRICE: ₱<span class="livePriceMini">0.10</span></div>
 <div style="font-size:13px;margin-top:6px">📥 Received: <b style="color:#00ff88" id="recv2">0</b> • 📤 Sent: <b style="color:#ff5555" id="sent2">0</b></div>
@@ -118,75 +88,223 @@ input{width:100%;padding:15px;border-radius:12px;border:none;margin-top:10px;fon
 
 <!-- SEND -->
 <div class="box hidden" id="tab-transfer">
-<h3>📤 SEND ZERO</h3>
-<div id="refInfo" style="display:none;background:#FFD700;color:#000;padding:10px;border-radius:12px;font-size:13px;font-weight:900;margin-top:10px">🎁 Galing ka sa invite! Papadalhan mo si: <span id="refInfoAddr"></span></div>
+<h3>📤 SEND ZERO</h3><div id="refInfo" style="display:none;background:#FFD700;color:#000;padding:10px;border-radius:12px;font-size:13px;font-weight:900;margin-top:10px">🎁 Galing ka sa invite! Papadalhan mo si: <span id="refInfoAddr"></span></div>
 <div style="font-size:36px;font-weight:900;margin-top:10px"><span id="bal3">0.00</span> ZERO</div>
 <div style="font-size:13px;color:#FFD700;font-weight:bold">≈ ₱<span id="balValue3">0.00</span> • LIVE PRICE: ₱<span class="livePriceMini">0.10</span></div>
-<input id="toAddr" placeholder="Paste ZERO address ng papadalhan">
-<input id="amount" type="number" placeholder="Ilan ZERO? Ex: 5">
-<button class="btn" onclick="sendZero()">🚀 SEND ZERO!</button>
-<button class="btn2" onclick="pasteAddr()">📋 PASTE ADDRESS</button>
+<input id="toAddr" placeholder="Paste ZERO address ng papadalhan"><input id="amount" type="number" placeholder="Ilan ZERO? Ex: 5">
+<button class="btn" onclick="sendZero()">🚀 SEND ZERO!</button><button class="btn2" onclick="pasteAddr()">📋 PASTE ADDRESS</button>
 <div class="hist" id="hist"><b>📜 Send History:</b><br>Wala pa!</div>
 </div>
 
 <!-- RECEIVED -->
 <div class="box hidden" id="tab-receive">
-<h3>📥 RECEIVED</h3>
-<p class="small">YOUR ADDRESS - TAP PARA MA-COPY 👇</p>
-<div class="addr" id="myAddrRecv" onclick="copyAddr()"></div>
-<input id="addrInput2" readonly onclick="this.select();copyAddr()" value="">
+<h3>📥 RECEIVED</h3><p class="small">YOUR ADDRESS - TAP PARA MA-COPY 👇</p>
+<div class="addr" id="myAddrRecv" onclick="copyAddr()"></div><input id="addrInput2" readonly onclick="this.select();copyAddr()" value="">
 <div style="font-size:36px;font-weight:900;margin-top:10px"><span id="balRecv">0.00</span> ZERO</div>
 <div style="font-size:13px;color:#FFD700;font-weight:bold">≈ ₱<span id="balValueRecv">0.00</span> • LIVE PRICE: ₱<span class="livePriceMini">0.10</span></div>
-<button class="btn-gold" onclick="copyAddr()">📋 COPY MY ADDRESS</button>
-<button class="btn-purple" onclick="showTab('share')">🔗 SHARE MY LINK</button>
-<button class="btn2" onclick="checkIncoming()">📥 CHECK KUNG MAY NAG-SEND NA!</button>
-<button class="btn" onclick="testReceive()">🎁 MAGPA-SEND NG 5 ZERO SAKIN!</button>
+<button class="btn-gold" onclick="copyAddr()">📋 COPY MY ADDRESS</button><button class="btn-purple" onclick="showTab('share')">🔗 SHARE MY LINK</button>
+<button class="btn2" onclick="checkIncoming()">📥 CHECK KUNG MAY NAG-SEND NA!</button><button class="btn" onclick="testReceive()">🎁 MAGPA-SEND NG 5 ZERO SAKIN!</button>
 <div class="hist" id="histRecv"><b>📥 Received History:</b><br>Wala pa.</div>
+</div>
+
+<!-- FUTURES AI - BAGO! -->
+<div class="box hidden futures" id="tab-futures">
+<h3>🤖 FUTURES AI • ZERO</h3>
+<p class="small">AI magsasabi kung LONG o SHORT! Leverage hanggang 50x!<br>⚠️ Demo lang! Walang totoong pera!</p>
+<div class="chart" id="futChart"></div>
+<div style="font-size:12px;color:#aaa;margin-top:4px">📈 LIVE CHART - ZERO PRICE • <span id="chartTrend" style="color:#00ff88">UPTREND</span></div>
+
+<div class="ai-box">
+<div style="font-size:12px;letter-spacing:1px;color:#c084fc;font-weight:900">🤖 AI PREDICTION • LIVE</div>
+<div class="ai-signal" id="aiSignal">ANALYZING...</div>
+<div style="font-size:13px" id="aiReason">AI nag-aanalyze ng chart...</div>
+<div style="font-size:12px;margin-top:6px">Confidence: <b id="aiConf" style="color:#FFD700">--%</b> • Win Rate: <b style="color:#00ff88">78.5%</b> • Next Signal in: <b id="aiCountdown">10</b>s</div>
+<button class="btn2" onclick="refreshAI()" style="border-color:#a855f7;color:#c084fc">🔄 REFRESH AI SIGNAL</button>
+</div>
+
+<div style="margin-top:14px;font-weight:900;font-size:14px">⚡ LEVERAGE MO:</div>
+<div class="lev-row">
+<button class="lev-btn" onclick="setLev(5,this)">5x</button>
+<button class="lev-btn active" onclick="setLev(10,this)">10x</button>
+<button class="lev-btn" onclick="setLev(20,this)">20x</button>
+<button class="lev-btn" onclick="setLev(50,this)">50x</button>
+</div>
+<div style="font-size:12px;color:#aaa;margin-top:6px">Leverage: <b id="levShow" style="color:#fff">10x</b> • Margin mo: <b id="marginShow">10 ZERO</b> • Position Size: <b id="sizeShow" style="color:#FFD700">100 ZERO</b></div>
+
+<div style="font-weight:900;font-size:14px;margin-top:12px">💰 ILAN ZERO ITATAYA MO?</div>
+<input id="futAmount" type="number" value="10" placeholder="Ilan ZERO? Ex: 10" oninput="updateFutCalc()">
+<div style="font-size:12px;color:#aaa;margin-top:4px">Balance mo: <b style="color:#fff" id="futBal">0 ZERO</b> • Entry Price: ₱<span id="entryPreview">0.10</span></div>
+
+<div id="noPos">
+<div style="display:flex;gap:10px;margin-top:12px">
+<button class="btn-long" onclick="openFut('LONG')">🟢 LONG<br><span style="font-size:11px">TATAAS!</span></button>
+<button class="btn-short" onclick="openFut('SHORT')">🔴 SHORT<br><span style="font-size:11px">BABABA!</span></button>
+</div>
+<div style="font-size:11px;color:#aaa;margin-top:8px">Tip: Sundin mo yung AI! Pag LONG sinabi, pindutin mo LONG!</div>
+</div>
+
+<div id="hasPos" class="hidden">
+<div class="pos-box">
+<div style="display:flex;justify-content:space-between"><b id="posSide" style="font-size:16px">LONG 10x</b><span id="posStatus" style="color:#00ff88;font-weight:900">● LIVE</span></div>
+<div style="font-size:13px;margin-top:8px">Entry: ₱<span id="posEntry">0.00</span> • Now: ₱<span id="posNow">0.00</span> • Margin: <span id="posMargin">0</span> ZERO</div>
+<div style="font-size:28px;font-weight:900;margin-top:6px" id="posPNL">+0.00 ZERO</div>
+<div style="font-size:12px" id="posPNLPercent">+0.00% • ROE: +0.00%</div>
+<div style="font-size:12px;margin-top:4px">Liq. Price: ₱<span id="posLiq">0.00</span> • <span id="posWarn" style="color:#FFD700">Safe pa!</span></div>
+<button class="btn-close" onclick="closeFut()">❌ CLOSE POSITION • TAKE PROFIT / CUT LOSS</button>
+<button class="btn2" onclick="closeFut()">💰 CLOSE NA!</button>
+</div>
+</div>
+
+<div class="hist" id="histFut"><b>🤖 Futures History:</b><br>Wala pa! Mag LONG / SHORT ka na!</div>
+<div style="font-size:11px;color:#888;margin-top:10px;text-align:center">⚠️ FUTURES AY RISKY! Demo lang to. Huwag mag-all in boss! Sundin mo AI, pero manage mo risk!</div>
 </div>
 
 <!-- SHARE LINK -->
 <div class="box hidden share" id="tab-share">
-<h3>🔗 SHARE LINK</h3>
-<p class="small">Isend mo to sa tropa! Pag pinindot nila, ikaw agad papadalhan nila!</p>
-<div style="font-size:12px;color:#aaa;margin-top:10px">WALLET MO:</div>
-<div class="addr" id="shareWalletShow"></div>
-<div style="font-size:12px;color:#aaa;margin-top:10px">SHARE LINK MO:</div>
-<input class="share-input" id="shareLinkInput" readonly onclick="this.select();copyShareLink()" value="">
-<button class="btn-gold" onclick="copyShareLink()">📋 COPY SHARE LINK</button>
-<button class="btn-purple" onclick="shareLink()">📤 SHARE SA MESSENGER / FB / TIKTOK</button>
-<button class="btn2" onclick="copyAddr()">📋 COPY ADDRESS LANG</button>
+<h3>🔗 SHARE LINK</h3><p class="small">Isend mo to sa tropa! Pag pinindot nila, ikaw agad papadalhan nila!</p>
+<div style="font-size:12px;color:#aaa;margin-top:10px">WALLET MO:</div><div class="addr" id="shareWalletShow"></div>
+<div style="font-size:12px;color:#aaa;margin-top:10px">SHARE LINK MO:</div><input class="share-input" id="shareLinkInput" readonly onclick="this.select();copyShareLink()" value="">
+<button class="btn-gold" onclick="copyShareLink()">📋 COPY SHARE LINK</button><button class="btn-purple" onclick="shareLink()">📤 SHARE SA MESSENGER / FB / TIKTOK</button><button class="btn2" onclick="copyAddr()">📋 COPY ADDRESS LANG</button>
 </div>
-
-<p style="font-size:11px;color:#888;margin-top:14px;text-align:center">ZERO BLOCKCHAIN • LIVE PRICE • FIREBASE LIVE<br>Educational demo. Mining is FREE.</p>
+<p style="font-size:11px;color:#888;margin-top:14px;text-align:center">ZERO BLOCKCHAIN • FUTURES AI • LIVE PRICE • FIREBASE LIVE<br>Educational demo. Mining is FREE.</p>
 </div>
 <script>
 const firebaseConfig={apiKey:"AIzaSyD55Q2Ozl80GAigcavjt4fV87jMylJqgAk",authDomain:"zero-blockchain.firebaseapp.com",projectId:"zero-blockchain",storageBucket:"zero-blockchain.firebasestorage.app",messagingSenderId:"196490717248",appId:"1:196490717248:web:2b0ce95efe8413f6a617a5",measurementId:"G-VXLQFBRDNX"};
 var db=null;try{firebase.initializeApp(firebaseConfig);db=firebase.firestore();}catch(e){}
 function getShareLink(){return "https://ricafortalbert92-bot.github.io/zero-blockchain/?ref="+wallet;}
-function getShareText(){return "Mine ka ng FREE ZERO!\n\nSendan mo ko ng ZERO dito:\n"+getShareLink()+"\n\nAddress ko: "+wallet+"\n\nLIBRE lang magmina! Click mo na link ko!";}
+function getShareText(){return "Mine ka ng FREE ZERO!\n\nSendan mo ko ng ZERO dito:\n"+getShareLink()+"\n\nAddress ko: "+wallet;}
 function copyShareLink(){if(!wallet)return;var link=getShareLink();if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(link).then(function(){showNotif("NA-COPY NA YUNG SHARE LINK!");alert("NA-COPY NA!\n\n"+link);}).catch(function(){fallbackShare(link);});}else{fallbackShare(link);}}
 function fallbackShare(link){var ta=document.createElement('textarea');ta.value=link;ta.style.position='fixed';ta.style.opacity='0';document.body.appendChild(ta);ta.select();try{document.execCommand('copy');showNotif("NA-COPY NA!");alert("NA-COPY NA!\n\n"+link);}catch(e){alert("Long press mo yung link, tapos Copy!\n\n"+link);}document.body.removeChild(ta);}
 function shareLink(){if(!wallet)return;if(navigator.share){navigator.share({title:"Mine FREE ZERO!",text:getShareText(),url:getShareLink()}).catch(function(){copyShareLink();});}else{copyShareLink();}}
-function pushToFirebase(type,amt,blockNum,txHash){if(!db)return;db.collection("blocks").add({block:blockNum,type:type,amount:amt,name:myName,wallet:wallet,tx:txHash,timeStr:new Date().toLocaleTimeString(),created:firebase.firestore.FieldValue.serverTimestamp()}).catch(function(e){});db.collection("live_feed").add({name:myName,amount:amt,type:type,block:blockNum,tx:txHash,timeStr:new Date().toLocaleTimeString(),created:firebase.firestore.FieldValue.serverTimestamp()}).catch(function(e){});}
+function pushToFirebase(type,amt,blockNum,txHash){if(!db)return;db.collection("blocks").add({block:blockNum,type:type,amount:amt,name:myName,wallet:wallet,tx:txHash,timeStr:new Date().toLocaleTimeString(),created:firebase.firestore.FieldValue.serverTimestamp()}).catch(function(e){});}
 function listenFirebase(){if(!db)return;db.collection("blocks").orderBy("created","desc").limit(20).onSnapshot(function(snap){var last=0;snap.forEach(function(doc){var b=doc.data();if(b.block>last)last=b.block;});if(last>0)blockHeight=last;});listenIncoming();}
 var claimedIds={};try{claimedIds=JSON.parse(localStorage.getItem('zero_claimed')||'{}');}catch(e){claimedIds={};}
 function listenIncoming(){if(!db||!wallet)return;document.getElementById('incomingStatus').innerText="Listening... "+wallet.slice(0,12)+"...";db.collection("transfers").where("to","==",wallet).orderBy("created","desc").limit(20).onSnapshot(function(snap){snap.forEach(function(doc){var d=doc.data();if(claimedIds[doc.id])return;claimedIds[doc.id]=true;try{localStorage.setItem('zero_claimed',JSON.stringify(claimedIds));}catch(e){}var amt=parseFloat(d.amount||0);balance+=amt;totalReceived+=amt;recvHist+="📥 +"+amt+" ZERO - GALING KAY "+(d.fromName||"Tropa")+"<br>";histText+="📥 RECEIVED +"+amt+" ZERO from "+(d.fromName||"Tropa")+"<br>";saveAll();update();showNotif("MAY NAG-SEND SAYO! +"+amt+" ZERO!");showToast('📥 <b>MAY NAG-SEND SAYO!</b><br><b style="color:#FFD700">+'+amt+' ZERO</b> from '+(d.fromName||"Tropa"));document.getElementById('incomingStatus').innerText="MAY PUMASOK! +"+amt+" ZERO";});});}
 function checkIncoming(){if(!wallet)return;listenIncoming();showNotif("Chine-check ko...");setTimeout(function(){alert("CHECK DONE!\nBalance mo: "+balance.toFixed(2)+" ZERO");},1200);}
 var deviceId="";try{deviceId=localStorage.getItem('zero_device_id');}catch(e){}if(!deviceId){deviceId="DEV-"+Math.random().toString(36).substring(2,8).toUpperCase()+"-"+Date.now().toString().slice(-6);try{localStorage.setItem('zero_device_id',deviceId);}catch(e){}}
-var balance=0,totalMined=0,wallet="",walletDevice="",histText="",recvHist="",totalReceived=0,totalSent=0,mining=false,secLeft=60,pending=0,myTimer=null,sessionCount=0,miningStartTime=0,blockHeight=0,myName="USER",refFrom="";
+var balance=0,totalMined=0,wallet="",walletDevice="",histText="",recvHist="",totalReceived=0,totalSent=0,mining=false,secLeft=60,pending=0,myTimer=null,sessionCount=0,miningStartTime=0,blockHeight=0,myName="USER",refFrom="",futHist="",futTotalPNL=0;
+// FUTURES VARS
+var futLev=10, futPos=null, aiSignal="LONG", aiConf=82, aiCountdown=10, priceHistory=[];
 function getRefFromUrl(){try{return new URLSearchParams(window.location.search).get('ref')||"";}catch(e){return "";}}
 function makeHash(){var c="0123456789abcdef";var h="0x";for(var i=0;i<16;i++){h+=c[Math.floor(Math.random()*16)];}return h;}
 function showNotif(m){var n=document.getElementById('notif');n.innerText=m;n.style.display='block';setTimeout(function(){n.style.display='none';},3500);}
 function showToast(m){var t=document.getElementById('toast');t.innerHTML=m;t.style.display='block';setTimeout(function(){t.style.display='none';},5000);}
-function showTab(n){var ids=['mining','wallet','transfer','receive','share'];for(var i=0;i<ids.length;i++){document.getElementById('tab-'+ids[i]).classList.add('hidden');}document.getElementById('tab-'+n).classList.remove('hidden');var btns=document.querySelectorAll('.gbtn');for(var j=0;j<btns.length;j++){btns[j].classList.remove('active');}var map={mining:'btn-mining',wallet:'btn-wallet',transfer:'btn-transfer',receive:'btn-receive'};if(map[n])document.getElementById(map[n]).classList.add('active');window.scrollTo({top:document.body.scrollHeight,behavior:'smooth'});}
-function getLivePrice(){return 0.10 + (totalMined/1000000)*99.90 + Math.sin(Date.now()/60000)*0.005;}
-function updateLivePrice(){var p=getLivePrice();document.getElementById('livePrice').innerText=p.toFixed(2);document.getElementById('livePriceUSD').innerText=(p/58).toFixed(4);document.getElementById('priceChange').innerText="🟢 +"+((p-0.10)/0.10*100).toFixed(2)+"% TODAY • LIVE";document.getElementById('myValue').innerText=(balance*p).toFixed(2);document.getElementById('mcap').innerText=(totalMined*p).toFixed(2);var minis=document.querySelectorAll('.livePriceMini');for(var i=0;i<minis.length;i++){minis[i].innerText=p.toFixed(2);}document.getElementById('balValue2').innerText=(balance*p).toFixed(2);document.getElementById('balValue3').innerText=(balance*p).toFixed(2);document.getElementById('balValueRecv').innerText=(balance*p).toFixed(2);}
-setInterval(updateLivePrice,3000);
+function showTab(n){var ids=['mining','wallet','transfer','receive','futures','share'];for(var i=0;i<ids.length;i++){document.getElementById('tab-'+ids[i]).classList.add('hidden');}document.getElementById('tab-'+n).classList.remove('hidden');var btns=document.querySelectorAll('.gbtn');for(var j=0;j<btns.length;j++){btns[j].classList.remove('active');}var map={mining:'btn-mining',wallet:'btn-wallet',transfer:'btn-transfer',receive:'btn-receive',futures:'btn-futures'};if(map[n])document.getElementById(map[n]).classList.add('active');}
+function getLivePrice(){return 0.10 + (totalMined/1000000)*99.90 + Math.sin(Date.now()/60000)*0.005 + Math.sin(Date.now()/15000)*0.003;}
+function updateLivePrice(){var p=getLivePrice();document.getElementById('livePrice').innerText=p.toFixed(2);document.getElementById('livePriceUSD').innerText=(p/58).toFixed(4);document.getElementById('priceChange').innerText="🟢 +"+((p-0.10)/0.10*100).toFixed(2)+"% TODAY • LIVE";document.getElementById('myValue').innerText=(balance*p).toFixed(2);document.getElementById('mcap').innerText=(totalMined*p).toFixed(2);var minis=document.querySelectorAll('.livePriceMini');for(var i=0;i<minis.length;i++){minis[i].innerText=p.toFixed(2);}if(document.getElementById('balValue2'))document.getElementById('balValue2').innerText=(balance*p).toFixed(2);if(document.getElementById('balValue3'))document.getElementById('balValue3').innerText=(balance*p).toFixed(2);if(document.getElementById('balValueRecv'))document.getElementById('balValueRecv').innerText=(balance*p).toFixed(2);document.getElementById('futBal').innerText=balance.toFixed(2)+" ZERO";document.getElementById('entryPreview').innerText=p.toFixed(2);updateFutPosition();}
+// ===== FUTURES AI LOGIC =====
+function refreshAI(){
+  var isLong = Math.random() > 0.35;
+  aiSignal = isLong ? "LONG" : "SHORT";
+  aiConf = 68 + Math.floor(Math.random()*28);
+  aiCountdown = 10;
+  var reasonsLong = ["RSI Oversold! Bounce na!", "Whale bumibili! Volume UP!", "Breakout sa resistance!", "Golden Cross! Bullish!", "Support na-hold! Aakyat na!"];
+  var reasonsShort = ["RSI Overbought! Babagsak!", "Whale nagbenta! Volume DOWN!", "Rejection sa resistance!", "Death Cross! Bearish!", "Breakdown! Bababa pa!"];
+  var reason = isLong ? reasonsLong[Math.floor(Math.random()*reasonsLong.length)] : reasonsShort[Math.floor(Math.random()*reasonsShort.length)];
+  var sigEl = document.getElementById('aiSignal');
+  sigEl.innerText = (isLong ? "🟢 LONG! " : "🔴 SHORT! ") + aiConf + "%";
+  sigEl.className = "ai-signal " + (isLong ? "ai-long" : "ai-short");
+  document.getElementById('aiReason').innerText = "🤖 AI: " + reason;
+  document.getElementById('aiConf').innerText = aiConf + "%";
+  document.getElementById('aiMiniSignal').innerText = "AI: " + aiSignal + " " + aiConf + "% • " + reason;
+  document.getElementById('aiMiniSignal').style.color = isLong ? "#00ff88" : "#ff5555";
+}
+function setLev(lev, el){ futLev = lev; document.getElementById('levShow').innerText = lev + "x"; var btns=document.querySelectorAll('.lev-btn'); for(var i=0;i<btns.length;i++){btns[i].classList.remove('active');} if(el) el.classList.add('active'); updateFutCalc(); }
+function updateFutCalc(){ var amt = parseFloat(document.getElementById('futAmount').value||0); document.getElementById('marginShow').innerText = amt.toFixed(2)+" ZERO"; document.getElementById('sizeShow').innerText = (amt*futLev).toFixed(2)+" ZERO"; }
+function openFut(side){
+  var amt = parseFloat(document.getElementById('futAmount').value||0);
+  if(!amt || amt<=0){ alert("Lagyan mo ng amount boss! Ex: 10"); return; }
+  if(amt>balance){ alert("Kulang balance! Balance mo: "+balance.toFixed(2)+" ZERO"); return; }
+  if(futPos){ alert("May open position ka pa! Close mo muna!"); return; }
+  var entry = getLivePrice();
+  balance -= amt;
+  futPos = {side:side, entry:entry, margin:amt, lev:futLev, time:new Date().toLocaleTimeString()};
+  saveAll(); update();
+  document.getElementById('noPos').classList.add('hidden');
+  document.getElementById('hasPos').classList.remove('hidden');
+  document.getElementById('posSide').innerText = (side==="LONG"?"🟢 LONG ":"🔴 SHORT ") + futLev + "x";
+  document.getElementById('posSide').style.color = side==="LONG" ? "#00ff88" : "#ff5555";
+  document.getElementById('posEntry').innerText = entry.toFixed(2);
+  document.getElementById('posMargin').innerText = amt.toFixed(2);
+  var liq = side==="LONG" ? entry*(1 - 0.9/futLev) : entry*(1 + 0.9/futLev);
+  document.getElementById('posLiq').innerText = liq.toFixed(2);
+  showNotif((side==="LONG"?"🟢 LONG OPEN! ":"🔴 SHORT OPEN! ") + amt + " ZERO x " + futLev + "x @ ₱" + entry.toFixed(2));
+  alert((side==="LONG"?"🟢 LONG OPEN!":"🔴 SHORT OPEN!")+"\n\nMargin: "+amt+" ZERO\nLeverage: "+futLev+"x\nPosition Size: "+(amt*futLev).toFixed(2)+" ZERO\nEntry: ₱"+entry.toFixed(2)+"\n\nAI Signal: "+aiSignal+" "+aiConf+"%\nGood luck boss!");
+  updateFutPosition();
+}
+function calcFutPNL(){
+  if(!futPos) return 0;
+  var now = getLivePrice();
+  var diff = (now - futPos.entry) / futPos.entry;
+  if(futPos.side==="SHORT") diff = -diff;
+  return diff * futPos.margin * futPos.lev;
+}
+function updateFutPosition(){
+  if(!futPos) return;
+  var now = getLivePrice();
+  var pnl = calcFutPNL();
+  var roe = futPos.margin>0 ? (pnl/futPos.margin*100) : 0;
+  document.getElementById('posNow').innerText = now.toFixed(2);
+  var pnlEl = document.getElementById('posPNL');
+  pnlEl.innerText = (pnl>=0?"+":"") + pnl.toFixed(2) + " ZERO";
+  pnlEl.style.color = pnl>=0 ? "#00ff88" : "#ff5555";
+  document.getElementById('posPNLPercent').innerText = (pnl>=0?"+":"") + pnl.toFixed(2) + " ZERO • ROE: " + (roe>=0?"+":"") + roe.toFixed(2) + "%";
+  document.getElementById('posWarn').innerText = Math.abs(roe) > 80 ? "⚠️ Malapit ka na ma-LIQUIDATE! Close na!" : "Safe pa!";
+  document.getElementById('posWarn').style.color = Math.abs(roe)>80 ? "#ff0055" : "#FFD700";
+  document.getElementById('totalFutPNL').innerText = (pnl>=0?"+":"") + pnl.toFixed(2);
+  document.getElementById('totalFutPNL').style.color = pnl>=0 ? "#00ff88" : "#ff5555";
+  // Auto Liquidate pag -95%
+  if(roe <= -95){
+    alert("💥 LIQUIDATED! Naubos margin mo!\n\n- "+futPos.margin.toFixed(2)+" ZERO");
+    futPos = null;
+    document.getElementById('noPos').classList.remove('hidden');
+    document.getElementById('hasPos').classList.add('hidden');
+    document.getElementById('totalFutPNL').innerText = "+0.00";
+    saveAll(); update();
+  }
+}
+function closeFut(){
+  if(!futPos){ alert("Wala kang open position!"); return; }
+  var pnl = calcFutPNL();
+  var ret = futPos.margin + pnl;
+  if(ret<0) ret=0;
+  balance += ret;
+  futTotalPNL += pnl;
+  futHist += (futPos.side==="LONG"?"🟢 LONG ":"🔴 SHORT ") + futPos.lev + "x • PNL: " + (pnl>=0?"+":"") + pnl.toFixed(2) + " ZERO • " + new Date().toLocaleTimeString() + "<br>";
+  var msg = pnl>=0 ? "🎉 PANALO KA BOSS!\n\n+" + pnl.toFixed(2) + " ZERO!" : "😭 TALO BOSS!\n\n" + pnl.toFixed(2) + " ZERO";
+  alert(msg + "\n\nMargin bumalik: " + ret.toFixed(2) + " ZERO\nBalance mo na: " + balance.toFixed(2) + " ZERO");
+  futPos = null;
+  document.getElementById('noPos').classList.remove('hidden');
+  document.getElementById('hasPos').classList.add('hidden');
+  document.getElementById('totalFutPNL').innerText = "+0.00";
+  document.getElementById('totalFutPNL').style.color = "#00ff88";
+  if(document.getElementById('histFut')) document.getElementById('histFut').innerHTML = "<b>🤖 Futures History:</b><br>" + futHist;
+  saveAll(); update();
+}
+function drawChart(){
+  var chart = document.getElementById('futChart');
+  if(!chart) return;
+  var p = getLivePrice();
+  priceHistory.push(p);
+  if(priceHistory.length>25) priceHistory.shift();
+  var min = Math.min(...priceHistory), max = Math.max(...priceHistory);
+  var html = "";
+  for(var i=0;i<priceHistory.length;i++){
+    var h = max===min ? 30 : 10 + ((priceHistory[i]-min)/(max-min)*55);
+    var up = i>0 && priceHistory[i] >= priceHistory[i-1];
+    html += '<div class="chart-bar" style="height:'+h+'px;background:'+(up?"#00ff88":"#ff0055")+'"></div>';
+  }
+  chart.innerHTML = html;
+  var trend = priceHistory.length>2 && priceHistory[priceHistory.length-1] > priceHistory[0] ? "UPTREND 🟢" : "DOWNTREND 🔴";
+  document.getElementById('chartTrend').innerText = trend;
+}
+setInterval(function(){ drawChart(); if(aiCountdown>0){ aiCountdown--; document.getElementById('aiCountdown').innerText = aiCountdown; if(aiCountdown===0) refreshAI(); } }, 1000);
+setInterval(updateLivePrice, 3000);
 function copyAddr(){if(!wallet)return;var done=function(){showNotif("NA-COPY NA!");alert("NA-COPY NA!\n\n"+wallet);};if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(wallet).then(done).catch(function(){var ta=document.createElement('textarea');ta.value=wallet;document.body.appendChild(ta);ta.select();try{document.execCommand('copy');done();}catch(e){alert(wallet);}document.body.removeChild(ta);});}else{alert(wallet);}}
 function pasteAddr(){if(navigator.clipboard&&navigator.clipboard.readText){navigator.clipboard.readText().then(function(t){document.getElementById('toAddr').value=t.trim();showNotif("Na-paste na!");}).catch(function(){alert("Long press mo yung box, tapos Paste!");});}else{alert("Long press mo yung box, tapos Paste!");}}
-function saveAll(){try{localStorage.setItem('zero_bal',balance);localStorage.setItem('zero_total',totalMined);localStorage.setItem('zero_wallet',wallet);localStorage.setItem('zero_wallet_device',walletDevice);localStorage.setItem('zero_hist',histText);localStorage.setItem('zero_recv_hist',recvHist);localStorage.setItem('zero_total_recv',totalReceived);localStorage.setItem('zero_total_sent',totalSent);localStorage.setItem('zero_session',sessionCount);localStorage.setItem('zero_pending',pending);localStorage.setItem('zero_myname',myName);if(mining){localStorage.setItem('zero_mining_start',miningStartTime);}else{localStorage.removeItem('zero_mining_start');}}catch(e){}}
-function loadAll(){try{balance=parseFloat(localStorage.getItem('zero_bal')||0);totalMined=parseInt(localStorage.getItem('zero_total')||0);wallet=localStorage.getItem('zero_wallet')||"";walletDevice=localStorage.getItem('zero_wallet_device')||"";histText=localStorage.getItem('zero_hist')||"";recvHist=localStorage.getItem('zero_recv_hist')||"";totalReceived=parseFloat(localStorage.getItem('zero_total_recv')||0);totalSent=parseFloat(localStorage.getItem('zero_total_sent')||0);sessionCount=parseInt(localStorage.getItem('zero_session')||0);pending=parseFloat(localStorage.getItem('zero_pending')||0);myName=localStorage.getItem('zero_myname')||"USER";var oldStart=parseInt(localStorage.getItem('zero_mining_start')||0);if(oldStart>0){var e=Math.floor((Date.now()-oldStart)/1000);if(e<60){secLeft=60-e;miningStartTime=oldStart;mining=true;setTimeout(resumeMining,500);}else{balance+=10;totalMined+=10;totalReceived+=10;pending=0;localStorage.removeItem('zero_mining_start');}}}catch(e){}}
-function update(){document.getElementById('balTop').innerText=balance.toFixed(2);document.getElementById('bal1').innerText=balance.toFixed(2);document.getElementById('bal2').innerText=balance.toFixed(2);document.getElementById('bal3').innerText=balance.toFixed(2);document.getElementById('balRecv').innerText=balance.toFixed(2);document.getElementById('totalMined').innerText=totalMined;document.getElementById('mineSession').innerText=sessionCount;document.getElementById('recv2').innerText=totalReceived.toFixed(2);document.getElementById('sent2').innerText=totalSent.toFixed(2);if(wallet){document.getElementById('myAddr').innerText=wallet;document.getElementById('myAddrRecv').innerText=wallet;document.getElementById('addrInput').value=wallet;document.getElementById('addrInput2').value=wallet;document.getElementById('shareWalletShow').innerText=wallet;document.getElementById('shareLinkInput').value=getShareLink();}if(histText){document.getElementById('hist').innerHTML="<b>Send History:</b><br>"+histText;document.getElementById('histWallet').innerHTML="<b>Wallet History:</b><br>"+histText;}if(recvHist){document.getElementById('histRecv').innerHTML="<b>Received History:</b><br>"+recvHist;}updateLivePrice();}
+function saveAll(){try{localStorage.setItem('zero_bal',balance);localStorage.setItem('zero_total',totalMined);localStorage.setItem('zero_wallet',wallet);localStorage.setItem('zero_wallet_device',walletDevice);localStorage.setItem('zero_hist',histText);localStorage.setItem('zero_recv_hist',recvHist);localStorage.setItem('zero_total_recv',totalReceived);localStorage.setItem('zero_total_sent',totalSent);localStorage.setItem('zero_session',sessionCount);localStorage.setItem('zero_pending',pending);localStorage.setItem('zero_myname',myName);localStorage.setItem('zero_fut_hist',futHist);localStorage.setItem('zero_fut_pnl',futTotalPNL);if(futPos) localStorage.setItem('zero_fut_pos',JSON.stringify(futPos)); else localStorage.removeItem('zero_fut_pos'); if(mining){localStorage.setItem('zero_mining_start',miningStartTime);}else{localStorage.removeItem('zero_mining_start');}}catch(e){}}
+function loadAll(){try{balance=parseFloat(localStorage.getItem('zero_bal')||0);totalMined=parseInt(localStorage.getItem('zero_total')||0);wallet=localStorage.getItem('zero_wallet')||"";walletDevice=localStorage.getItem('zero_wallet_device')||"";histText=localStorage.getItem('zero_hist')||"";recvHist=localStorage.getItem('zero_recv_hist')||"";totalReceived=parseFloat(localStorage.getItem('zero_total_recv')||0);totalSent=parseFloat(localStorage.getItem('zero_total_sent')||0);sessionCount=parseInt(localStorage.getItem('zero_session')||0);pending=parseFloat(localStorage.getItem('zero_pending')||0);myName=localStorage.getItem('zero_myname')||"USER";futHist=localStorage.getItem('zero_fut_hist')||"";futTotalPNL=parseFloat(localStorage.getItem('zero_fut_pnl')||0);var fp=localStorage.getItem('zero_fut_pos'); if(fp){ futPos=JSON.parse(fp); } var oldStart=parseInt(localStorage.getItem('zero_mining_start')||0);if(oldStart>0){var e=Math.floor((Date.now()-oldStart)/1000);if(e<60){secLeft=60-e;miningStartTime=oldStart;mining=true;setTimeout(resumeMining,500);}else{balance+=10;totalMined+=10;totalReceived+=10;pending=0;localStorage.removeItem('zero_mining_start');}}}catch(e){}}
+function update(){document.getElementById('balTop').innerText=balance.toFixed(2);document.getElementById('bal1').innerText=balance.toFixed(2);document.getElementById('bal2').innerText=balance.toFixed(2);document.getElementById('bal3').innerText=balance.toFixed(2);document.getElementById('balRecv').innerText=balance.toFixed(2);document.getElementById('totalMined').innerText=totalMined;document.getElementById('mineSession').innerText=sessionCount;document.getElementById('recv2').innerText=totalReceived.toFixed(2);document.getElementById('sent2').innerText=totalSent.toFixed(2);if(wallet){document.getElementById('myAddr').innerText=wallet;document.getElementById('myAddrRecv').innerText=wallet;document.getElementById('addrInput').value=wallet;document.getElementById('addrInput2').value=wallet;document.getElementById('shareWalletShow').innerText=wallet;document.getElementById('shareLinkInput').value=getShareLink();}if(histText){document.getElementById('hist').innerHTML="<b>Send History:</b><br>"+histText;document.getElementById('histWallet').innerHTML="<b>Wallet History:</b><br>"+histText;}if(recvHist){document.getElementById('histRecv').innerHTML="<b>Received History:</b><br>"+recvHist;}if(futHist){document.getElementById('histFut').innerHTML="<b>🤖 Futures History:</b><br>"+futHist;}if(futPos){document.getElementById('noPos').classList.add('hidden');document.getElementById('hasPos').classList.remove('hidden');document.getElementById('posSide').innerText=(futPos.side==="LONG"?"🟢 LONG ":"🔴 SHORT ")+futPos.lev+"x";document.getElementById('posEntry').innerText=futPos.entry.toFixed(2);document.getElementById('posMargin').innerText=futPos.margin.toFixed(2);var liq=futPos.side==="LONG"?futPos.entry*(1-0.9/futPos.lev):futPos.entry*(1+0.9/futPos.lev);document.getElementById('posLiq').innerText=liq.toFixed(2);}updateLivePrice();updateFutCalc();}
 function startMining(){if(mining){alert("Nagmi-mina ka na!");return;}mining=true;sessionCount++;secLeft=60;pending=0;miningStartTime=Date.now();saveAll();var b=document.getElementById('mineBtn');b.disabled=true;b.innerText="MINING...";document.getElementById('status').innerText=">> MINING... +0.00 ZERO";runTimer();}
 function resumeMining(){if(!mining)return;document.getElementById('mineBtn').disabled=true;document.getElementById('mineBtn').innerText="MINING... (RESUMED)";runTimer();}
 function runTimer(){if(myTimer)clearInterval(myTimer);myTimer=setInterval(function(){secLeft--;pending=10*(60-secLeft)/60;document.getElementById('timer').innerText=secLeft;document.getElementById('bar').style.width=((60-secLeft)/60*100)+"%";document.getElementById('status').innerText=">> MINING... +"+pending.toFixed(2)+" ZERO";if(secLeft%5===0)saveAll();if(secLeft<=0){clearInterval(myTimer);mining=false;var b=document.getElementById('mineBtn');b.disabled=false;b.innerText="MINE AGAIN";document.getElementById('status').innerText=">> COMPLETE! PINDUTIN MO CLAIM!";saveAll();showNotif("MINING DONE! CLAIM NA!");}},1000);}
@@ -197,7 +315,7 @@ loadAll();
 if(!wallet){wallet="ZERO"+Math.random().toString(36).substring(2,10).toUpperCase()+Math.random().toString(36).substring(2,8).toUpperCase();walletDevice=deviceId;myName="USER"+Math.floor(Math.random()*9999);saveAll();}
 refFrom=getRefFromUrl();
 if(refFrom&&refFrom!==wallet){document.getElementById('refInfo').style.display='block';document.getElementById('refInfoAddr').innerText=refFrom;setTimeout(function(){document.getElementById('toAddr').value=refFrom;},500);showNotif("Galing ka sa invite!");}
-update();listenFirebase();updateLivePrice();
+update();listenFirebase();updateLivePrice();refreshAI();updateFutCalc();drawChart();
 </script>
 </body>
 </html>
