@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="tl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ZERO MINING - Active Mining</title>
+<style>
+body{background:#000;color:#fff;font-family:Arial;text-align:center;padding:20px}
+.box{background:#111;border:2px solid #00ff88;border-radius:20px;padding:20px;max-width:400px;margin:auto}
+h1{color:#00ff88;font-size:28px;margin:5px}
+.balance{font-size:48px;color:#00ff88;font-weight:bold}
+button{background:#00ff88;color:#000;border:none;padding:15px 30px;font-size:18px;font-weight:bold;border-radius:50px;cursor:pointer;width:100%;margin-top:10px}
+button:disabled{background:#333;color:#888}
+.progress{background:#333;height:20px;border-radius:10px;overflow:hidden;margin:15px 0}
+.bar{background:#00ff88;height:100%;width:0%;transition:0.3s}
+.halving{background:#1a1a1a;padding:12px;border-radius:12px;margin-top:15px;text-align:left;font-size:14px}
+.tag{background:#00ff88;color:#000;padding:3px 10px;border-radius:20px;font-size:12px;font-weight:bold}
+</style>
+</head>
+<body>
+<div class="box">
+<p>⛏️ ZERO BLOCKCHAIN</p>
+<h1>ACTIVE MINING</h1>
+<p><span class="tag">EPOCH 1 - LIVE</span></p>
+<p>YOUR BALANCE</p>
+<div class="balance"><span id="bal">0.00</span> ZERO</div>
+<p>Mining Rate: <b id="rate">10 ZERO / min</b></p>
+<div class="progress"><div class="bar" id="bar"></div></div>
+<p id="status">Pindutin START para magmina</p>
+<p>⏰ <span id="timer">60</span> seconds</p>
+<button id="mineBtn" onclick="startMining()">▶ START MINING</button>
+<button onclick="claim()" style="background:#fff">💰 CLAIM ZERO</button>
+<div class="halving">
+<b>🔥 HALVING SCHEDULE</b><br><br>
+✅ Epoch 1: 10 ZERO / min - <b>ACTIVE</b><br>
+⏳ Epoch 2: 5 ZERO / min<br>
+⏳ Epoch 3: 2.5 ZERO / min<br>
+⏳ Epoch 4: 1.25 ZERO / min<br><br>
+Total Mined: <b><span id="totalMined">0</span> / 1,000,000</b> ZERO<br>
+Halving in: <b><span id="left">1,000,000</span> ZERO</b>
+</div>
+<p style="font-size:12px;color:#888">Zero Hack • Zero Nakaw • Zero Daya<br>Wallet mo naka-save sa phone mo lang. Walang password na hinihingi.</p>
+</div>
+
+<script>
+let balance = parseFloat(localStorage.getItem('zero_bal') || 0);
+let totalMined = parseInt(localStorage.getItem('zero_total') || 0);
+let mining = false;
+let sec = 60;
+let pending = 0;
+let interval;
+
+function getRate(){
+  if(totalMined < 1000000) return 10;
+  if(totalMined < 2000000) return 5;
+  if(totalMined < 3000000) return 2.5;
+  return 1.25;
+}
+function update(){
+  document.getElementById('bal').innerText = balance.toFixed(2);
+  document.getElementById('totalMined').innerText = totalMined.toLocaleString();
+  document.getElementById('left').innerText = Math.max(0, 1000000 - totalMined).toLocaleString();
+  document.getElementById('rate').innerText = getRate() + " ZERO / min";
+}
+function startMining(){
+  if(mining) return;
+  mining = true;
+  sec = 60;
+  pending = 0;
+  document.getElementById('mineBtn').disabled = true;
+  document.getElementById('mineBtn').innerText = "⛏️ MINING...";
+  interval = setInterval(()=>{
+    sec--;
+    pending = (getRate() * (60 - sec) / 60);
+    document.getElementById('timer').innerText = sec;
+    document.getElementById('bar').style.width = ((60-sec)/60*100) + "%";
+    document.getElementById('status').innerText = "Mining... +" + pending.toFixed(2) + " ZERO";
+    if(sec <= 0){
+      clearInterval(interval);
+      mining = false;
+      document.getElementById('mineBtn').disabled = false;
+      document.getElementById('mineBtn').innerText = "▶ START MINING ULIT";
+      document.getElementById('status').innerText = "Tapos na! Pindutin CLAIM!";
+    }
+  }, 1000);
+}
+function claim(){
+  if(pending <= 0){ alert("Magmina ka muna boss! Pindutin START MINING"); return; }
+  balance += pending;
+  totalMined += Math.floor(pending);
+  localStorage.setItem('zero_bal', balance);
+  localStorage.setItem('zero_total', totalMined);
+  alert("Congrats! Naka-claim ka ng " + pending.toFixed(2) + " ZERO!");
+  pending = 0;
+  document.getElementById('bar').style.width = "0%";
+  document.getElementById('timer').innerText = "60";
+  document.getElementById('status').innerText = "Na-claim mo na! Mina ulit!";
+  update();
+}
+update();
+</script>
+</body>
+</html>
