@@ -3,82 +3,144 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>ZERO BLOCKCHAIN - Future Mining</title>
-<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700;900&display=swap" rel="stylesheet">
+<title>ZERO BLOCKCHAIN</title>
 <style>
-body{background:#000;color:#fff;font-family:'Orbitron',Arial,sans-serif;text-align:center;padding:15px;margin:0}
-.top{max-width:430px;margin:auto}
-.logo{font-size:32px;color:#00ff88;text-shadow:0 0 20px #00ff88;letter-spacing:3px}
-.sub{font-size:11px;letter-spacing:2px;color:#aaa}
-.box{background:radial-gradient(circle at top,#001a0d 0%,#000 70%);border:2px solid #00ff88;box-shadow:0 0 30px #00ff88;border-radius:25px;padding:20px;margin-top:18px;position:relative;overflow:hidden}
-.box::before{content:"";position:absolute;top:-50%;left:-50%;width:200%;height:200%;background:linear-gradient(45deg,transparent 40%,rgba(0,255,136,.15) 50%,transparent 60%);animation:scan 3s linear infinite;pointer-events:none}
-@keyframes scan{0%{transform:translateY(-100%)}100%{transform:translateY(100%)}}
-.bal{font-size:52px;font-weight:900;text-shadow:0 0 20px #00ff88}
-.rate{display:inline-block;background:#00ff88;color:#000;padding:6px 14px;border-radius:20px;font-size:12px;font-weight:900}
-.bar-bg{background:#111;border:1px solid #00ff88;height:18px;border-radius:20px;overflow:hidden;margin:15px 0}
-.bar{background:linear-gradient(90deg,#00ff88,#00ccff);height:100%;width:0%;box-shadow:0 0 15px #00ff88}
-.btn{background:linear-gradient(90deg,#00ff88,#00ccff);color:#000;border:none;padding:15px;font-size:14px;font-weight:900;border-radius:50px;width:100%;cursor:pointer;box-shadow:0 0 20px #00ff88;margin-top:10px;font-family:'Orbitron'}
-.btn2{background:transparent;color:#00ff88;border:2px solid #00ff88;padding:13px;font-size:12px;font-weight:700;border-radius:50px;width:100%;cursor:pointer;margin-top:10px;font-family:'Orbitron'}
-input{width:90%;padding:12px;border-radius:10px;border:none;margin-top:10px;font-size:14px;font-family:Arial}
-.tabs{display:flex;gap:8px;margin-top:15px}
-.tab{flex:1;padding:12px;background:#222;color:#fff;border:none;border-radius:12px;font-weight:bold;cursor:pointer;font-family:'Orbitron';font-size:11px}
+body{background:#000;color:#fff;font-family:Arial;text-align:center;padding:15px}
+.box{background:#111;border:2px solid #00ff88;border-radius:20px;padding:20px;max-width:400px;margin:auto;box-shadow:0 0 20px #00ff88}
+.bal{font-size:50px;color:#00ff88;font-weight:bold}
+button{background:#00ff88;color:#000;border:none;padding:15px;font-size:16px;font-weight:bold;border-radius:50px;width:100%;margin-top:10px;cursor:pointer}
+button:disabled{background:#333;color:#888}
+.btn2{background:transparent;color:#00ff88;border:2px solid #00ff88}
+.bar-bg{background:#333;height:18px;border-radius:10px;overflow:hidden;margin:12px 0}
+.bar{background:#00ff88;height:100%;width:0%}
+.tab{padding:12px;background:#222;color:#fff;border:none;border-radius:10px;font-weight:bold}
 .tab.active{background:#00ff88;color:#000}
-.info{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:15px}
-.card{background:rgba(255,255,255,.05);border:1px solid rgba(0,255,136,.4);border-radius:15px;padding:10px;font-size:11px}
-.card b{font-size:15px;color:#00ff88;display:block}
 .hidden{display:none}
-.wallet{font-size:10px;word-break:break-all;color:#00ccff;margin-top:10px;background:#000;padding:8px;border-radius:10px;border:1px dashed #00ccff}
-.hist{text-align:left;font-size:12px;background:#111;padding:10px;border-radius:10px;margin-top:10px;font-family:Arial}
+input{width:90%;padding:12px;border-radius:10px;border:none;margin-top:10px}
 </style>
 </head>
 <body>
-<div class="top">
-<div class="sub">⚡ ZERO BLOCKCHAIN • SYSTEM ONLINE ⚡</div>
-<div class="logo">ZERO</div>
-<div class="sub">ZERO HACK • ZERO NAKAW • ZERO DAYA</div>
-
-<div class="tabs">
+<div style="max-width:400px;margin:auto">
+<h1 style="color:#00ff88">ZERO</h1>
+<p>ZERO HACK • ZERO NAKAW • ZERO DAYA</p>
 <button class="tab active" onclick="showTab('mining',this)">⛏️ MINING</button>
 <button class="tab" onclick="showTab('wallet',this)">💰 WALLET</button>
 <button class="tab" onclick="showTab('transfer',this)">📤 TRANSFER</button>
-</div>
 
-<div class="box">
+<div class="box" style="margin-top:15px">
 <div id="tab-mining">
-<div><span class="rate">EPOCH 1 • <span id="rate">10 ZERO / MIN</span></span></div>
-<div class="bal"><span id="bal1">0.00</span> <span style="font-size:18px;color:#00ff88">ZERO</span></div>
+<p>EPOCH 1 • <span id="rate">10 ZERO / MIN</span></p>
+<div class="bal"><span id="bal1">0.00</span> ZERO</div>
 <div class="bar-bg"><div class="bar" id="bar"></div></div>
-<div id="status" style="font-size:12px">>> SYSTEM READY. PRESS START <<</div>
-<div style="font-size:12px;margin-top:8px">⏰ <b id="timer" style="color:#00ff88">60</b> SEC</div>
-<button class="btn" id="mineBtn" onclick="startMining()">▶ START MINING</button>
+<p id="status">Pindutin START para magmina</p>
+<p>⏰ <span id="timer">60</span> SEC</p>
+<button id="mineBtn" onclick="startMining()">▶ START MINING</button>
 <button class="btn2" onclick="claim()">💰 CLAIM ZERO</button>
-<div class="info">
-<div class="card">TOTAL MINED<b><span id="totalMined">0</span></b>/ 1,000,000</div>
-<div class="card">HALVING IN<b><span id="left">1,000,000</span></b>ZERO</div>
-<div class="card">HASH POWER<b>⚡ 1.2 TH/s</b>FUTURE RIG</div>
-<div class="card">NEXT HALVING<b>5 ZERO</b>EPOCH 2</div>
-</div>
+<p style="font-size:12px">Total: <span id="totalMined">0</span> / 1,000,000</p>
 </div>
 
 <div id="tab-wallet" class="hidden">
-<h3>💰 FUTURE WALLET</h3>
-<div id="noWallet"><button class="btn" onclick="createWallet()">✨ CREATE MY WALLET</button></div>
-<div id="hasWallet" class="hidden">
-<div class="wallet" id="myAddr"></div>
-<div class="bal" style="font-size:36px"><span id="bal2">0.00</span> ZERO</div>
-<button class="btn2" onclick="copyAddr()">📋 COPY ADDRESS</button>
-<p style="font-size:11px;color:#888;font-family:Arial">I-send mo address mo sa Messenger para ma-send-an kita ng FREE ZERO!</p>
-</div>
+<h3>💰 WALLET</h3>
+<div id="noWallet"><button onclick="createWallet()">✨ CREATE WALLET</button></div>
+<div id="hasWallet" class="hidden"><p id="myAddr" style="word-break:break-all;color:#00ff88"></p><div class="bal"><span id="bal2">0.00</span> ZERO</div><button onclick="copyAddr()">📋 COPY ADDRESS</button></div>
 </div>
 
 <div id="tab-transfer" class="hidden">
-<h3>📤 TRANSFER ZERO</h3>
-<div class="bal" style="font-size:36px"><span id="bal3">0.00</span> ZERO</div>
-<input id="toAddr" placeholder="Wallet address ng papadalhan">
-<input id="amount" type="number" placeholder="Ilan ZERO? Ex: 5">
-<button class="btn" onclick="sendZero()">🚀 SEND ZERO</button>
-<div class="hist" id="hist"><b>📜 History:</b><br>Wala pa</div>
+<h3>📤 TRANSFER</h3>
+<div class="bal"><span id="bal3">0.00</span> ZERO</div>
+<input id="toAddr" placeholder="Wallet address">
+<input id="amount" type="number" placeholder="Ilan ZERO?">
+<button onclick="sendZero()">🚀 SEND ZERO</button>
+<p id="hist" style="font-size:12px;text-align:left">History: Wala pa</p>
+</div>
 </div>
 </div>
 
-<p style="font-size:10px;color:#666;margin-top:12px">
+<script>
+var balance = parseFloat(localStorage.getItem('zero_bal') || 0);
+var totalMined = parseInt(localStorage.getItem('zero_total') || 0);
+var wallet = localStorage.getItem('zero_wallet_addr');
+var hist = JSON.parse(localStorage.getItem('zero_hist') || '[]');
+var mining = false, sec = 60, pending = 0, interval = null;
+
+function showTab(n, el){
+  document.getElementById('tab-mining').classList.add('hidden');
+  document.getElementById('tab-wallet').classList.add('hidden');
+  document.getElementById('tab-transfer').classList.add('hidden');
+  document.getElementById('tab-'+n).classList.remove('hidden');
+  var tabs = document.querySelectorAll('.tab');
+  for(var i=0;i<tabs.length;i++) tabs[i].classList.remove('active');
+  el.classList.add('active');
+  update();
+}
+function getRate(){ if(totalMined < 1000000) return 10; return 5; }
+function update(){
+  document.getElementById('bal1').innerText = balance.toFixed(2);
+  document.getElementById('bal2').innerText = balance.toFixed(2);
+  document.getElementById('bal3').innerText = balance.toFixed(2);
+  document.getElementById('rate').innerText = getRate() + " ZERO / MIN";
+  document.getElementById('totalMined').innerText = totalMined;
+  if(wallet){
+    document.getElementById('noWallet').classList.add('hidden');
+    document.getElementById('hasWallet').classList.remove('hidden');
+    document.getElementById('myAddr').innerText = wallet;
+  }
+  if(hist.length > 0) document.getElementById('hist').innerHTML = "History:<br>" + hist.join("<br>");
+}
+function startMining(){
+  alert("Mining started! Hintayin mo 60 sec");
+  if(mining) return;
+  mining = true; sec = 60; pending = 0;
+  document.getElementById('mineBtn').disabled = true;
+  document.getElementById('mineBtn').innerText = "⛏️ MINING...";
+  interval = setInterval(function(){
+    sec = sec - 1;
+    pending = (getRate() * (60 - sec) / 60);
+    document.getElementById('timer').innerText = sec;
+    document.getElementById('bar').style.width = ((60-sec)/60*100) + "%";
+    document.getElementById('status').innerText = "Mining... +" + pending.toFixed(2) + " ZERO";
+    if(sec <= 0){
+      clearInterval(interval);
+      mining = false;
+      document.getElementById('mineBtn').disabled = false;
+      document.getElementById('mineBtn').innerText = "▶ START MINING ULIT";
+      document.getElementById('status').innerText = "Tapos na! Pindutin CLAIM!";
+    }
+  }, 1000);
+}
+function claim(){
+  if(pending <= 0){ alert("Magmina ka muna! Pindutin START MINING"); return; }
+  balance = balance + pending;
+  totalMined = totalMined + Math.floor(pending);
+  localStorage.setItem('zero_bal', balance);
+  localStorage.setItem('zero_total', totalMined);
+  alert("Congrats! +" + pending.toFixed(2) + " ZERO!");
+  pending = 0;
+  document.getElementById('bar').style.width = "0%";
+  document.getElementById('timer').innerText = "60";
+  update();
+}
+function createWallet(){
+  var r = 'ZERO' + Math.random().toString(36).substring(2,10).toUpperCase() + Math.random().toString(36).substring(2,10).toUpperCase();
+  localStorage.setItem('zero_wallet_addr', r);
+  wallet = r;
+  alert("Wallet mo: " + r);
+  update();
+}
+function copyAddr(){ navigator.clipboard.writeText(wallet); alert("Na-copy na!"); }
+function sendZero(){
+  var to = document.getElementById('toAddr').value;
+  var amt = parseFloat(document.getElementById('amount').value);
+  if(!to || !amt){ alert("Lagyan mo address at amount!"); return; }
+  if(amt > balance){ alert("Kulang balance! Magmina ka muna!"); return; }
+  balance = balance - amt;
+  localStorage.setItem('zero_bal', balance);
+  hist.push("Nag-send ka ng " + amt + " ZERO kay " + to);
+  localStorage.setItem('zero_hist', JSON.stringify(hist));
+  alert("SUCCESS! Na-send mo " + amt + " ZERO!");
+  update();
+}
+update();
+</script>
+</body>
+</html>
