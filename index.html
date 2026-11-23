@@ -9,16 +9,24 @@ body{background:#000;color:#fff;font-family:Arial;text-align:center;padding:12px
 .top{max-width:430px;margin:auto}
 .logo{font-size:50px;font-weight:900;color:#00ff88;text-shadow:0 0 25px #00ff88;letter-spacing:5px;margin:2px;line-height:1}
 .sub{font-size:12px;letter-spacing:2px;color:#aaa;font-weight:bold}
-/* MALIIT NA LANGUAGE BUTTON SA TAAS - BAGO! */
 .top-bar{display:flex;justify-content:space-between;align-items:center;margin-bottom:6px}
 .lang-toggle{background:#111;border:1px solid #00ff88;color:#00ff88;padding:7px 12px;border-radius:20px;font-size:12px;font-weight:800;cursor:pointer}
-.lang-toggle:active{background:#00ff88;color:#000}
 .live-dot{font-size:11px;color:#00ff88;font-weight:bold}
 .lang-panel{display:none;background:#111;border:1px solid #333;border-radius:14px;padding:8px;margin:6px 0 10px}
 .lang-panel.show{display:block}
 .lang-grid{display:flex;flex-wrap:wrap;gap:5px;justify-content:center}
 .lang-btn{background:#1a1a1a;border:1px solid #333;color:#fff;padding:6px 9px;border-radius:15px;font-size:11px;cursor:pointer}
 .lang-btn.active{background:#00ff88;color:#000;border-color:#00ff88;font-weight:900}
+/* FIREWALL BUTTON LANG - BAGO! */
+.fw-btn{width:100%;background:#0a0a0a;border:1px solid #ff0055;color:#fff;padding:9px 12px;border-radius:20px;font-size:12px;font-weight:800;cursor:pointer;display:flex;justify-content:space-between;align-items:center;margin-top:10px}
+.fw-btn b{color:#00ff88}
+.fw-panel{display:none;background:#0a0a0a;border:1px solid #ff0055;border-top:none;border-radius:0 0 14px 14px;padding:9px 10px;text-align:left}
+.fw-panel.show{display:block}
+.fire-row{display:flex;justify-content:space-between;font-size:11px;padding:3px 0;border-bottom:1px solid #1a1a1a}
+.fire-row b{color:#00ff88;font-size:11px}
+.threat-log{background:#000;border:1px solid #222;border-radius:8px;padding:6px;font-size:10px;font-family:monospace;height:48px;overflow-y:auto;margin-top:6px;color:#00ff88;line-height:1.4}
+.status-dot{display:inline-block;width:8px;height:8px;background:#00ff88;border-radius:50%;box-shadow:0 0 8px #00ff88;animation:blink 1s infinite}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:.3}}
 .tabs{display:flex;gap:7px;margin-top:14px}
 .tab{flex:1;padding:14px 4px;background:#1a1a1a;color:#fff;border:1px solid #333;border-radius:14px;font-weight:800;cursor:pointer;font-size:14px}
 .tab.active{background:#00ff88;color:#000;border-color:#00ff88;box-shadow:0 0 12px #00ff88}
@@ -38,26 +46,16 @@ input{width:90%;padding:14px;border-radius:12px;border:none;margin-top:9px;font-
 .hist{text-align:left;font-size:13px;background:#111;padding:10px;border-radius:10px;margin-top:10px}
 .price-box{background:linear-gradient(90deg,#FFD700,#FFA500);color:#000;border-radius:18px;padding:15px;margin-top:14px}
 .price-box b{font-size:30px}
-.firewall{background:#0a0a0a;border:2px solid #ff0055;border-radius:18px;padding:14px;margin-top:14px;box-shadow:0 0 15px rgba(255,0,85,.4);text-align:left}
-.firewall h3{margin:0;color:#ff0055;font-size:15px;text-align:center}
-.fire-row{display:flex;justify-content:space-between;font-size:13px;padding:6px 0;border-bottom:1px solid #222}
-.fire-row b{color:#00ff88;font-size:13px}
-.threat-log{background:#000;border:1px solid #333;border-radius:10px;padding:8px;font-size:12px;font-family:monospace;height:95px;overflow-y:auto;margin-top:8px;color:#00ff88;line-height:1.5}
-.shield{font-size:34px;text-align:center}
-.status-dot{display:inline-block;width:10px;height:10px;background:#00ff88;border-radius:50%;box-shadow:0 0 10px #00ff88;animation:blink 1s infinite}
-@keyframes blink{0%,100%{opacity:1}50%{opacity:.3}}
 </style>
 </head>
 <body>
 <div class="top">
 
-<!-- MALIIT NA BUTTON SA TAAS - BAGO! -->
 <div class="top-bar">
 <span class="live-dot">● LIVE • ONLINE</span>
 <button class="lang-toggle" onclick="toggleLang()">🌍 <span id="curLang">Tagalog</span> ▼</button>
 </div>
 
-<!-- NAKATAGO NA LANGUAGE PANEL - LALABAS LANG PAG PININDOT -->
 <div class="lang-panel" id="langPanel">
 <div style="font-size:11px;color:#aaa;margin-bottom:6px" id="t-choose">PILIIN ANG WIKA / CHOOSE LANGUAGE</div>
 <div class="lang-grid">
@@ -80,17 +78,18 @@ input{width:90%;padding:14px;border-radius:12px;border:none;margin-top:9px;font-
 <div class="logo">ZERO</div>
 <div class="sub" id="t-motto">ZERO HACK • ZERO NAKAW • ZERO DAYA</div>
 
-<div class="firewall">
-<div class="shield">🛡️🤖</div>
-<h3>ZERO AI FIREWALL v9.9 • <span class="status-dot"></span> <span id="t-active">ACTIVE</span></h3>
+<!-- FIREWALL BUTTON LANG! BAGO! -->
+<button class="fw-btn" onclick="toggleFw()">
+<span>🛡️ AI FIREWALL <span style="color:#ff0055">v9.9</span> • <span class="status-dot"></span> <span id="t-active">ACTIVE</span></span>
+<span><b>● PROTECTED</b> <span id="fwArrow" style="color:#fff">▼</span></span>
+</button>
+<div class="fw-panel" id="fwPanel">
 <div class="fire-row"><span>🛡️ <span id="t-fw">Firewall:</span></span><b>● PROTECTED</b></div>
 <div class="fire-row"><span>🤖 <span id="t-ai">AI Detection:</span></span><b>● SCANNING...</b></div>
-<div class="fire-row"><span>🚫 <span id="t-blocked">Blocked:</span></span><b id="blocked">127</b></div>
-<div class="fire-row"><span>👤 <span id="t-device">Device:</span></span><b>✅ VERIFIED HUMAN</b></div>
+<div class="fire-row"><span>🚫 <span id="t-blocked">Blocked:</span> <b id="blocked">127</b></span><b>👤 ✅ VERIFIED</b></div>
 <div class="fire-row"><span>🔐 <span id="t-enc">Encryption:</span></span><b>AES-256 + SHA-512</b></div>
-<div class="fire-row"><span>🌐 DDoS:</span><b>● ON</b></div>
-<div class="fire-row"><span>⚡ Anti-Bot:</span><b id="botStatus">● CLEAN</b></div>
-<div class="threat-log" id="threatLog">> AI FIREWALL INITIALIZED...<br>> Scanning network...<br>> No threats found. System secure.</div>
+<div class="fire-row"><span>🌐 DDoS:</span><b>● ON</b> <span>⚡ Anti-Bot: <b id="botStatus">● CLEAN</b></span></div>
+<div class="threat-log" id="threatLog">> AI FIREWALL INITIALIZED...<br>> No threats found. System secure.</div>
 </div>
 
 <div class="price-box">
@@ -152,7 +151,7 @@ input{width:90%;padding:14px;border-radius:12px;border:none;margin-top:9px;font-
 <p style="font-size:13px" id="t-secDesc">Your wallet is protected by ZERO AI FIREWALL</p>
 <div class="card" style="text-align:left;font-size:13px">🔐 <b id="t-lockTitle">Wallet Lock</b><br><span id="lockInfo">Wallet is UNLOCKED - Normal Mode</span><br><button class="btn2" onclick="toggleLock()">🔒 <span id="t-lockBtn">LOCK / UNLOCK WALLET</span></button></div>
 <div class="card" style="margin-top:10px;text-align:left;font-size:13px">🤖 <b id="t-scanTitle">AI SCAN RESULT</b><br><span id="t-lastScan">Last Scan:</span> <span id="lastScan">Just now</span><br><span id="t-threats">Threats:</span> <b style="color:#00ff88">0 FOUND</b><br><button class="btn2" onclick="runScan()">🔍 <span id="t-scanBtn">RUN AI DEEP SCAN</span></button></div>
-<div class="card" style="margin-top:10px;text-align:left;font-size:13px">📜 <b id="t-logTitle">SECURITY LOG</b><div class="threat-log" id="threatLog2">> System secure...</div></div>
+<div class="card" style="margin-top:10px;text-align:left;font-size:13px">📜 <b id="t-logTitle">SECURITY LOG</b><div class="threat-log" id="threatLog2" style="height:60px">> System secure...</div></div>
 </div>
 </div>
 
@@ -161,6 +160,15 @@ input{width:90%;padding:14px;border-radius:12px;border:none;margin-top:9px;font-
 
 <script>
 function toggleLang(){ document.getElementById('langPanel').classList.toggle('show'); }
+function toggleFw(){ var p=document.getElementById('fwPanel'); p.classList.toggle('show'); document.getElementById('fwArrow').innerText = p.classList.contains('show') ? '▲' : '▼'; }
 var LANG = {
 tl:{name:"Tagalog",motto:"ZERO HACK • ZERO NAKAW • ZERO DAYA",choose:"PILIIN ANG WIKA / CHOOSE LANGUAGE",active:"ACTIVE",fw:"Firewall:",ai:"AI Detection:",blocked:"Blocked:",device:"Device:",enc:"Encryption:",priceTitle:"💰 LIVE PRICE • SCARCITY MODEL",yourZero:"Yung ZERO mo:",mcap:"Market Cap:",scarcity:"📈 Kunti pa nagmimina = MURA PA • Paubos na = MAHAL NA!",tabMine:"⛏️ MINING",tabWallet:"💰 WALLET",tabTrans:"📤 TRANSFER",tabSec:"🛡️ SECURITY",epoch:"EPOCH 1",sec:"SEC",start:"START MINING",claim:"CLAIM ZERO",total:"TOTAL MINED",halving:"HALVING IN",hash:"HASH POWER",next:"NEXT HALVING",epoch2:"EPOCH 2",walletTitle:"FUTURE WALLET",create:"CREATE MY WALLET",copy:"COPY ADDRESS",transTitle:"TRANSFER ZERO",price2:"Price:",send:"SEND ZERO",secTitle:"AI SECURITY CENTER",secDesc:"Your wallet is protected by ZERO AI FIREWALL",lockTitle:"Wallet Lock",lockBtn:"LOCK / UNLOCK WALLET",scanTitle:"AI SCAN RESULT",lastScan:"Last Scan:",threats:"Threats:",scanBtn:"RUN AI DEEP SCAN",logTitle:"SECURITY LOG",footer:"For educational purposes. Mining is FREE. No investment."},
-en:{name:"English",motto:"ZERO HACK • ZERO THEFT • ZERO CHEAT",choose:"CHOOSE LANGUAGE",active:"ACTIVE",fw:"Firewall:",ai:"AI Detection:",blocked:"Blocked:",device:"Device:",enc:"Encryption:",priceTitle:"💰 LIVE PRICE • SCARCITY MODEL",yourZero:"Your ZERO:",mcap:"Market Cap:",scarcity:"
+en:{name:"English",motto:"ZERO HACK • ZERO THEFT • ZERO CHEAT",choose:"CHOOSE LANGUAGE",active:"ACTIVE",fw:"Firewall:",ai:"AI Detection:",blocked:"Blocked:",device:"Device:",enc:"Encryption:",priceTitle:"💰 LIVE PRICE • SCARCITY MODEL",yourZero:"Your ZERO:",mcap:"Market Cap:",scarcity:"📈 Few miners = CHEAP • Almost gone = EXPENSIVE!",tabMine:"⛏️ MINING",tabWallet:"💰 WALLET",tabTrans:"📤 TRANSFER",tabSec:"🛡️ SECURITY",epoch:"EPOCH 1",sec:"SEC",start:"START MINING",claim:"CLAIM ZERO",total:"TOTAL MINED",halving:"HALVING IN",hash:"HASH POWER",next:"NEXT HALVING",epoch2:"EPOCH 2",walletTitle:"FUTURE WALLET",create:"CREATE MY WALLET",copy:"COPY ADDRESS",transTitle:"TRANSFER ZERO",price2:"Price:",send:"SEND ZERO",secTitle:"AI SECURITY CENTER",secDesc:"Your wallet is protected by ZERO AI FIREWALL",lockTitle:"Wallet Lock",lockBtn:"LOCK / UNLOCK WALLET",scanTitle:"AI SCAN RESULT",lastScan:"Last Scan:",threats:"Threats:",scanBtn:"RUN AI DEEP SCAN",logTitle:"SECURITY LOG",footer:"For educational purposes. Mining is FREE. No investment."},
+ceb:{name:"Cebuano",motto:"ZERO HACK • ZERO KAWAT • ZERO LIMBONG",choose:"PILI-A ANG PINULUNGAN",active:"ACTIVE",fw:"Firewall:",ai:"AI Detection:",blocked:"Gibabagan:",device:"Device:",enc:"Encryption:",priceTitle:"💰 LIVE PRICE • SCARCITY MODEL",yourZero:"Imong ZERO:",mcap:"Market Cap:",scarcity:"📈 Gamay pa miner = BARATO • Hapit na mahurot = MAHAL!",tabMine:"⛏️ MINING",tabWallet:"💰 WALLET",tabTrans:"📤 TRANSFER",tabSec:"🛡️ SECURITY",epoch:"EPOCH 1",sec:"SEC",start:"START MINING",claim:"CLAIM ZERO",total:"TOTAL MINED",halving:"HALVING IN",hash:"HASH POWER",next:"NEXT HALVING",epoch2:"EPOCH 2",walletTitle:"FUTURE WALLET",create:"HIMO A AKONG WALLET",copy:"COPY ADDRESS",transTitle:"TRANSFER ZERO",price2:"Presyo:",send:"SEND ZERO",secTitle:"AI SECURITY CENTER",secDesc:"Giprotektahan ka sa ZERO AI FIREWALL",lockTitle:"Wallet Lock",lockBtn:"LOCK / UNLOCK WALLET",scanTitle:"AI SCAN RESULT",lastScan:"Last Scan:",threats:"Threats:",scanBtn:"RUN AI DEEP SCAN",logTitle:"SECURITY LOG",footer:"For educational purposes. Mining is FREE. No investment."},
+es:{name:"Español",motto:"ZERO HACK • ZERO ROBO • ZERO TRAMPA",choose:"ELIGE IDIOMA",active:"ACTIVO",fw:"Firewall:",ai:"Detección IA:",blocked:"Bloqueados:",device:"Dispositivo:",enc:"Cifrado:",priceTitle:"💰 PRECIO EN VIVO • ESCASEZ",yourZero:"Tu ZERO:",mcap:"Capitalización:",scarcity:"📈 Pocos mineros = BARATO • Casi agotado = CARO!",tabMine:"⛏️ MINERÍA",tabWallet:"💰 CARTERA",tabTrans:"📤 TRANSFERIR",tabSec:"🛡️ SEGURIDAD",epoch:"ÉPOCA 1",sec:"SEG",start:"EMPEZAR MINERÍA",claim:"RECLAMAR ZERO",total:"TOTAL MINADO",halving:"HALVING EN",hash:"POTENCIA",next:"PRÓXIMO HALVING",epoch2:"ÉPOCA 2",walletTitle:"CARTERA FUTURA",create:"CREAR MI CARTERA",copy:"COPIAR DIRECCIÓN",transTitle:"TRANSFERIR ZERO",price2:"Precio:",send:"ENVIAR ZERO",secTitle:"CENTRO DE SEGURIDAD IA",secDesc:"Tu cartera está protegida por ZERO AI FIREWALL",lockTitle:"Bloqueo de Cartera",lockBtn:"BLOQUEAR / DESBLOQUEAR",scanTitle:"RESULTADO DE ESCANEO",lastScan:"Último escaneo:",threats:"Amenazas:",scanBtn:"EJECUTAR ESCANEO IA",logTitle:"REGISTRO",footer:"Con fines educativos. Minería GRATIS. Sin inversión."},
+zh:{name:"中文",motto:"零黑客 • 零盗窃 • 零作弊",choose:"选择语言",active:"已激活",fw:"防火墙:",ai:"AI检测:",blocked:"已阻止:",device:"设备:",enc:"加密:",priceTitle:"💰 实时价格 • 稀缺模型",yourZero:"你的 ZERO:",mcap:"市值:",scarcity:"📈 矿工少 = 便宜 • 快挖完 = 贵!",tabMine:"⛏️ 挖矿",tabWallet:"💰 钱包",tabTrans:"📤 转账",tabSec:"🛡️ 安全",epoch:"时代 1",sec:"秒",start:"开始挖矿",claim:"领取 ZERO",total:"已挖总量",halving:"减半还剩",hash:"算力",next:"下次减半",epoch2:"时代 2",walletTitle:"未来钱包",create:"创建我的钱包",copy:"复制地址",transTitle:"转账 ZERO",price2:"价格:",send:"发送 ZERO",secTitle:"AI 安全中心",secDesc:"你的钱包受 ZERO AI 防火墙保护",lockTitle:"钱包锁",lockBtn:"锁定 / 解锁钱包",scanTitle:"AI 扫描结果",lastScan:"上次扫描:",threats:"威胁:",scanBtn:"运行 AI 深度扫描",logTitle:"安全日志",footer:"仅供学习。挖矿免费。无需投资。"},
+ja:{name:"日本語",motto:"ゼロハック • ゼロ盗難 • ゼロ不正",choose:"言語を選択",active:"有効",fw:"ファイアウォール:",ai:"AI検出:",blocked:"ブロック:",device:"デバイス:",enc:"暗号化:",priceTitle:"💰 ライブ価格 • 希少モデル",yourZero:"あなたの ZERO:",mcap:"時価総額:",scarcity:"📈 マイナー少 = 安い • 残り少 = 高い!",tabMine:"⛏️ マイニング",tabWallet:"💰 ウォレット",tabTrans:"📤 送金",tabSec:"🛡️ セキュリティ",epoch:"エポック 1",sec:"秒",start:"マイニング開始",claim:"ZEROを受け取る",total:"採掘済み",halving:"半減期まで",hash:"ハッシュパワー",next:"次半減期",epoch2:"エポック 2",walletTitle:"未来ウォレット",create:"ウォレットを作成",copy:"アドレスをコピー",transTitle:"ZERO送金",price2:"価格:",send:"ZEROを送る",secTitle:"AIセキュリティセンター",secDesc:"あなたのウォレットはZERO AIファイアウォールで保護されています",lockTitle:"ウォレットロック",lockBtn:"ロック / ロック解除",scanTitle:"AIスキャン結果",lastScan:"最終スキャン:",threats:"脅威:",scanBtn:"AIディープスキャン実行",logTitle:"セキュリティログ",footer:"教育目的です。マイニングは無料。投資不要。"},
+ko:{name:"한국어",motto:"제로 해킹 • 제로 도둑 • 제로 부정",choose:"언어 선택",active:"활성",fw:"방화벽:",ai:"AI 탐지:",blocked:"차단됨:",device:"장치:",enc:"암호화:",priceTitle:"💰 실시간 가격 • 희소성 모델",yourZero:"내 ZERO:",mcap:"시가총액:",scarcity:"📈 채굴자 적음 = 저렴 • 거의 소진 = 비쌈!",tabMine:"⛏️ 채굴",tabWallet:"💰 지갑",tabTrans:"📤 전송",tabSec:"🛡️ 보안",epoch:"에포크 1",sec:"초",start:"채굴 시작",claim:"ZERO 받기",total:"총 채굴량",halving:"반감기까지",hash:"해시 파워",next:"다음 반감기",epoch2:"에포크 2",walletTitle:"미래 지갑",create:"내 지갑 만들기",copy:"주소 복사",transTitle:"ZERO 전송",price2:"가격:",send:"ZERO 보내기",secTitle:"AI 보안 센터",secDesc:"지갑은 ZERO AI 방화벽으로 보호됩니다",lockTitle:"지갑 잠금",lockBtn:"잠금 / 잠금 해제",scanTitle:"AI 스캔 결과",lastScan:"마지막 스캔:",threats:"위협:",scanBtn:"AI 정밀 스캔 실행",logTitle:"보안 로그",footer:"교육 목적. 채굴 무료. 투자 불필요."},
+ar:{name:"العربية",motto:"صفر اختراق • صفر سرقة • صفر غش",choose:"اختر اللغة",active:"نشط",fw:"الجدار الناري:",ai:"كشف الذكاء الاصطناعي:",blocked:"محظور:",device:"الجهاز:",enc:"التشفير:",priceTitle:"💰 السعر المباشر • نموذج الندرة",yourZero:"ZERO الخاص بك:",mcap:"القيمة السوقية:",scarcity:"📈 قلة المعدنين = رخيص • أوشك على النفاد = غالي!",tabMine:"⛏️ تعدين",tabWallet:"💰 محفظة",tabTrans:"📤 تحويل",tabSec:"🛡️ أمان",epoch:"العصر 1",sec:"ثانية",start:"ابدأ التعدين",claim:"احصل على ZERO",total:"إجمالي التعدين",halving:"التنصيف بعد",hash:"قوة التجزئة",next:"التنصيف القادم",epoch2:"العصر 2",walletTitle:"محفظة المستقبل",create:"إنشاء محفظتي",copy:"نسخ العنوان",transTitle:"تحويل ZERO",price2:"السعر:",send:"إرسال ZERO",secTitle:"مركز أمان الذكاء الاصطناعي",secDesc:"محفظتك محمية بجدار ZERO AI الناري",lockTitle:"قفل المحفظة",lockBtn:"قفل / فتح المحفظة",scanTitle:"نتيجة الفحص",lastScan:"آخر فحص:",threats:"التهديدات:",scanBtn:"تشغيل فحص عميق",logTitle:"سجل الأمان",footer:"لأغراض تعليمية. التعدين مجاني. بدون استثمار."},
+fr:{name:"Français",motto:"ZÉRO HACK • ZÉRO VOL • ZÉRO TRICHE",choose:"CHOISIR LA LANGUE",active:"ACTIF",fw:"Pare-feu:",ai:"Détection IA:",blocked:"Bloqués:",device:"Appareil:",enc:"Chiffrement:",priceTitle:"💰 PRIX EN DIRECT • MODÈLE RARETÉ",yourZero:"Votre ZERO:",mcap:"Capitalisation:",scarcity:"📈 Peu de mineurs = PAS CHER • Presque épuisé = CHER!",tabMine:"⛏️ MINAGE",tabWallet:"💰 PORTEFEUILLE",tabTrans:"📤 TRANSFERT",tabSec:"🛡️ SÉCURITÉ",epoch:"ÉPOQUE 1",sec:"SEC",start:"COMMENCER LE MINAGE",claim:"RÉCLAMER ZERO",total:"TOTAL MINÉ",halving:"HALVING DANS",hash:"PUISSANCE",next:"PROCHAIN HALVING",epoch2:"ÉPOQUE 2",walletTitle:"PORTEFEUILLE FUTUR",create:"CRÉER MON PORTEFEUILLE",copy:"COPIER ADRESSE",transTitle:"TRANSFÉRER ZERO",price2:"Prix:",send:"ENVOYER ZERO",secTitle:"CENTRE SÉCURITÉ IA",secDesc:"Votre portefeuille est protégé par ZERO AI FIREWALL",lockTitle:"Verrouillage",lockBtn:"VERROUILLER / DÉVERROUILLER",scanTitle:"RÉSULTAT SCAN IA",lastScan:"Dernier scan:",threats:"Menaces:",scanBtn:"LANCER SCAN IA",logTitle:"JOURNAL SÉCURITÉ",footer:"À des fins éducatives. Minage GRATUIT. Sans investissement."},
+hi:{name:"हिन्दी",motto:"ज़ीरो हैक • ज़ीरो चोरी • ज़ीरो धोखा",choose:"भाषा चुनें",active:"सक्रिय",fw:"फ़ायरवॉल:",ai:"AI पहचान:",blocked:"ब्लॉक:",device:"डिवाइस:",enc:"एन्क्रिप्शन:",priceTitle:"💰 लाइव कीमत • कमी मॉडल",yourZero:"आपका ZERO:",mcap:"मार्केट कैप:",scarcity:"📈 कम माइनर = सस्ता • खत्म होने वाला = महंगा!",tabMine:"⛏️ माइनिंग",tabWallet:"💰 वॉलेट",tabTrans:"📤 ट्रांसफर",tabSec:"
