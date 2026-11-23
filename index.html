@@ -12,9 +12,7 @@ body{background:#000;color:#fff;font-family:Arial;text-align:center;padding:15px
 .tabs{display:flex;gap:8px;margin-top:18px}
 .tab{flex:1;padding:13px 5px;background:#1a1a1a;color:#fff;border:1px solid #333;border-radius:14px;font-weight:bold;cursor:pointer;font-size:13px}
 .tab.active{background:#00ff88;color:#000;border-color:#00ff88;box-shadow:0 0 15px #00ff88}
-.box{background:radial-gradient(circle at top,#00220f 0%,#000 70%);border:2px solid #00ff88;box-shadow:0 0 30px rgba(0,255,136,.6);border-radius:25px;padding:22px;margin-top:15px;position:relative;overflow:hidden}
-.box::before{content:"";position:absolute;top:-50%;left:-50%;width:200%;height:200%;background:linear-gradient(45deg,transparent 40%,rgba(0,255,136,.12) 50%,transparent 60%);animation:scan 3s linear infinite;pointer-events:none}
-@keyframes scan{0%{transform:translateY(-100%)}100%{transform:translateY(100%)}}
+.box{background:radial-gradient(circle at top,#00220f 0%,#000 70%);border:2px solid #00ff88;box-shadow:0 0 30px rgba(0,255,136,.6);border-radius:25px;padding:22px;margin-top:15px}
 .bal{font-size:52px;font-weight:900;color:#fff;text-shadow:0 0 20px #00ff88}
 .rate{display:inline-block;background:#00ff88;color:#000;padding:7px 14px;border-radius:20px;font-size:12px;font-weight:900}
 .bar-bg{background:#111;border:1px solid #00ff88;height:18px;border-radius:20px;overflow:hidden;margin:15px 0}
@@ -28,6 +26,8 @@ input{width:90%;padding:13px;border-radius:12px;border:none;margin-top:10px;font
 .hidden{display:none}
 .wallet{font-size:12px;word-break:break-all;color:#00ccff;background:#000;padding:10px;border-radius:10px;border:1px dashed #00ccff}
 .hist{text-align:left;font-size:12px;background:#111;padding:10px;border-radius:10px;margin-top:10px}
+.price-box{background:linear-gradient(90deg,#FFD700,#FFA500);color:#000;border-radius:18px;padding:14px;margin-top:15px}
+.price-box b{font-size:26px}
 </style>
 </head>
 <body>
@@ -35,6 +35,15 @@ input{width:90%;padding:13px;border-radius:12px;border:none;margin-top:10px;font
 <div class="sub">⚡ ZERO BLOCKCHAIN • SYSTEM ONLINE ⚡</div>
 <div class="logo">ZERO</div>
 <div class="sub">ZERO HACK • ZERO NAKAW • ZERO DAYA</div>
+
+<!-- PRESYO NG ZERO - BAGO! -->
+<div class="price-box">
+<div style="font-size:11px;letter-spacing:2px">💰 LIVE PRICE • SCARCITY MODEL</div>
+<div><b>₱<span id="price">0.10</span></b> <span style="font-size:12px">/ 1 ZERO</span></div>
+<div style="font-size:11px">≈ $<span id="priceUSD">0.0017</span> USD • <span id="priceChange" style="font-weight:bold">🟢 +0.01% TODAY</span></div>
+<div style="font-size:11px;margin-top:6px">Yung ZERO mo: <b>₱<span id="myValue">0.00</span></b> • Market Cap: <b>₱<span id="mcap">1.00</span></b></div>
+<div style="font-size:10px;margin-top:6px">📈 Kunti pa nagmimina = MURA PA • Paubos na = MAHAL NA!</div>
+</div>
 
 <div class="tabs">
 <button class="tab active" onclick="showTab('mining',this)">⛏️ MINING</button>
@@ -46,6 +55,7 @@ input{width:90%;padding:13px;border-radius:12px;border:none;margin-top:10px;font
 <div id="tab-mining">
 <div><span class="rate">EPOCH 1 • <span id="rate">10 ZERO / MIN</span></span></div>
 <div class="bal"><span id="bal1">0.00</span> <span style="font-size:18px;color:#00ff88">ZERO</span></div>
+<div style="font-size:12px;color:#FFD700">≈ ₱<span id="balValue1">0.00</span> PESOS</div>
 <div class="bar-bg"><div class="bar" id="bar"></div></div>
 <div id="status" style="font-size:12px">>> SYSTEM READY. PRESS START <<</div>
 <div style="font-size:12px;margin-top:8px">⏰ <b id="timer" style="color:#00ff88">60</b> SEC</div>
@@ -57,6 +67,7 @@ input{width:90%;padding:13px;border-radius:12px;border:none;margin-top:10px;font
 <div class="card">HASH POWER<b>⚡ 1.2 TH/s</b>FUTURE RIG</div>
 <div class="card">NEXT HALVING<b>5 ZERO</b>EPOCH 2</div>
 </div>
+<div class="card" style="margin-top:10px">📊 PRICE TABLE<br><span style="font-size:11px">0 mined = ₱0.10 • 250K mined = ₱25.07 • 500K mined = ₱50.05 • 1M mined = ₱100.00</span></div>
 </div>
 
 <div id="tab-wallet" class="hidden">
@@ -65,14 +76,15 @@ input{width:90%;padding:13px;border-radius:12px;border:none;margin-top:10px;font
 <div id="hasWallet" class="hidden">
 <div class="wallet" id="myAddr"></div>
 <div class="bal" style="font-size:36px"><span id="bal2">0.00</span> ZERO</div>
+<div style="color:#FFD700;font-weight:bold">≈ ₱<span id="balValue2">0.00</span> PESOS</div>
 <button class="btn2" onclick="copyAddr()">📋 COPY ADDRESS</button>
-<p style="font-size:11px;color:#888">I-send mo address mo sa Messenger para ma-send-an kita ng FREE ZERO!</p>
 </div>
 </div>
 
 <div id="tab-transfer" class="hidden">
 <h3>📤 TRANSFER ZERO</h3>
 <div class="bal" style="font-size:36px"><span id="bal3">0.00</span> ZERO</div>
+<div style="color:#FFD700">≈ ₱<span id="balValue3">0.00</span> • Price: ₱<span id="price3">0.10</span>/ZERO</div>
 <input id="toAddr" placeholder="Wallet address ng papadalhan">
 <input id="amount" type="number" placeholder="Ilan ZERO? Ex: 5">
 <button class="btn" onclick="sendZero()">🚀 SEND ZERO</button>
@@ -80,7 +92,7 @@ input{width:90%;padding:13px;border-radius:12px;border:none;margin-top:10px;font
 </div>
 </div>
 
-<p style="font-size:10px;color:#666;margin-top:12px">POWERED BY ZERO BLOCKCHAIN • 2099 PROTOCOL • TESTNET</p>
+<p style="font-size:10px;color:#666;margin-top:12px">POWERED BY ZERO BLOCKCHAIN • 2099 PROTOCOL • TESTNET • Presyo ay base sa scarcity, hindi pa totoong pera</p>
 </div>
 
 <script>
@@ -89,6 +101,7 @@ var totalMined = parseInt(localStorage.getItem('zero_total') || 0);
 var wallet = localStorage.getItem('zero_wallet_addr');
 var hist = JSON.parse(localStorage.getItem('zero_hist') || '[]');
 var mining = false, sec = 60, pending = 0, interval = null;
+function getPrice(){ return 0.10 + (totalMined / 1000000) * 99.90; }
 function showTab(n, el){
   document.getElementById('tab-mining').classList.add('hidden');
   document.getElementById('tab-wallet').classList.add('hidden');
@@ -101,9 +114,21 @@ function showTab(n, el){
 }
 function getRate(){ if(totalMined < 1000000) return 10; return 5; }
 function update(){
+  var price = getPrice();
+  var myVal = balance * price;
+  var mcap = totalMined * price;
+  document.getElementById('price').innerText = price.toFixed(2);
+  document.getElementById('priceUSD').innerText = (price/58).toFixed(4);
+  document.getElementById('price3').innerText = price.toFixed(2);
+  document.getElementById('myValue').innerText = myVal.toFixed(2);
+  document.getElementById('mcap').innerText = mcap.toLocaleString(undefined,{maximumFractionDigits:2});
+  document.getElementById('priceChange').innerText = "🟢 +" + (totalMined/10000).toFixed(2) + "% SINCE START";
   document.getElementById('bal1').innerText = balance.toFixed(2);
   document.getElementById('bal2').innerText = balance.toFixed(2);
   document.getElementById('bal3').innerText = balance.toFixed(2);
+  document.getElementById('balValue1').innerText = myVal.toFixed(2);
+  document.getElementById('balValue2').innerText = myVal.toFixed(2);
+  document.getElementById('balValue3').innerText = myVal.toFixed(2);
   document.getElementById('rate').innerText = getRate() + " ZERO / MIN";
   document.getElementById('totalMined').innerText = totalMined.toLocaleString();
   document.getElementById('left').innerText = Math.max(0,1000000-totalMined).toLocaleString();
@@ -127,7 +152,7 @@ function claim(){
   if(pending<=0){ alert("Magmina ka muna boss!"); return; }
   balance=balance+pending; totalMined=totalMined+Math.floor(pending);
   localStorage.setItem('zero_bal',balance); localStorage.setItem('zero_total',totalMined);
-  alert("🚀 CLAIM SUCCESS! +"+pending.toFixed(2)+" ZERO!"); pending=0;
+  alert("🚀 CLAIM SUCCESS! +"+pending.toFixed(2)+" ZERO! Presyo ngayon ₱"+getPrice().toFixed(2)+"!"); pending=0;
   document.getElementById('bar').style.width="0%"; document.getElementById('timer').innerText="60";
   update();
 }
@@ -142,9 +167,10 @@ function sendZero(){
   if(!to||!amt){ alert("Lagyan mo address at amount!"); return; }
   if(amt>balance){ alert("Kulang balance! Magmina ka muna!"); return; }
   balance=balance-amt; localStorage.setItem('zero_bal',balance);
-  hist.push("✅ Nag-send ka ng "+amt+" ZERO kay "+to.substring(0,10)+"...");
+  var val = (amt*getPrice()).toFixed(2);
+  hist.push("✅ Nag-send ka ng "+amt+" ZERO (₱"+val+") kay "+to.substring(0,10)+"...");
   localStorage.setItem('zero_hist',JSON.stringify(hist));
-  alert("SUCCESS! Na-send mo "+amt+" ZERO!"); update();
+  alert("SUCCESS! Na-send mo "+amt+" ZERO (≈ ₱"+val+")!"); update();
 }
 update();
 </script>
