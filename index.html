@@ -3,31 +3,39 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>ZERO BLOCKCHAIN - Mina, Wallet, Transfer</title>
+<title>ZERO BLOCKCHAIN - Future Mining</title>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700;900&display=swap" rel="stylesheet">
 <style>
-body{background:#000;color:#fff;font-family:Arial;text-align:center;padding:15px;margin:0}
-.box{background:#111;border:2px solid #00ff88;border-radius:20px;padding:18px;max-width:430px;margin:auto}
-h1{color:#00ff88;font-size:26px;margin:5px}
-.tabs{display:flex;gap:8px;margin:15px 0}
-.tab{flex:1;padding:12px;background:#222;color:#fff;border:none;border-radius:12px;font-weight:bold;cursor:pointer}
+body{background:#000;color:#fff;font-family:'Orbitron',Arial,sans-serif;text-align:center;padding:15px;margin:0}
+.top{max-width:430px;margin:auto}
+.logo{font-size:32px;color:#00ff88;text-shadow:0 0 20px #00ff88;letter-spacing:3px}
+.sub{font-size:11px;letter-spacing:2px;color:#aaa}
+.box{background:radial-gradient(circle at top,#001a0d 0%,#000 70%);border:2px solid #00ff88;box-shadow:0 0 30px #00ff88;border-radius:25px;padding:20px;margin-top:18px;position:relative;overflow:hidden}
+.box::before{content:"";position:absolute;top:-50%;left:-50%;width:200%;height:200%;background:linear-gradient(45deg,transparent 40%,rgba(0,255,136,.15) 50%,transparent 60%);animation:scan 3s linear infinite;pointer-events:none}
+@keyframes scan{0%{transform:translateY(-100%)}100%{transform:translateY(100%)}}
+.bal{font-size:52px;font-weight:900;text-shadow:0 0 20px #00ff88}
+.rate{display:inline-block;background:#00ff88;color:#000;padding:6px 14px;border-radius:20px;font-size:12px;font-weight:900}
+.bar-bg{background:#111;border:1px solid #00ff88;height:18px;border-radius:20px;overflow:hidden;margin:15px 0}
+.bar{background:linear-gradient(90deg,#00ff88,#00ccff);height:100%;width:0%;box-shadow:0 0 15px #00ff88}
+.btn{background:linear-gradient(90deg,#00ff88,#00ccff);color:#000;border:none;padding:15px;font-size:14px;font-weight:900;border-radius:50px;width:100%;cursor:pointer;box-shadow:0 0 20px #00ff88;margin-top:10px;font-family:'Orbitron'}
+.btn2{background:transparent;color:#00ff88;border:2px solid #00ff88;padding:13px;font-size:12px;font-weight:700;border-radius:50px;width:100%;cursor:pointer;margin-top:10px;font-family:'Orbitron'}
+input{width:90%;padding:12px;border-radius:10px;border:none;margin-top:10px;font-size:14px;font-family:Arial}
+.tabs{display:flex;gap:8px;margin-top:15px}
+.tab{flex:1;padding:12px;background:#222;color:#fff;border:none;border-radius:12px;font-weight:bold;cursor:pointer;font-family:'Orbitron';font-size:11px}
 .tab.active{background:#00ff88;color:#000}
-.balance{font-size:44px;color:#00ff88;font-weight:bold}
-button{background:#00ff88;color:#000;border:none;padding:14px;font-size:16px;font-weight:bold;border-radius:50px;cursor:pointer;width:100%;margin-top:10px}
-button:disabled{background:#333;color:#888}
-button.white{background:#fff}
-input{width:90%;padding:12px;border-radius:10px;border:none;margin-top:10px;font-size:14px}
-.progress{background:#333;height:20px;border-radius:10px;overflow:hidden;margin:12px 0}
-.bar{background:#00ff88;height:100%;width:0%}
-.addr{background:#222;padding:10px;border-radius:10px;word-break:break-all;font-size:12px}
-.hist{text-align:left;font-size:13px;background:#1a1a1a;padding:10px;border-radius:10px;margin-top:10px}
-.halving{background:#1a1a1a;padding:12px;border-radius:12px;margin-top:12px;text-align:left;font-size:13px}
+.info{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:15px}
+.card{background:rgba(255,255,255,.05);border:1px solid rgba(0,255,136,.4);border-radius:15px;padding:10px;font-size:11px}
+.card b{font-size:15px;color:#00ff88;display:block}
 .hidden{display:none}
+.wallet{font-size:10px;word-break:break-all;color:#00ccff;margin-top:10px;background:#000;padding:8px;border-radius:10px;border:1px dashed #00ccff}
+.hist{text-align:left;font-size:12px;background:#111;padding:10px;border-radius:10px;margin-top:10px;font-family:Arial}
 </style>
 </head>
 <body>
-<div class="box">
-<p>🇵🇭 ZERO BLOCKCHAIN</p>
-<h1>Zero Hack • Zero Nakaw • Zero Daya</h1>
+<div class="top">
+<div class="sub">⚡ ZERO BLOCKCHAIN • SYSTEM ONLINE ⚡</div>
+<div class="logo">ZERO</div>
+<div class="sub">ZERO HACK • ZERO NAKAW • ZERO DAYA</div>
 
 <div class="tabs">
 <button class="tab active" onclick="showTab('mining',this)">⛏️ MINING</button>
@@ -35,115 +43,42 @@ input{width:90%;padding:12px;border-radius:10px;border:none;margin-top:10px;font
 <button class="tab" onclick="showTab('transfer',this)">📤 TRANSFER</button>
 </div>
 
-<!-- MINING TAB -->
+<div class="box">
 <div id="tab-mining">
-<p><b>EPOCH 1 - LIVE 🔥</b><br>Reward: <span id="rate">10 ZERO / min</span></p>
-<div class="balance"><span id="bal1">0.00</span> ZERO</div>
-<div class="progress"><div class="bar" id="bar"></div></div>
-<p id="status">Pindutin START para magmina</p>
-<p>⏰ <span id="timer">60</span> sec</p>
-<button id="mineBtn" onclick="startMining()">▶ START MINING</button>
-<button class="white" onclick="claim()">💰 CLAIM ZERO</button>
-<div class="halving">
-<b>🔥 HALVING SCHEDULE</b><br>
-✅ Epoch 1: 10 ZERO / min - ACTIVE<br>
-⏳ Epoch 2: 5 ZERO / min<br>
-⏳ Epoch 3: 2.5 ZERO / min<br>
-⏳ Epoch 4: 1.25 ZERO / min<br><br>
-Total Mined: <b><span id="totalMined">0</span> / 1,000,000</b><br>
-Halving in: <b><span id="left">1,000,000</span> ZERO</b>
+<div><span class="rate">EPOCH 1 • <span id="rate">10 ZERO / MIN</span></span></div>
+<div class="bal"><span id="bal1">0.00</span> <span style="font-size:18px;color:#00ff88">ZERO</span></div>
+<div class="bar-bg"><div class="bar" id="bar"></div></div>
+<div id="status" style="font-size:12px">>> SYSTEM READY. PRESS START <<</div>
+<div style="font-size:12px;margin-top:8px">⏰ <b id="timer" style="color:#00ff88">60</b> SEC</div>
+<button class="btn" id="mineBtn" onclick="startMining()">▶ START MINING</button>
+<button class="btn2" onclick="claim()">💰 CLAIM ZERO</button>
+<div class="info">
+<div class="card">TOTAL MINED<b><span id="totalMined">0</span></b>/ 1,000,000</div>
+<div class="card">HALVING IN<b><span id="left">1,000,000</span></b>ZERO</div>
+<div class="card">HASH POWER<b>⚡ 1.2 TH/s</b>FUTURE RIG</div>
+<div class="card">NEXT HALVING<b>5 ZERO</b>EPOCH 2</div>
 </div>
 </div>
 
-<!-- WALLET TAB -->
 <div id="tab-wallet" class="hidden">
-<p>YOUR WALLET ADDRESS</p>
-<div id="noWallet"><button onclick="createWallet()">✨ CREATE MY ZERO WALLET</button></div>
+<h3>💰 FUTURE WALLET</h3>
+<div id="noWallet"><button class="btn" onclick="createWallet()">✨ CREATE MY WALLET</button></div>
 <div id="hasWallet" class="hidden">
-<div class="addr" id="myAddr"></div>
-<div class="balance"><span id="bal2">0.00</span> ZERO</div>
-<button onclick="copyAddr()" style="background:#333;color:#fff">📋 COPY MY ADDRESS</button>
-<p style="font-size:12px;color:#888">I-send mo tong address mo sa Messenger para ma-send-an kita ng FREE ZERO!</p>
+<div class="wallet" id="myAddr"></div>
+<div class="bal" style="font-size:36px"><span id="bal2">0.00</span> ZERO</div>
+<button class="btn2" onclick="copyAddr()">📋 COPY ADDRESS</button>
+<p style="font-size:11px;color:#888;font-family:Arial">I-send mo address mo sa Messenger para ma-send-an kita ng FREE ZERO!</p>
 </div>
 </div>
 
-<!-- TRANSFER TAB -->
 <div id="tab-transfer" class="hidden">
-<p>YOUR BALANCE</p>
-<div class="balance"><span id="bal3">0.00</span> ZERO</div>
+<h3>📤 TRANSFER ZERO</h3>
+<div class="bal" style="font-size:36px"><span id="bal3">0.00</span> ZERO</div>
 <input id="toAddr" placeholder="Wallet address ng papadalhan">
 <input id="amount" type="number" placeholder="Ilan ZERO? Ex: 5">
-<button onclick="sendZero()" style="background:#fff">🚀 SEND ZERO</button>
+<button class="btn" onclick="sendZero()">🚀 SEND ZERO</button>
 <div class="hist" id="hist"><b>📜 History:</b><br>Wala pa</div>
 </div>
-
-<p style="font-size:11px;color:#888;margin-top:15px">⚠️ TESTNET pa lang. Pang-community lang muna. Wag mag-send ng totoong pera.<br><a href="#" style="color:#00ff88">Message us sa Messenger: Type WALLET</a></p>
 </div>
 
-<script>
-let balance = parseFloat(localStorage.getItem('zero_bal') || 0);
-let totalMined = parseInt(localStorage.getItem('zero_total') || 0);
-let wallet = localStorage.getItem('zero_wallet_addr');
-let hist = JSON.parse(localStorage.getItem('zero_hist') || '[]');
-let mining=false, sec=60, pending=0, interval;
-
-function showTab(name, el){
-  ['mining','wallet','transfer'].forEach(t=>{ document.getElementById('tab-'+t).classList.add('hidden'); });
-  document.getElementById('tab-'+name).classList.remove('hidden');
-  document.querySelectorAll('.tab').forEach(b=>b.classList.remove('active'));
-  el.classList.add('active');
-  update();
-}
-function getRate(){ if(totalMined<1000000) return 10; if(totalMined<2000000) return 5; if(totalMined<3000000) return 2.5; return 1.25; }
-function update(){
-  document.getElementById('bal1').innerText=balance.toFixed(2);
-  document.getElementById('bal2').innerText=balance.toFixed(2);
-  document.getElementById('bal3').innerText=balance.toFixed(2);
-  document.getElementById('rate').innerText=getRate()+" ZERO / min";
-  document.getElementById('totalMined').innerText=totalMined.toLocaleString();
-  document.getElementById('left').innerText=Math.max(0,1000000-totalMined).toLocaleString();
-  if(wallet){
-    document.getElementById('noWallet').classList.add('hidden');
-    document.getElementById('hasWallet').classList.remove('hidden');
-    document.getElementById('myAddr').innerText=wallet;
-  }
-  let h="<b>📜 History:</b><br>"; if(hist.length==0) h+="Wala pa"; hist.slice().reverse().forEach(t=>{h+=t+"<br>";});
-  document.getElementById('hist').innerHTML=h;
-}
-function startMining(){
-  if(mining) return; mining=true; sec=60; pending=0;
-  document.getElementById('mineBtn').disabled=true; document.getElementById('mineBtn').innerText="⛏️ MINING...";
-  interval=setInterval(()=>{
-    sec--; pending=(getRate()*(60-sec)/60);
-    document.getElementById('timer').innerText=sec;
-    document.getElementById('bar').style.width=((60-sec)/60*100)+"%";
-    document.getElementById('status').innerText="Mining... +"+pending.toFixed(2)+" ZERO";
-    if(sec<=0){ clearInterval(interval); mining=false; document.getElementById('mineBtn').disabled=false; document.getElementById('mineBtn').innerText="▶ START MINING ULIT"; document.getElementById('status').innerText="Tapos na! Pindutin CLAIM!"; }
-  },1000);
-}
-function claim(){
-  if(pending<=0){ alert("Magmina ka muna boss! Pindutin START MINING"); return; }
-  balance+=pending; totalMined+=Math.floor(pending);
-  localStorage.setItem('zero_bal',balance); localStorage.setItem('zero_total',totalMined);
-  alert("Congrats! Naka-claim ka ng "+pending.toFixed(2)+" ZERO!");
-  pending=0; document.getElementById('bar').style.width="0%"; document.getElementById('timer').innerText="60"; document.getElementById('status').innerText="Na-claim mo na! Mina ulit!";
-  update();
-}
-function createWallet(){
-  let rand='ZERO'+Math.random().toString(36).substring(2,10).toUpperCase()+Math.random().toString(36).substring(2,10).toUpperCase();
-  localStorage.setItem('zero_wallet_addr',rand); wallet=rand; alert('Congrats! Wallet mo: '+rand); update();
-}
-function copyAddr(){ navigator.clipboard.writeText(wallet); alert('Na-copy na! Send mo sa Messenger!'); }
-function sendZero(){
-  let to=document.getElementById('toAddr').value.trim(); let amt=parseFloat(document.getElementById('amount').value);
-  if(!to||!amt){ alert('Lagyan mo address at amount boss!'); return; }
-  if(amt>balance){ alert('Kulang balance mo! Magmina ka muna!'); return; }
-  balance-=amt; localStorage.setItem('zero_bal',balance);
-  let tx="✅ Nag-send ka ng "+amt+" ZERO kay "+to.substring(0,10)+"...";
-  hist.push(tx); localStorage.setItem('zero_hist',JSON.stringify(hist));
-  alert('SUCCESS! Na-send mo na '+amt+' ZERO!'); update();
-}
-update();
-</script>
-</body>
-                        </html>
+<p style="font-size:10px;color:#666;margin-top:12px">
