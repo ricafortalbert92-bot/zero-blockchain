@@ -3,28 +3,37 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>ZERO Exchange - Mining Platform</title>
+<title>ZERO Exchange - Real Login</title>
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
 <style>
 *{box-sizing:border-box;margin:0;padding:0}body{background:#070b14;color:#e8ecf3;font-family:Inter,Arial,sans-serif}
+/* LOGIN SCREEN - FULL SCREEN */
+.auth-wrap{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:16px;background:radial-gradient(600px 300px at 50% 0%,#0e2a3a,transparent),#070b14}
+.auth-card{width:100%;max-width:400px;background:#0d1424;border:1px solid #1a2233;border-radius:20px;padding:24px;text-align:center}
+.auth-logo{font-size:32px;font-weight:900}.auth-logo b{color:#3ddcff}.auth-logo span{color:#fff}
+.auth-sub{color:#9aa7bd;font-size:13px;margin:8px 0 16px}
+.auth-tabs{display:flex;background:#070b14;border-radius:12px;padding:4px;margin-bottom:14px}.auth-tabs button{flex:1;background:transparent;color:#9aa7bd;border:none;padding:10px;border-radius:10px;font-weight:800;cursor:pointer}.auth-tabs button.active{background:#3ddcff;color:#000}
+.auth-input{width:100%;padding:13px;border-radius:12px;border:none;margin-top:10px;font-size:14px;text-align:left;background:#fff;color:#000}
+.auth-btn{width:100%;border:none;padding:14px;border-radius:12px;font-weight:900;font-size:15px;cursor:pointer;margin-top:14px;background:#3ddcff;color:#000}
+.auth-btn2{width:100%;border:1px solid #1e293b;background:transparent;color:#fff;padding:12px;border-radius:12px;font-weight:700;cursor:pointer;margin-top:8px}
+.auth-note{font-size:11px;color:#9aa7bd;line-height:1.6;margin-top:12px}
 .header{background:#070b14;padding:14px 18px;display:flex;justify-content:space-between;align-items:center;position:sticky;top:0;z-index:100;border-bottom:1px solid #1a2233}
-.logo{font-size:32px;font-weight:900;letter-spacing:1px}.logo b{color:#3ddcff}.logo span{color:#fff}
-.hright{display:flex;align-items:center;gap:14px;font-size:13px;text-align:right}.hright b{font-size:14px}.dot{color:#0ecb81}
-.avatar{width:42px;height:42px;background:#1e293b;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:900;position:relative}.pro{position:absolute;top:-6px;right:-8px;background:#3ddcff;color:#000;font-size:10px;padding:2px 6px;border-radius:6px;font-weight:900}
+.logo{font-size:30px;font-weight:900}.logo b{color:#3ddcff}.logo span{color:#fff}
+.hright{display:flex;align-items:center;gap:12px;font-size:13px;text-align:right}.dot{color:#0ecb81}
+.avatar{width:42px;height:42px;background:#1e293b;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:900;position:relative;cursor:pointer}.pro{position:absolute;top:-6px;right:-8px;background:#3ddcff;color:#000;font-size:10px;padding:2px 6px;border-radius:6px;font-weight:900}
+.user-menu{position:absolute;top:60px;right:16px;background:#0d1424;border:1px solid #1a2233;border-radius:14px;padding:12px;width:230px;display:none;z-index:200}.user-menu.show{display:block}.user-menu b{display:block;font-size:14px}.user-menu small{color:#9aa7bd}.user-menu button{width:100%;border:none;padding:11px;border-radius:10px;margin-top:8px;cursor:pointer;font-weight:800}.btn-out{background:#f6465d;color:#fff}.btn-prof{background:#1e293b;color:#fff}
 .nav{max-width:1440px;margin:auto;padding:12px 18px;display:flex;gap:6px;overflow-x:auto;white-space:nowrap}
 .nav button{background:#101826;color:#9aa7bd;border:none;padding:9px 14px;border-radius:8px;font-size:13px;cursor:pointer;font-weight:600}.nav button.active{background:#0e1a2e;color:#3ddcff;border-bottom:2px solid #3ddcff}.nav button.mining-active{background:#0e1a2e;color:#fff;border-bottom:2px solid #3ddcff}
 .wrap{max-width:1440px;margin:auto;padding:0 18px 20px}
-.title{font-size:32px;font-weight:900;margin-top:6px}.subtitle{color:#9aa7bd;font-size:14px;margin-top:4px}
-.grid3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px;margin-top:18px}
-@media(max-width:900px){.grid3{grid-template-columns:1fr}}
-.card{background:#0d1424;border:1px solid #1a2233;border-radius:16px;padding:18px}
-.card h3{font-size:18px;margin-bottom:12px}.card p{font-size:13px;color:#9aa7bd;line-height:1.6}
-.hash{font-size:42px;font-weight:900;color:#3ddcff}
-.bar{height:8px;background:#1e293b;border-radius:20px;overflow:hidden;margin:8px 0}.bar i{display:block;height:100%;background:#3ddcff;width:98.4%}
-.btn{width:100%;border:none;padding:13px;border-radius:10px;font-weight:800;font-size:14px;cursor:pointer;margin-top:12px}.btn-outline{background:transparent;color:#fff;border:1px solid #3ddcff}.btn-cyan{background:#3ddcff;color:#000}.btn-gold{background:#f0b90b;color:#000}.btn-dark{background:#1e293b;color:#fff}
-.earn{font-size:32px;font-weight:900;color:#3ddcff}
-table{width:100%;border-collapse:collapse;font-size:13px;margin-top:12px}th{text-align:left;color:#fff;padding:12px 10px;border-bottom:1px solid #1a2233}td{padding:14px 10px;border-bottom:1px solid #131c2e;color:#dbe2ef}
+.title{font-size:30px;font-weight:900;margin-top:6px}.subtitle{color:#9aa7bd;font-size:14px;margin-top:4px}
+.grid3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px;margin-top:18px}@media(max-width:900px){.grid3{grid-template-columns:1fr}}
+.card{background:#0d1424;border:1px solid #1a2233;border-radius:16px;padding:18px}.card h3{font-size:18px;margin-bottom:12px}.card p{font-size:13px;color:#9aa7bd;line-height:1.6}
+.hash{font-size:40px;font-weight:900;color:#3ddcff}.bar{height:8px;background:#1e293b;border-radius:20px;overflow:hidden;margin:8px 0}.bar i{display:block;height:100%;background:#3ddcff;width:98.4%}
+.btn{width:100%;border:none;padding:13px;border-radius:10px;font-weight:800;font-size:14px;cursor:pointer;margin-top:12px}.btn-outline{background:transparent;color:#fff;border:1px solid #3ddcff}.btn-cyan{background:#3ddcff;color:#000}.btn-gold{background:#f0b90b;color:#000}
+.earn{font-size:30px;font-weight:900;color:#3ddcff}
+table{width:100%;border-collapse:collapse;font-size:13px;margin-top:12px}th{text-align:left;padding:12px 10px;border-bottom:1px solid #1a2233}td{padding:14px 10px;border-bottom:1px solid #131c2e;color:#dbe2ef}
 .badge{display:inline-block;padding:4px 10px;border-radius:8px;font-size:11px;font-weight:800}.rec{background:#3ddcff;color:#000}.active{background:#22c55e;color:#fff}.stable{background:#3b82f6;color:#fff}
 canvas{width:100%;background:#0a0f1e;border-radius:10px;margin-top:10px}
 .footer{margin-top:14px;background:#0d1424;border:1px solid #1a2233;border-radius:14px;padding:12px 16px;display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px;font-size:12px;color:#9aa7bd}
@@ -37,13 +46,31 @@ input,select{width:100%;padding:12px;border-radius:10px;border:none;margin-top:8
 <body>
 <div class="notif" id="notif"></div>
 
-<!-- HEADER - GAYA SA PICTURE! -->
-<div class="header">
-<div class="logo">◆ <b>ZERO</b> <span>Exchange</span></div>
-<div class="hright"><div><b><span id="usdtTop">0.8452</span> USDT</b><br><span class="dot">●</span> Connected</div><div style="font-size:22px">🔔</div><div class="avatar">JD<span class="pro">Pro</span></div></div>
+<!-- LOGIN / SIGN UP - REAL USER! -->
+<div id="authScreen" class="auth-wrap">
+<div class="auth-card">
+<div class="auth-logo">◆ <b>ZERO</b> <span>Exchange</span></div>
+<div class="auth-sub">Real User Account — Mag Sign Up o Log In para mag-trade at mag-mine!</div>
+<div class="auth-tabs"><button id="tabLogin" class="active" onclick="switchAuth('login')">LOG IN</button><button id="tabSignup" onclick="switchAuth('signup')">SIGN UP</button></div>
+<div id="signupFields" class="hidden"><input id="regName" class="auth-input" placeholder="Full Name — Ex: Juan Dela Cruz"></div>
+<input id="authEmail" class="auth-input" type="email" placeholder="Email — Ex: juan@gmail.com">
+<input id="authPass" class="auth-input" type="password" placeholder="Password — Min 6 characters">
+<input id="authPass2" class="auth-input hidden" type="password" placeholder="Confirm Password">
+<button class="auth-btn" id="authMainBtn" onclick="doAuth()">LOG IN →</button>
+<button class="auth-btn2" onclick="demoLogin()">👀 Try Demo Account — No Sign Up</button>
+<div class="auth-note">✅ Bawat user, may sariling Wallet, Balance at Mining!<br>✅ Pag nag-Log Out ka, naka-save pa rin balance mo pag balik mo!<br>⚠️ Demo pa lang ito sa browser. Para sa 100% real login sa lahat ng device, i-enable mo ang Firebase Auth sa Firebase Console (libre lang).</div>
+<div id="authError" style="color:#f6465d;font-size:12px;margin-top:10px"></div>
+</div>
 </div>
 
-<!-- TABS - LAHAT NANDITO! -->
+<!-- MAIN APP - NAKA-TAGO HANGGANG NAKA-LOGIN! -->
+<div id="appScreen" class="hidden">
+<div class="header">
+<div class="logo">◆ <b>ZERO</b> <span>Exchange</span></div>
+<div class="hright"><div><b><span id="usdtTop">0.84</span> USDT</b><br><span class="dot">●</span> Connected • <span id="headerName">JD</span></div><div style="font-size:22px">🔔</div><div class="avatar" onclick="toggleUserMenu()"><span id="avatarInit">JD</span><span class="pro">Pro</span></div></div>
+<div class="user-menu" id="userMenu"><b id="menuName">Juan Dela Cruz</b><small id="menuEmail">juan@gmail.com</small><small style="display:block;margin-top:6px">Wallet: <span id="menuWallet" style="color:#3ddcff">ZERO...</span></small><button class="btn-prof" onclick="showTab('wallet');toggleUserMenu()">💰 My Wallet</button><button class="btn-prof" onclick="showTab('settings');toggleUserMenu()">⚙️ Settings</button><button class="btn-out" onclick="doLogout()">🚪 LOG OUT</button></div>
+</div>
+
 <div class="nav">
 <button onclick="showTab('dashboard')" id="tab-dashboard">Dashboard</button>
 <button onclick="showTab('trade')" id="tab-trade">Trade</button>
@@ -57,127 +84,151 @@ input,select{width:100%;padding:12px;border-radius:10px;border:none;margin-top:8
 </div>
 
 <div class="wrap">
-
-<!-- DASHBOARD / TRADE / MARKETS / WALLET / ETC - MALINIS, NAKA-TAGO PAG MINING LANG -->
 <div id="page-dashboard" class="hidden">
-<div class="title">Dashboard</div><div class="subtitle">Welcome back, JD — Your ZERO Overview</div>
-<div class="grid3"><div class="card"><h3>💰 Total Balance</h3><div class="earn"><span id="balDash">0.00</span> ZERO</div><p>≈ $<span id="usdtDash">0.84</span> USDT • Wallet Balance</p></div>
-<div class="card"><h3>📈 Today P&L</h3><div class="earn" style="color:#22c55e">+2.18%</div><p>BTC / ZERO +4.32% • ETH / ZERO +2.18%</p></div>
+<div class="title">Welcome, <span id="dashName">JD</span> 👋</div><div class="subtitle">Your ZERO Overview — <span id="dashEmail">juan@gmail.com</span></div>
+<div class="grid3"><div class="card"><h3>💰 Total Balance</h3><div class="earn"><span id="balDash">0.00</span> ZERO</div><p>≈ $<span id="usdtDash">0.84</span> USDT</p></div>
+<div class="card"><h3>📈 Today P&L</h3><div class="earn" style="color:#22c55e">+2.18%</div><p>BTC / ZERO +4.32%</p></div>
 <div class="card"><h3>⛏️ Mining Today</h3><div class="earn"><span id="todayDash">0.0245</span> ZERO</div><p>Hashrate: <span id="hashDash">1.24</span> GH/s • Active</p></div></div>
-<div class="card" style="margin-top:16px"><h3>📊 Quick Chart — ZERO / USDT</h3><canvas id="dashChart" width="800" height="220"></canvas><p>Live Price: ₱<span id="dashPrice">0.10</span> • <span style="color:#22c55e">+0.01%</span></p></div>
+<div class="card" style="margin-top:16px"><h3>📊 Quick Chart — ZERO / USDT</h3><canvas id="dashChart" width="800" height="220"></canvas><p>Live: ₱<span id="dashPrice">0.10</span></p></div>
 </div>
 
 <div id="page-trade" class="hidden">
 <div class="title">Trade</div><div class="subtitle">ZERO / USDT • Spot • Live</div>
 <div class="grid3"><div class="card"><h3>📊 Chart</h3><div class="earn">₱<span id="livePrice">0.10</span></div><canvas id="tradeChart" width="400" height="200"></canvas><div class="hist" id="tradeHist"><b>Live Trades</b><br>Waiting...</div></div>
 <div class="card"><h3>📖 Order Book</h3><div style="color:#f6465d;font-weight:800;font-size:12px">SELL</div><div id="sellBook"></div><div style="text-align:center;font-size:20px;font-weight:900;color:#3ddcff;margin:10px 0">₱<span class="liveMini">0.10</span></div><div style="color:#22c55e;font-weight:800;font-size:12px">BUY</div><div id="buyBook"></div></div>
-<div class="card"><h3>💱 Buy / Sell</h3><p>Available: <b style="color:#fff"><span class="usdtMini">0.84</span> USDT</b> • <b style="color:#fff"><span class="zeroMini">0.00</span> ZERO</b></p><input id="tradeAmount" type="number" placeholder="Ilan ZERO? Ex: 10"><div style="display:flex;gap:6px;margin-top:8px"><button onclick="setAmt(25)" style="flex:1;background:#1e293b;color:#fff;border:none;padding:9px;border-radius:8px">25%</button><button onclick="setAmt(50)" style="flex:1;background:#1e293b;color:#fff;border:none;padding:9px;border-radius:8px">50%</button><button onclick="setAmt(75)" style="flex:1;background:#1e293b;color:#fff;border:none;padding:9px;border-radius:8px">75%</button><button onclick="setAmt(100)" style="flex:1;background:#3ddcff;color:#000;border:none;padding:9px;border-radius:8px;font-weight:900">MAX</button></div><div style="font-size:12px;color:#9aa7bd;margin-top:8px">Total: ₱<span id="tradeTotal">0.00</span></div><button class="btn" style="background:#22c55e;color:#fff" onclick="buyZero()">BUY ZERO</button><button class="btn" style="background:#f6465d;color:#fff" onclick="sellZero()">SELL ZERO</button><div class="hist" id="myTrades"><b>My Trades</b><br>Wala pa!</div></div></div>
+<div class="card"><h3>💱 Buy / Sell</h3><p>Available: <b style="color:#fff"><span class="usdtMini">0.84</span> USDT</b> • <b style="color:#fff"><span class="zeroMini">0.00</span> ZERO</b></p><input id="tradeAmount" type="number" placeholder="Ilan ZERO?"><div style="display:flex;gap:6px;margin-top:8px"><button onclick="setAmt(25)" style="flex:1;background:#1e293b;color:#fff;border:none;padding:9px;border-radius:8px">25%</button><button onclick="setAmt(50)" style="flex:1;background:#1e293b;color:#fff;border:none;padding:9px;border-radius:8px">50%</button><button onclick="setAmt(75)" style="flex:1;background:#1e293b;color:#fff;border:none;padding:9px;border-radius:8px">75%</button><button onclick="setAmt(100)" style="flex:1;background:#3ddcff;color:#000;border:none;padding:9px;border-radius:8px;font-weight:900">MAX</button></div><div style="font-size:12px;color:#9aa7bd;margin-top:8px">Total: ₱<span id="tradeTotal">0.00</span></div><button class="btn" style="background:#22c55e;color:#fff" onclick="buyZero()">BUY ZERO</button><button class="btn" style="background:#f6465d;color:#fff" onclick="sellZero()">SELL ZERO</button><div class="hist" id="myTrades"><b>My Trades</b><br>Wala pa!</div></div></div>
 </div>
 
 <div id="page-markets" class="hidden">
 <div class="title">Markets</div><div class="subtitle">All Pairs • Live</div>
-<div class="card" style="margin-top:14px"><table><tr><th>Pair</th><th>Price</th><th>24h Change</th><th>Action</th></tr>
+<div class="card" style="margin-top:14px"><table><tr><th>Pair</th><th>Price</th><th>24h</th><th>Action</th></tr>
 <tr><td>BTC / ZERO</td><td>₱2,485,120</td><td style="color:#22c55e">+4.32%</td><td><button onclick="showTab('trade')" style="background:#3ddcff;border:none;padding:6px 12px;border-radius:8px;font-weight:800;cursor:pointer">Trade</button></td></tr>
 <tr><td>ETH / ZERO</td><td>₱145,900</td><td style="color:#22c55e">+2.18%</td><td><button onclick="showTab('trade')" style="background:#3ddcff;border:none;padding:6px 12px;border-radius:8px;font-weight:800;cursor:pointer">Trade</button></td></tr>
-<tr><td>SOL / ZERO</td><td>₱9,210.50</td><td style="color:#22c55e">+6.75%</td><td><button onclick="showTab('trade')" style="background:#3ddcff;border:none;padding:6px 12px;border-radius:8px;font-weight:800;cursor:pointer">Trade</button></td></tr>
 <tr><td>ZERO / USDT</td><td>₱<span class="liveMini">0.10</span></td><td style="color:#22c55e">+1.12%</td><td><button onclick="showTab('trade')" style="background:#3ddcff;border:none;padding:6px 12px;border-radius:8px;font-weight:800;cursor:pointer">Trade</button></td></tr>
 </table></div>
 </div>
 
-<!-- MINING - ITO YUNG NASA PICTURE MO BOSS! -->
 <div id="page-mining">
-<div class="title">Mining</div><div class="subtitle">Earn ZERO by contributing mining power to the network</div>
+<div class="title">Mining</div><div class="subtitle">Earn ZERO by contributing mining power — <b style="color:#3ddcff">Hi, <span class="userNameSpan">JD</span>!</b></div>
 <div class="grid3">
-<!-- MINING STATUS -->
-<div class="card"><h3>Mining Status</h3>
-<p>● Status: <b style="color:#22c55e" id="mineStatus">Active</b></p>
-<p style="margin-top:8px">Mining Pool: <b style="color:#fff" id="minePoolName">ZERO-POOL-01</b></p>
-<p style="margin-top:10px">Hashrate:</p><div class="hash"><span id="hashRate">1.24</span> GH/s</div>
-<p>Accepted Shares: <span id="accepted">12,487</span> &nbsp;|&nbsp; Rejected: <span id="rejected">12</span></p>
-<p style="margin-top:8px">Efficiency: <span id="effText">98.4%</span></p><div class="bar"><i id="effBar"></i></div>
-<button class="btn btn-outline" id="mineBtn" onclick="toggleMining()">■ Stop Mining</button>
-<div style="font-size:12px;color:#9aa7bd;margin-top:10px;text-align:center">⏰ Session: <b style="color:#fff"><span id="mineTimer">60</span> sec</b> • Reward: <b style="color:#fff">+<span id="minePending">0.0032</span> ZERO</b></div>
+<div class="card"><h3>Mining Status</h3><p>● Status: <b style="color:#22c55e" id="mineStatus">Active</b></p><p style="margin-top:8px">Mining Pool: <b style="color:#fff" id="minePoolName">ZERO-POOL-01</b></p><p style="margin-top:10px">Hashrate:</p><div class="hash"><span id="hashRate">1.24</span> GH/s</div><p>Accepted: <span id="accepted">12,487</span> | Rejected: <span id="rejected">12</span></p><p style="margin-top:8px">Efficiency: 98.4%</p><div class="bar"><i></i></div><button class="btn btn-outline" id="mineBtn" onclick="toggleMining()">■ Stop Mining</button><div style="font-size:12px;color:#9aa7bd;margin-top:10px;text-align:center">⏰ Session: <b style="color:#fff"><span id="mineTimer">60</span> sec</b> • Pending: <b style="color:#fff">+<span id="minePending">0.0032</span> ZERO</b></div></div>
+<div class="card"><h3>Mining Rewards</h3><div style="display:flex;gap:12px;align-items:center"><div style="font-size:36px">🪙</div><div><div style="font-size:13px;color:#9aa7bd">Today's Earnings:</div><div class="earn"><span id="todayEarn">0.0245</span> ZERO</div><div style="font-size:13px;color:#9aa7bd">≈ $4.92 USD</div></div></div><p style="margin-top:12px">🕐 Pending: <b style="color:#fff"><span id="pendingEarn">0.0032</span> ZERO</b></p><p style="margin-top:8px">Total Mined (30d): <b style="color:#fff"><span id="totalMined">0.5864</span> ZERO</b></p><button class="btn btn-cyan" onclick="claimRewards()">+ Claim Rewards</button><p style="font-size:11px;text-align:center;margin-top:8px">✅ Claim → Itatabi sa Wallet mo!</p></div>
+<div class="card"><h3>Mining Hardware</h3><div style="font-size:13px;line-height:1.8"><p>Device: <b style="color:#fff">GPU RTX 4090 x1</b></p><p>Temperature: <b style="color:#22c55e">62°C</b></p><p>Power: <b style="color:#22c55e">280W</b></p><p>Uptime: <b style="color:#fff">14h 22m</b></p></div><p style="margin-top:10px">Hashrate (24h)</p><canvas id="hashChart" width="400" height="120"></canvas><div style="display:flex;justify-content:space-between;font-size:11px;color:#9aa7bd"><span>00:00</span><span>06:00</span><span>12:00</span><span>18:00</span><span>24:00</span></div></div>
 </div>
-<!-- MINING REWARDS -->
-<div class="card"><h3>Mining Rewards</h3>
-<div style="display:flex;gap:12px;align-items:center"><div style="font-size:36px">🪙</div><div><div style="font-size:13px;color:#9aa7bd">Today's Earnings:</div><div class="earn"><span id="todayEarn">0.0245</span> ZERO</div><div style="font-size:13px;color:#9aa7bd">≈ $4.92 USD</div></div></div>
-<p style="margin-top:12px">🕐 Pending: <b style="color:#fff"><span id="pendingEarn">0.0032</span> ZERO</b><br>Payout in <span id="payoutIn">02:14:35</span></p>
-<p style="margin-top:8px">Total Mined (30d):<br><b style="color:#fff"><span id="totalMined">0.5864</span> ZERO</b></p>
-<button class="btn btn-cyan" onclick="claimRewards()">+ Claim Rewards</button>
-<p style="font-size:11px;text-align:center;margin-top:8px">✅ Claim → Direktang itatabi sa Wallet mo! Walang lock!</p>
-</div>
-<!-- MINING HARDWARE -->
-<div class="card"><h3>Mining Hardware</h3>
-<div style="display:flex;gap:10px"><div style="font-size:28px">🖥️</div><div style="font-size:13px;line-height:1.8"><p>Device: <b style="color:#fff">GPU RTX 4090 x1</b></p><p>Temperature: <b style="color:#22c55e">62°C</b></p><p>Power Draw: <b style="color:#22c55e">280W</b></p><p>Uptime: <b style="color:#fff"><span id="uptime">14h 22m</span></b></p></div></div>
-<p style="margin-top:10px">Hashrate (24h)</p><canvas id="hashChart" width="400" height="120"></canvas>
-<div style="display:flex;justify-content:space-between;font-size:11px;color:#9aa7bd"><span>00:00</span><span>06:00</span><span>12:00</span><span>18:00</span><span>24:00</span></div>
-</div>
-</div>
-
-<!-- MINING POOLS -->
-<div class="card" style="margin-top:16px"><h3>Mining Pools</h3>
-<table><tr><th>Pool Name</th><th>Fee</th><th>Miners</th><th>Hashrate</th><th>Status</th></tr>
-<tr onclick="selectPool('ZERO-POOL-01',this)" style="cursor:pointer"><td>ZERO-POOL-01 <span class="badge rec">Recommended</span></td><td>0.5%</td><td>3,421</td><td>420.8 GH/s</td><td><span class="badge active">Active</span></td></tr>
-<tr onclick="selectPool('ZERO-POOL-02 Global',this)" style="cursor:pointer"><td>ZERO-POOL-02 Global</td><td>1.0%</td><td>1,892</td><td>198.4 GH/s</td><td><span class="badge stable">Stable</span></td></tr>
-<tr onclick="selectPool('ZERO-POOL-03 Asia',this)" style="cursor:pointer"><td>ZERO-POOL-03 Asia</td><td>0.8%</td><td>876</td><td>95.2 GH/s</td><td><span class="badge active">Active</span></td></tr>
-</table>
-<p style="font-size:12px;margin-top:10px">👆 Pindutin mo yung pool para lumipat! Current: <b style="color:#3ddcff" id="currentPoolText">ZERO-POOL-01</b></p>
-</div>
-
-<div class="footer"><span>Network Difficulty: 1,245,892 &nbsp;|&nbsp; Block Height: <span id="blockHeight">2,184,039</span> &nbsp;|&nbsp; Reward: 0.50 ZERO/block</span><span>Auto-payout enabled • 0.01 ZERO minimum</span></div>
+<div class="card" style="margin-top:16px"><h3>Mining Pools</h3><table><tr><th>Pool Name</th><th>Fee</th><th>Miners</th><th>Hashrate</th><th>Status</th></tr>
+<tr onclick="selectPool('ZERO-POOL-01')" style="cursor:pointer"><td>ZERO-POOL-01 <span class="badge rec">Recommended</span></td><td>0.5%</td><td>3,421</td><td>420.8 GH/s</td><td><span class="badge active">Active</span></td></tr>
+<tr onclick="selectPool('ZERO-POOL-02 Global')" style="cursor:pointer"><td>ZERO-POOL-02 Global</td><td>1.0%</td><td>1,892</td><td>198.4 GH/s</td><td><span class="badge stable">Stable</span></td></tr>
+<tr onclick="selectPool('ZERO-POOL-03 Asia')" style="cursor:pointer"><td>ZERO-POOL-03 Asia</td><td>0.8%</td><td>876</td><td>95.2 GH/s</td><td><span class="badge active">Active</span></td></tr>
+</table><p style="font-size:12px;margin-top:10px">Current: <b style="color:#3ddcff" id="currentPoolText">ZERO-POOL-01</b></p></div>
+<div class="footer"><span>Network Difficulty: 1,245,892 | Block Height: <span id="blockHeight">2,184,039</span> | Reward: 0.50 ZERO/block</span><span>Auto-payout enabled • 0.01 ZERO minimum</span></div>
 </div>
 
 <div id="page-wallet" class="hidden">
-<div class="title">Wallet</div><div class="subtitle">Itatabi lang sa Wallet — Walang Lock!</div>
+<div class="title">Wallet — <span class="userNameSpan">JD</span></div><div class="subtitle">Itatabi lang sa Wallet — Walang Lock!</div>
 <div class="grid3"><div class="card"><h3>💰 ZERO Balance</h3><div class="earn"><span id="balWallet">0.00</span> ZERO</div><p>Wallet Address:</p><div style="font-size:11px;word-break:break-all;color:#3ddcff;background:#000;padding:10px;border-radius:8px;margin-top:8px" id="myAddr" onclick="copyAddr()">Loading...</div><input id="addrInput" readonly value=""><button class="btn btn-cyan" onclick="copyAddr()">COPY ADDRESS</button></div>
 <div class="card"><h3>💵 USDT Balance</h3><div class="earn">$<span id="usdtWallet">0.84</span></div><p>Mining rewards mo, dito napupunta pag nag-Claim ka!</p><button class="btn btn-gold" onclick="showTab('mining')">⛏️ GO TO MINING</button></div>
 <div class="card"><h3>📤 Send ZERO</h3><input id="toAddr" placeholder="Paste ZERO address"><input id="sendAmount" type="number" placeholder="Ilan ZERO?"><button class="btn" style="background:#22c55e;color:#fff" onclick="sendZero()">SEND ZERO</button><div class="hist" id="histWallet"><b>History</b><br>Wala pa!</div></div></div>
 </div>
 
-<div id="page-portfolio" class="hidden"><div class="title">Portfolio</div><div class="subtitle">Your Holdings</div><div class="card" style="margin-top:14px"><p>ZERO: <b style="color:#fff"><span id="balPort">0.00</span> ZERO</b> • USDT: <b style="color:#fff">$<span id="usdtPort">0.84</span></b></p><p style="margin-top:8px">Total Mined (30d): <b style="color:#fff"><span id="totalPort">0.5864</span> ZERO</b> • Total Earned Today: <b style="color:#fff"><span id="todayPort">0.0245</span> ZERO</b></p></div></div>
-<div id="page-staking" class="hidden"><div class="title">Staking</div><div class="subtitle">Stake ZERO, Earn More</div><div class="card" style="margin-top:14px"><p>Stake Amount:</p><input id="stakeAmt" type="number" placeholder="Ilan ZERO i-stake?"><button class="btn btn-cyan" onclick="stakeNow()">STAKE NOW — 12% APY (Demo)</button><div class="hist" id="stakeHist"><b>Staking History</b><br>Wala pa!</div></div></div>
-<div id="page-rewards" class="hidden"><div class="title">Rewards</div><div class="subtitle">Daily Rewards & Bonuses</div><div class="card" style="margin-top:14px"><p>Claim Daily Bonus:</p><button class="btn btn-gold" onclick="claimDaily()">🎁 CLAIM DAILY +1.00 ZERO</button><div class="hist" id="rewardHist"><b>Rewards</b><br>Wala pa!</div></div></div>
-<div id="page-settings" class="hidden"><div class="title">Settings</div><div class="subtitle">Account Settings</div><div class="card" style="margin-top:14px"><p>Wallet Address:</p><input id="addrSettings" readonly value=""><p style="margin-top:10px">Demo Mode — Practice Only. Para sa real money, gamitin ang official exchange.</p></div></div>
+<div id="page-portfolio" class="hidden"><div class="title">Portfolio — <span class="userNameSpan">JD</span></div><div class="card" style="margin-top:14px"><p>ZERO: <b style="color:#fff"><span id="balPort">0.00</span> ZERO</b> • USDT: <b style="color:#fff">$<span id="usdtPort">0.84</span></b></p><p style="margin-top:8px">Total Mined: <b style="color:#fff"><span id="totalPort">0.5864</span> ZERO</b></p></div></div>
+<div id="page-staking" class="hidden"><div class="title">Staking</div><div class="card" style="margin-top:14px"><p>Stake Amount:</p><input id="stakeAmt" type="number" placeholder="Ilan ZERO?"><button class="btn btn-cyan" onclick="stakeNow()">STAKE NOW — 12% APY (Demo)</button><div class="hist" id="stakeHist"><b>Staking</b><br>Wala pa!</div></div></div>
+<div id="page-rewards" class="hidden"><div class="title">Rewards</div><div class="card" style="margin-top:14px"><button class="btn btn-gold" onclick="claimDaily()">🎁 CLAIM DAILY +1.00 ZERO</button><div class="hist" id="rewardHist"><b>Rewards</b><br>Wala pa!</div></div></div>
+<div id="page-settings" class="hidden"><div class="title">Settings — <span class="userNameSpan">JD</span></div><div class="card" style="margin-top:14px"><p><b>Name:</b> <span id="setName">JD</span></p><p><b>Email:</b> <span id="setEmail">-</span></p><p><b>Wallet:</b> <span id="setWallet" style="color:#3ddcff">-</span></p><p style="margin-top:10px">Account mo ito, naka-save per user!</p><button class="btn" style="background:#f6465d;color:#fff" onclick="doLogout()">🚪 LOG OUT</button></div></div>
 
+</div>
 </div>
 
 <script>
+const firebaseConfig={apiKey:"AIzaSyD55Q2Ozl80GAigcavjt4fV87jMylJqgAk",authDomain:"zero-blockchain.firebaseapp.com",projectId:"zero-blockchain",storageBucket:"zero-blockchain.firebasestorage.app",messagingSenderId:"196490717248",appId:"1:196490717248:web:2b0ce95efe8413f6a617a5",measurementId:"G-VXLQFBRDNX"};
+var db=null,auth=null;try{firebase.initializeApp(firebaseConfig);db=firebase.firestore();auth=firebase.auth();}catch(e){}
+// REAL USER STATE
+var currentUser=null; // {name,email,uid}
+var authMode='login';
 var balance=0,usdtBal=0.8452,todayEarn=0.0245,totalMined=0.5864,pending=0.0032,hashRate=1.24,accepted=12487,rejected=12,mining=true,secLeft=60,myTimer=null,blockHeight=2184039,wallet="",histText="",currentPrice=0.10,myTrades="",poolName="ZERO-POOL-01";
 function showNotif(m){var n=document.getElementById('notif');n.innerText=m;n.style.display='block';setTimeout(function(){n.style.display='none';},3000);}
-function showTab(id){
-var pages=['dashboard','trade','markets','mining','wallet','portfolio','staking','rewards','settings'];
-for(var i=0;i<pages.length;i++){document.getElementById('page-'+pages[i]).classList.add('hidden');var tb=document.getElementById('tab-'+pages[i]);if(tb)tb.classList.remove('active');if(tb)tb.classList.remove('mining-active');}
-document.getElementById('page-'+id).classList.remove('hidden');
-var cur=document.getElementById('tab-'+id);if(cur){if(id==='mining'){cur.classList.add('mining-active');}else{cur.classList.add('active');}}
-window.scrollTo({top:0,behavior:'smooth'});
-if(id==='trade'||id==='dashboard'){drawCharts();}
+function switchAuth(mode){authMode=mode;document.getElementById('tabLogin').classList.toggle('active',mode==='login');document.getElementById('tabSignup').classList.toggle('active',mode==='signup');document.getElementById('signupFields').classList.toggle('hidden',mode!=='signup');document.getElementById('authPass2').classList.toggle('hidden',mode!=='signup');document.getElementById('authMainBtn').innerText=mode==='login'?'LOG IN →':'SIGN UP →';document.getElementById('authError').innerText='';}
+function getInitials(name){var p=name.trim().split(' ');if(p.length===1)return p[0].substring(0,2).toUpperCase();return (p[0][0]+p[p.length-1][0]).toUpperCase();}
+function userKey(){if(!currentUser)return 'zero_guest';return 'zero_user_'+currentUser.email.toLowerCase().replace(/[^a-z0-9]/g,'_');}
+function saveAll(){if(!currentUser)return;try{var data={balance:balance,usdtBal:usdtBal,todayEarn:todayEarn,totalMined:totalMined,pending:pending,wallet:wallet,histText:histText,blockHeight:blockHeight,myTrades:myTrades,name:currentUser.name,email:currentUser.email};localStorage.setItem(userKey(),JSON.stringify(data));localStorage.setItem('zero_last_user',JSON.stringify(currentUser));if(db){db.collection('users').doc(currentUser.email.toLowerCase()).set(data,{merge:true});}}catch(e){}}
+function loadForUser(){try{var raw=localStorage.getItem(userKey());if(!raw){balance=0;usdtBal=0.8452;todayEarn=0.0245;totalMined=0.5864;pending=0.0032;histText="";myTrades="";blockHeight=2184039;wallet="ZERO"+Math.random().toString(36).substring(2,10).toUpperCase()+Math.random().toString(36).substring(2,8).toUpperCase();saveAll();return;}var d=JSON.parse(raw);balance=d.balance||0;usdtBal=d.usdtBal||0.8452;todayEarn=d.todayEarn||0.0245;totalMined=d.totalMined||0.5864;pending=d.pending||0.0032;wallet=d.wallet||"";histText=d.histText||"";myTrades=d.myTrades||"";blockHeight=d.blockHeight||2184039;if(!wallet){wallet="ZERO"+Math.random().toString(36).substring(2,10).toUpperCase()+Math.random().toString(36).substring(2,8).toUpperCase();}}catch(e){}}
+function doAuth(){
+var email=document.getElementById('authEmail').value.trim().toLowerCase();
+var pass=document.getElementById('authPass').value;
+var name=document.getElementById('regName').value.trim();
+var pass2=document.getElementById('authPass2').value;
+var errEl=document.getElementById('authError');
+if(!email||!email.includes('@')){errEl.innerText='Lagyan mo ng valid email!';return;}
+if(!pass||pass.length<6){errEl.innerText='Password dapat min 6 characters!';return;}
+if(authMode==='signup'){
+if(!name){errEl.innerText='Lagyan mo ng Full Name!';return;}
+if(pass!==pass2){errEl.innerText='Hindi magkapareho yung password!';return;}
+var users=JSON.parse(localStorage.getItem('zero_all_users')||'{}');
+if(users[email]){errEl.innerText='May account na yung email na yan! Mag LOG IN ka na lang!';return;}
+users[email]={name:name,pass:pass};localStorage.setItem('zero_all_users',JSON.stringify(users));
+currentUser={name:name,email:email,uid:'local_'+email};
+} else {
+var users2=JSON.parse(localStorage.getItem('zero_all_users')||'{}');
+if(!users2[email]){errEl.innerText='Walang account yung email na yan! Mag SIGN UP ka muna!';return;}
+if(users2[email].pass!==pass){errEl.innerText='Mali yung password!';return;}
+currentUser={name:users2[email].name,email:email,uid:'local_'+email};
 }
-function selectPool(name,el){poolName=name;document.getElementById('minePoolName').innerText=name;document.getElementById('currentPoolText').innerText=name;showNotif("Lumipat ka sa "+name);update();}
+// Try Firebase Auth din kung naka-enable (hindi pipigil pag fail - local pa rin gagana)
+if(auth){auth.signInWithEmailAndPassword(email,pass).catch(function(){auth.createUserWithEmailAndPassword(email,pass).catch(function(){});});}
+enterApp();
+}
+function demoLogin(){currentUser={name:'Demo User',email:'demo@zero.exchange',uid:'demo'};enterApp();}
+function enterApp(){
+loadForUser();
+document.getElementById('authScreen').classList.add('hidden');
+document.getElementById('appScreen').classList.remove('hidden');
+document.getElementById('headerName').innerText=currentUser.name.split(' ')[0];
+document.getElementById('dashName').innerText=currentUser.name.split(' ')[0];
+document.getElementById('dashEmail').innerText=currentUser.email;
+document.getElementById('menuName').innerText=currentUser.name;
+document.getElementById('menuEmail').innerText=currentUser.email;
+document.getElementById('menuWallet').innerText=wallet;
+document.getElementById('setName').innerText=currentUser.name;
+document.getElementById('setEmail').innerText=currentUser.email;
+document.getElementById('setWallet').innerText=wallet;
+document.getElementById('avatarInit').innerText=getInitials(currentUser.name);
+var spans=document.querySelectorAll('.userNameSpan');for(var i=0;i<spans.length;i++){spans[i].innerText=currentUser.name.split(' ')[0];}
+update();drawCharts();updateOrderBook(currentPrice);runTimer();
+showNotif('Welcome, '+currentUser.name.split(' ')[0]+'! Naka-login ka na!');
+showTab('mining');
+}
+function doLogout(){
+saveAll();
+if(auth){try{auth.signOut();}catch(e){}}
+currentUser=null;
+document.getElementById('appScreen').classList.add('hidden');
+document.getElementById('authScreen').classList.remove('hidden');
+document.getElementById('userMenu').classList.remove('show');
+document.getElementById('authEmail').value='';document.getElementById('authPass').value='';
+showNotif('Naka-log out ka na! Balik ka ulit!');
+}
+function toggleUserMenu(){document.getElementById('userMenu').classList.toggle('show');}
+function showTab(id){var pages=['dashboard','trade','markets','mining','wallet','portfolio','staking','rewards','settings'];for(var i=0;i<pages.length;i++){document.getElementById('page-'+pages[i]).classList.add('hidden');var tb=document.getElementById('tab-'+pages[i]);if(tb)tb.classList.remove('active');if(tb)tb.classList.remove('mining-active');}document.getElementById('page-'+id).classList.remove('hidden');var cur=document.getElementById('tab-'+id);if(cur){if(id==='mining'){cur.classList.add('mining-active');}else{cur.classList.add('active');}}document.getElementById('userMenu').classList.remove('show');window.scrollTo({top:0,behavior:'smooth'});if(id==='trade'||id==='dashboard'){drawCharts();}}
+function selectPool(name){poolName=name;document.getElementById('minePoolName').innerText=name;document.getElementById('currentPoolText').innerText=name;showNotif("Lumipat ka sa "+name);update();}
 function toggleMining(){mining=!mining;var b=document.getElementById('mineBtn');var st=document.getElementById('mineStatus');if(mining){b.innerText="■ Stop Mining";st.innerText="Active";st.style.color="#22c55e";showNotif("Mining RESUMED!");runTimer();}else{b.innerText="▶ Start Mining";st.innerText="Paused";st.style.color="#f6465d";if(myTimer)clearInterval(myTimer);showNotif("Mining PAUSED!");}}
-function runTimer(){if(myTimer)clearInterval(myTimer);myTimer=setInterval(function(){secLeft--;if(secLeft<0){secLeft=60;pending+=0.0032;todayEarn+=0.0032;totalMined+=0.0032;blockHeight++;}document.getElementById('mineTimer').innerText=secLeft;document.getElementById('minePending').innerText=pending.toFixed(4);document.getElementById('pendingEarn').innerText=pending.toFixed(4);document.getElementById('todayEarn').innerText=todayEarn.toFixed(4);document.getElementById('totalMined').innerText=totalMined.toFixed(4);document.getElementById('blockHeight').innerText=blockHeight.toLocaleString();update();saveAll();},1000);}
-function claimRewards(){if(pending<=0){alert("Magmina ka muna! Wala pang pending!");return;}var c=pending;balance+=c;pending=0;histText+="✅ CLAIM MINING +"+c.toFixed(4)+" ZERO → Wallet<br>";saveAll();update();showNotif("+"+c.toFixed(4)+" ZERO → Wallet!");alert("CLAIMED!\n\n+"+c.toFixed(4)+" ZERO\n\nItinabi na sa WALLET mo! Walang lock!");}
-function stakeNow(){var amt=parseFloat(document.getElementById('stakeAmt').value||0);if(!amt||amt<=0){alert("Lagyan mo amount!");return;}if(amt>balance){alert("Kulang ZERO!");return;}balance-=amt;document.getElementById('stakeHist').innerHTML="<b>Staking History</b><br>✅ Staked "+amt+" ZERO • 12% APY (Demo)<br>"+document.getElementById('stakeHist').innerHTML.split('<br>').slice(1).join('<br>');saveAll();update();alert("STAKED "+amt+" ZERO!");}
-function claimDaily(){balance+=1;histText+="🎁 DAILY +1.00 ZERO<br>";saveAll();update();showNotif("Daily +1.00 ZERO!");alert("DAILY CLAIMED +1.00 ZERO!");}
+function runTimer(){if(myTimer)clearInterval(myTimer);myTimer=setInterval(function(){if(!currentUser)return;secLeft--;if(secLeft<0){secLeft=60;pending+=0.0032;todayEarn+=0.0032;totalMined+=0.0032;blockHeight++;}document.getElementById('mineTimer').innerText=secLeft;document.getElementById('minePending').innerText=pending.toFixed(4);document.getElementById('pendingEarn').innerText=pending.toFixed(4);document.getElementById('todayEarn').innerText=todayEarn.toFixed(4);document.getElementById('totalMined').innerText=totalMined.toFixed(4);document.getElementById('blockHeight').innerText=blockHeight.toLocaleString();update();saveAll();},1000);}
+function claimRewards(){if(pending<=0){alert("Magmina ka muna!");return;}var c=pending;balance+=c;pending=0;histText+="✅ CLAIM MINING +"+c.toFixed(4)+" ZERO → Wallet<br>";saveAll();update();showNotif("+"+c.toFixed(4)+" ZERO → Wallet!");alert("CLAIMED!\n\n+"+c.toFixed(4)+" ZERO\nItinabi na sa WALLET mo!");}
+function stakeNow(){var amt=parseFloat(document.getElementById('stakeAmt').value||0);if(!amt||amt<=0){alert("Lagyan mo amount!");return;}if(amt>balance){alert("Kulang ZERO!");return;}balance-=amt;document.getElementById('stakeHist').innerHTML="<b>Staking</b><br>✅ Staked "+amt+" ZERO • 12% APY (Demo)<br>";saveAll();update();alert("STAKED "+amt+" ZERO!");}
+function claimDaily(){balance+=1;histText+="🎁 DAILY +1.00 ZERO<br>";saveAll();update();showNotif("Daily +1.00 ZERO!");alert("DAILY +1.00 ZERO!");}
 function copyAddr(){if(!wallet)return;if(navigator.clipboard)navigator.clipboard.writeText(wallet).then(function(){showNotif("NA-COPY NA!");});else alert(wallet);}
 function sendZero(){var to=document.getElementById('toAddr').value.trim();var amt=parseFloat(document.getElementById('sendAmount').value);if(!to||!amt){alert("Lagyan mo address at amount!");return;}if(amt>balance){alert("Kulang balance!");return;}balance-=amt;blockHeight++;histText+="📤 SENT -"+amt+" ZERO kay "+to+"<br>";saveAll();update();alert("SENT! "+amt+" ZERO");}
 function setAmt(p){var maxUsdt=usdtBal/currentPrice;if(p===100)document.getElementById('tradeAmount').value=maxUsdt.toFixed(1);else document.getElementById('tradeAmount').value=(maxUsdt*p/100).toFixed(1);}
-function buyZero(){var amt=parseFloat(document.getElementById('tradeAmount').value||0);if(!amt||amt<=0){alert("Lagyan mo amount!");return;}var cost=amt*currentPrice;if(cost>usdtBal){alert("Kulang USDT!");return;}usdtBal-=cost;balance+=amt;var log="🟢 BUY "+amt+" ZERO @ ₱"+currentPrice.toFixed(3)+"<br>";myTrades=log+myTrades;histText=log+histText;document.getElementById('myTrades').innerHTML="<b>My Trades</b><br>"+myTrades;saveAll();update();showNotif("BUY SUCCESS!");}
-function sellZero(){var amt=parseFloat(document.getElementById('tradeAmount').value||0);if(!amt||amt<=0){alert("Lagyan mo amount!");return;}if(amt>balance){alert("Kulang ZERO!");return;}var gain=amt*currentPrice;balance-=amt;usdtBal+=gain;var log="🔴 SELL "+amt+" ZERO @ ₱"+currentPrice.toFixed(3)+"<br>";myTrades=log+myTrades;histText=log+histText;document.getElementById('myTrades').innerHTML="<b>My Trades</b><br>"+myTrades;saveAll();update();showNotif("SELL SUCCESS!");}
-function drawCharts(){
-var hc=document.getElementById('hashChart');if(hc){var ctx=hc.getContext('2d');ctx.fillStyle='#0a0f1e';ctx.fillRect(0,0,hc.width,hc.height);ctx.strokeStyle='#3ddcff';ctx.lineWidth=2;ctx.beginPath();var pts=[30,45,35,50,40,55,45,60,50,55,70,65,80,75,85,90,80,95,100,110];for(var i=0;i<pts.length;i++){var x=i/(pts.length-1)*hc.width;var y=hc.height-pts[i];if(i===0)ctx.moveTo(x,y);else ctx.lineTo(x,y);}ctx.stroke();}
-var dc=document.getElementById('dashChart');if(dc){var dctx=dc.getContext('2d');dctx.fillStyle='#0a0f1e';dctx.fillRect(0,0,dc.width,dc.height);dctx.strokeStyle='#22c55e';dctx.lineWidth=2;dctx.beginPath();for(var j=0;j<30;j++){var x2=j/29*dc.width;var y2=dc.height-(Math.sin(j*0.5)*30+100+Math.random()*20);if(j===0)dctx.moveTo(x2,y2);else dctx.lineTo(x2,y2);}dctx.stroke();}
-var tc=document.getElementById('tradeChart');if(tc){var tctx=tc.getContext('2d');tctx.fillStyle='#0a0f1e';tctx.fillRect(0,0,tc.width,tc.height);tctx.strokeStyle='#3ddcff';tctx.lineWidth=2;tctx.beginPath();for(var k=0;k<30;k++){var x3=k/29*tc.width;var y3=tc.height-(Math.sin(k*0.4)*25+100+Math.random()*15);if(k===0)tctx.moveTo(x3,y3);else tctx.lineTo(x3,y3);}tctx.stroke();}
-}
+function buyZero(){var amt=parseFloat(document.getElementById('tradeAmount').value||0);if(!amt||amt<=0){alert("Lagyan mo amount!");return;}var cost=amt*currentPrice;if(cost>usdtBal){alert("Kulang USDT!");return;}usdtBal-=cost;balance+=amt;var log="🟢 BUY "+amt+" ZERO<br>";myTrades=log+myTrades;histText=log+histText;document.getElementById('myTrades').innerHTML="<b>My Trades</b><br>"+myTrades;saveAll();update();showNotif("BUY SUCCESS!");}
+function sellZero(){var amt=parseFloat(document.getElementById('tradeAmount').value||0);if(!amt||amt<=0){alert("Lagyan mo amount!");return;}if(amt>balance){alert("Kulang ZERO!");return;}var gain=amt*currentPrice;balance-=amt;usdtBal+=gain;var log="🔴 SELL "+amt+" ZERO<br>";myTrades=log+myTrades;histText=log+histText;document.getElementById('myTrades').innerHTML="<b>My Trades</b><br>"+myTrades;saveAll();update();showNotif("SELL SUCCESS!");}
+function drawCharts(){var hc=document.getElementById('hashChart');if(hc){var ctx=hc.getContext('2d');ctx.fillStyle='#0a0f1e';ctx.fillRect(0,0,hc.width,hc.height);ctx.strokeStyle='#3ddcff';ctx.lineWidth=2;ctx.beginPath();var pts=[30,45,35,50,40,55,45,60,50,55,70,65,80,75,85,90,80,95,100,110];for(var i=0;i<pts.length;i++){var x=i/(pts.length-1)*hc.width;var y=hc.height-pts[i];if(i===0)ctx.moveTo(x,y);else ctx.lineTo(x,y);}ctx.stroke();}var dc=document.getElementById('dashChart');if(dc){var dctx=dc.getContext('2d');dctx.fillStyle='#0a0f1e';dctx.fillRect(0,0,dc.width,dc.height);dctx.strokeStyle='#22c55e';dctx.lineWidth=2;dctx.beginPath();for(var j=0;j<30;j++){var x2=j/29*dc.width;var y2=dc.height-(Math.sin(j*0.5)*30+100+Math.random()*20);if(j===0)dctx.moveTo(x2,y2);else dctx.lineTo(x2,y2);}dctx.stroke();}var tc=document.getElementById('tradeChart');if(tc){var tctx=tc.getContext('2d');tctx.fillStyle='#0a0f1e';tctx.fillRect(0,0,tc.width,tc.height);tctx.strokeStyle='#3ddcff';tctx.lineWidth=2;tctx.beginPath();for(var k=0;k<30;k++){var x3=k/29*tc.width;var y3=tc.height-(Math.sin(k*0.4)*25+100+Math.random()*15);if(k===0)tctx.moveTo(x3,y3);else tctx.lineTo(x3,y3);}tctx.stroke();}}
 function updateOrderBook(price){var sb="",bb="";for(var i=1;i<=5;i++){sb+='<div class="ob-row"><span style="color:#f6465d">₱'+(price+0.005*i).toFixed(3)+'</span><span>'+(Math.random()*50+5).toFixed(1)+' ZERO</span></div>';bb+='<div class="ob-row"><span style="color:#22c55e">₱'+(price-0.005*i).toFixed(3)+'</span><span>'+(Math.random()*50+5).toFixed(1)+' ZERO</span></div>';}var se=document.getElementById('sellBook');if(se)se.innerHTML=sb;var be=document.getElementById('buyBook');if(be)be.innerHTML=bb;}
-function saveAll(){try{localStorage.setItem('zero_bal',balance);localStorage.setItem('zero_usdt',usdtBal);localStorage.setItem('zero_today',todayEarn);localStorage.setItem('zero_total',totalMined);localStorage.setItem('zero_pending',pending);localStorage.setItem('zero_wallet',wallet);localStorage.setItem('zero_hist',histText);localStorage.setItem('zero_block',blockHeight);}catch(e){}}
-function loadAll(){try{balance=parseFloat(localStorage.getItem('zero_bal')||0);usdtBal=parseFloat(localStorage.getItem('zero_usdt')||0.8452);todayEarn=parseFloat(localStorage.getItem('zero_today')||0.0245);totalMined=parseFloat(localStorage.getItem('zero_total')||0.5864);pending=parseFloat(localStorage.getItem('zero_pending')||0.0032);wallet=localStorage.getItem('zero_wallet')||"";histText=localStorage.getItem('zero_hist')||"";blockHeight=parseInt(localStorage.getItem('zero_block')||2184039);}catch(e){}}
 function update(){
-document.getElementById('usdtTop').innerText=usdtBal.toFixed(4);
+if(!currentUser)return;
+document.getElementById('usdtTop').innerText=usdtBal.toFixed(2);
 document.getElementById('balDash').innerText=balance.toFixed(2);document.getElementById('usdtDash').innerText=usdtBal.toFixed(2);
 document.getElementById('todayDash').innerText=todayEarn.toFixed(4);document.getElementById('hashDash').innerText=hashRate.toFixed(2);
 document.getElementById('balWallet').innerText=balance.toFixed(2);document.getElementById('usdtWallet').innerText=usdtBal.toFixed(2);
 document.getElementById('balPort').innerText=balance.toFixed(2);document.getElementById('usdtPort').innerText=usdtBal.toFixed(2);
-document.getElementById('totalPort').innerText=totalMined.toFixed(4);document.getElementById('todayPort').innerText=todayEarn.toFixed(4);
+document.getElementById('totalPort').innerText=totalMined.toFixed(4);
 document.getElementById('todayEarn').innerText=todayEarn.toFixed(4);document.getElementById('totalMined').innerText=totalMined.toFixed(4);
 document.getElementById('pendingEarn').innerText=pending.toFixed(4);document.getElementById('minePending').innerText=pending.toFixed(4);
 document.getElementById('hashRate').innerText=hashRate.toFixed(2);document.getElementById('accepted').innerText=accepted.toLocaleString();document.getElementById('rejected').innerText=rejected;
@@ -186,15 +237,13 @@ var minis=document.querySelectorAll('.liveMini');for(var i=0;i<minis.length;i++)
 var us=document.querySelectorAll('.usdtMini');for(var j=0;j<us.length;j++){us[j].innerText=usdtBal.toFixed(2);}
 var zm=document.querySelectorAll('.zeroMini');for(var k=0;k<zm.length;k++){zm[k].innerText=balance.toFixed(2);}
 document.getElementById('tradeTotal').innerText=(parseFloat(document.getElementById('tradeAmount').value||0)*currentPrice).toFixed(2);
-if(wallet){document.getElementById('myAddr').innerText=wallet;document.getElementById('addrInput').value=wallet;document.getElementById('addrSettings').value=wallet;}
+if(wallet){document.getElementById('myAddr').innerText=wallet;document.getElementById('addrInput').value=wallet;document.getElementById('menuWallet').innerText=wallet;document.getElementById('setWallet').innerText=wallet;}
 if(histText){document.getElementById('histWallet').innerHTML="<b>History</b><br>"+histText;}
 document.getElementById('blockHeight').innerText=blockHeight.toLocaleString();
 }
-loadAll();
-if(!wallet){wallet="ZERO"+Math.random().toString(36).substring(2,10).toUpperCase()+Math.random().toString(36).substring(2,8).toUpperCase();saveAll();}
-update();drawCharts();updateOrderBook(currentPrice);runTimer();
-setInterval(function(){currentPrice+= (Math.random()-0.48)*0.002;if(currentPrice<0.05)currentPrice=0.05;hashRate=1.15+Math.random()*0.25;accepted+=Math.floor(Math.random()*5);var th=document.getElementById('tradeHist');if(th){th.innerHTML="<b>Live Trades</b><br>"+(Math.random()>0.5?'🟢 BUY':'🔴 SELL')+" "+(Math.random()*20+1).toFixed(1)+" ZERO @ ₱"+currentPrice.toFixed(3)+"<br>"+th.innerHTML.split('<br>').slice(0,5).join('<br>');}update();updateOrderBook(currentPrice);drawCharts();},3000);
-setInterval(function(){var d=new Date();var h=d.getHours();var m=d.getMinutes();document.getElementById('uptime').innerText="14h "+(22+Math.floor(m/2))+"m";var sec=2*3600+14*60+35;var left=Math.max(0,sec-Math.floor(Date.now()/1000)%86400%3600);var hh=String(Math.floor(left/3600)).padStart(2,'0');var mm=String(Math.floor((left%3600)/60)).padStart(2,'0');var ss=String(left%60).padStart(2,'0');document.getElementById('payoutIn').innerText=hh+":"+mm+":"+ss;},1000);
+// AUTO-LOGIN KUNG NAKA-LOGIN NA DATI
+try{var last=localStorage.getItem('zero_last_user');if(last){currentUser=JSON.parse(last);/* hindi auto-enter para safe — kailangan pa rin mag-login ulit, pero naka-fill na email */document.getElementById('authEmail').value=currentUser.email;}}catch(e){}
+setInterval(function(){if(!currentUser)return;currentPrice+=(Math.random()-0.48)*0.002;if(currentPrice<0.05)currentPrice=0.05;hashRate=1.15+Math.random()*0.25;accepted+=Math.floor(Math.random()*5);update();updateOrderBook(currentPrice);drawCharts();},3000);
 </script>
 </body>
 </html>
