@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ZERO Exchange - ADMIN PANEL</title>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}body{background:#070b14;color:#e8ecf3;font-family:Inter,Arial,sans-serif}
+.auth-wrap{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:16px}
+.auth-card{width:100%;max-width:400px;background:#0d1424;border:1px solid #f0b90b;border-radius:20px;padding:24px;text-align:center}
+.auth-logo{font-size:30px;font-weight:900}.auth-logo b{color:#3ddcff}
+.auth-input{width:100%;padding:13px;border-radius:12px;border:none;margin-top:10px;font-size:14px;background:#fff;color:#000;text-align:left}
+.auth-btn{width:100%;border:none;padding:14px;border-radius:12px;font-weight:900;font-size:15px;cursor:pointer;margin-top:14px;background:#f0b90b;color:#000}
+.header{background:#070b14;padding:14px 18px;display:flex;justify-content:space-between;align-items:center;position:sticky;top:0;z-index:100;border-bottom:1px solid #f0b90b}
+.logo{font-size:24px;font-weight:900}.logo b{color:#3ddcff}.admin-badge{background:#f0b90b;color:#000;font-size:11px;padding:4px 10px;border-radius:20px;font-weight:900;margin-left:8px}
+.btn-out{background:#f6465d;color:#fff;border:none;padding:10px 16px;border-radius:10px;font-weight:800;cursor:pointer}
+.wrap{max-width:1440px;margin:auto;padding:16px}
+.grid4{display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:12px}@media(max-width:900px){.grid4{grid-template-columns:1fr 1fr}}
+.card{background:#0d1424;border:1px solid #1a2233;border-radius:16px;padding:16px}.card h3{font-size:13px;color:#9aa7bd}.big{font-size:28px;font-weight:900;color:#3ddcff;margin-top:6px}
+table{width:100%;border-collapse:collapse;font-size:12px;margin-top:12px}th{text-align:left;padding:10px;border-bottom:1px solid #1a2233;color:#fff}td{padding:12px 8px;border-bottom:1px solid #131c2e;word-break:break-all}
+input,select{padding:10px;border-radius:8px;border:none;font-size:12px;background:#fff;color:#000;text-align:center}
+.btn{border:none;padding:8px 12px;border-radius:8px;font-weight:800;cursor:pointer;font-size:11px}.btn-green{background:#22c55e;color:#fff}.btn-red{background:#f6465d;color:#fff}.btn-cyan{background:#3ddcff;color:#000}.btn-gold{background:#f0b90b;color:#000}.btn-dark{background:#1e293b;color:#fff}
+.hidden{display:none!important}.notif{position:fixed;top:70px;left:50%;transform:translateX(-50%);background:#f0b90b;color:#000;padding:12px 18px;border-radius:12px;font-weight:900;font-size:13px;z-index:999;display:none}
+.tabs{display:flex;gap:6px;margin:14px 0;overflow-x:auto;white-space:nowrap}.tabs button{background:#101826;color:#9aa7bd;border:none;padding:9px 14px;border-radius:8px;font-weight:700;cursor:pointer}.tabs button.active{background:#f0b90b;color:#000}
+.search{width:100%;padding:12px;border-radius:10px;border:none;margin-top:12px;font-size:13px;background:#fff;color:#000;text-align:left}
+</style>
+</head>
+<body>
+<div class="notif" id="notif"></div>
+
+<!-- ADMIN LOGIN - IKAW LANG! -->
+<div id="adminLogin" class="auth-wrap">
+<div class="auth-card">
+<div class="auth-logo">◆ <b>ZERO</b> Exchange</div>
+<div style="background:#f0b90b;color:#000;display:inline-block;padding:5px 14px;border-radius:20px;font-weight:900;font-size:12px;margin-top:10px">👑 ADMIN PANEL</div>
+<p style="color:#9aa7bd;font-size:13px;margin:12px 0">Ikaw lang makakapasok dito boss! Huwag i-share yung password!</p>
+<input id="adminEmail" class="auth-input" placeholder="Admin Email">
+<input id="adminPass" class="auth-input" type="password" placeholder="Admin Password">
+<button class="auth-btn" onclick="adminLogin()">LOGIN AS ADMIN →</button>
+<button onclick="demoAdmin()" style="width:100%;background:transparent;border:1px solid #1e293b;color:#fff;padding:12px;border-radius:12px;margin-top:8px;cursor:pointer;font-weight:700">👀 Demo Admin — Try Lang</button>
+<div id="adminError" style="color:#f6465d;font-size:12px;margin-top:10px"></div>
+<div style="font-size:11px;color:#9aa7bd;line-height:1.6;margin-top:12px">Default Demo:<br><b style="color:#fff">Email: admin@zero.exchange</b><br><b style="color:#fff">Password: admin123</b><br><br>⚠️ Palitan mo agad to pag nilagay mo na sa tunay na server! Huwag iwan yung default sa public GitHub!</div>
+</div>
+</div>
+
+<!-- ADMIN DASHBOARD -->
+<div id="adminApp" class="hidden">
+<div class="header"><div class="logo">◆ <b>ZERO</b> Exchange <span class="admin-badge">ADMIN</span></div><div style="display:flex;gap:8px;align-items:center"><span style="font-size:12px">Hi, <b id="adminName">Admin</b></span><button class="btn-out" onclick="adminLogout()">🚪 LOG OUT</button></div></div>
+<div class="wrap">
+<div class="tabs"><button class="active" onclick="showAdminTab('overview')" id="atab-overview">📊 Overview</button><button onclick="showAdminTab('users')" id="atab-users">👥 Users</button><button onclick="showAdminTab('mining')" id="atab-mining">⛏️ Mining Control</button><button onclick="showAdminTab('settings')" id="atab-settings">⚙️ Settings</button></div>
+
+<!-- OVERVIEW -->
+<div id="admin-overview">
+<div class="grid4">
+<div class="card"><h3>👥 Total Users</h3><div class="big" id="statUsers">0</div><p style="font-size:11px;color:#9aa7bd">Naka-register</p></div>
+<div class="card"><h3>💰 Total ZERO in Wallets</h3><div class="big" id="statZero">0.00</div><p style="font-size:11px;color:#9aa7bd">Lahat ng user combined</p></div>
+<div class="card"><h3>💵 Total USDT</h3><div class="big" style="color:#22c55e">$<span id="statUsdt">0.00</span></div><p style="font-size:11px;color:#9aa7bd">Lahat ng user combined</p></div>
+<div class="card"><h3>⛏️ Total Mined (30d)</h3><div class="big" style="color:#f0b90b"><span id="statMined">0.00</span> ZERO</div><p style="font-size:11px;color:#9aa7bd">Total mined ng lahat</p></div>
+</div>
+<div class="card" style="margin-top:14px"><h3 style="color:#fff;font-size:16px">📈 Live Platform Status</h3><p style="font-size:13px;margin-top:8px">Block Height: <b style="color:#fff" id="adminBlock">2,184,039</b> • Mining: <b style="color:#22c55e" id="adminMiningStatus">ACTIVE</b> • Network: <b style="color:#fff">ZERO-POOL-01</b></p><p style="font-size:12px;margin-top:6px">Link ng main site mo: <b style="color:#3ddcff" id="mainLink"></b></p><button class="btn btn-cyan" onclick="openMain()" style="margin-top:10px;padding:11px 18px">🌐 Buksan Yung Main Site</button></div>
+<div class="card" style="margin-top:14px"><h3 style="color:#fff;font-size:16px">📝 Recent Activity (Lahat ng User)</h3><div id="adminActivity" style="font-size:12px;line-height:1.8;margin-top:8px">Wala pa!</div></div>
+</div>
+
+<!-- USERS -->
+<div id="admin-users" class="hidden">
+<input id="userSearch" class="search" placeholder="🔍 Search user — Name / Email / Wallet..." oninput="renderUsers()">
+<div class="card" style="margin-top:12px"><h3 style="color:#fff;font-size:16px">👥 All Users</h3>
+<table><tr><th>User</th><th>Wallet</th><th>ZERO</th><th>USDT</th><th>Mined</th><th>Action</th></tr><tbody id="usersTable"></tbody></table>
+<div style="margin-top:12px;display:flex;gap:8px;flex-wrap:wrap"><input id="bonusEmail" placeholder="Email ng bibigyan" style="flex:1;text-align:left"><input id="bonusAmt" type="number" placeholder="Ilan ZERO? Ex: 10" style="width:120px"><button class="btn btn-gold" onclick="giveBonus()">🎁 BIGYAN NG BONUS</button></div>
+<p style="font-size:11px;color:#9aa7bd;margin-top:8px">⚠️ Yung bonus, galing sayo boss — para sa promo / airdrop lang. Huwag magbigay ng hindi totoo para hindi ka ma-flag na scam.</p>
+</div>
+</div>
+
+<!-- MINING CONTROL -->
+<div id="admin-mining" class="hidden">
+<div class="card"><h3 style="color:#fff;font-size:16px">⛏️ Mining Control — Buong Platform</h3>
+<p style="font-size:13px;margin-top:8px">Mining Status Ngayon: <b style="color:#22c55e" id="miningCtrlStatus">ACTIVE</b></p>
+<p style="font-size:12px;margin-top:6px">Mining Reward per 60 sec: <b style="color:#fff"><span id="rewardRate">0.0032</span> ZERO</b></p>
+<div style="display:flex;gap:8px;margin-top:12px;flex-wrap:wrap"><button class="btn btn-green" onclick="setMining(true)" style="padding:12px 18px">▶ ENABLE MINING</button><button class="btn btn-red" onclick="setMining(false)" style="padding:12px 18px">⏸ PAUSE MINING</button></div>
+<div style="margin-top:14px"><label style="font-size:12px">Baguhin Reward per 60 sec:</label><div style="display:flex;gap:8px;margin-top:6px"><input id="newReward" type="number" step="0.0001" placeholder="0.0032"><button class="btn btn-cyan" onclick="changeReward()">SAVE REWARD</button></div></div>
+<div style="margin-top:14px"><label style="font-size:12px">Announcement sa Lahat ng User:</label><input id="announceText" placeholder="Ex: Happy Mining! New Pool Live!" style="width:100%;text-align:left;margin-top:6px"><button class="btn btn-gold" onclick="saveAnnouncement()" style="margin-top:8px;padding:11px 18px">📢 SAVE ANNOUNCEMENT</button><p style="font-size:12px;margin-top:8px">Current: <b style="color:#f0b90b" id="currentAnnounce">Wala pa!</b></p></div>
+</div>
+</div>
+
+<!-- SETTINGS -->
+<div id="admin-settings" class="hidden">
+<div class="card"><h3 style="color:#fff;font-size:16px">⚙️ Admin Settings</h3>
+<p style="font-size:13px;margin-top:8px">Main Site URL:</p><input id="mainUrl" placeholder="https://rica...github.io/zero-blockchain/" style="width:100%;text-align:left;margin-top:6px"><button class="btn btn-cyan" onclick="saveMainUrl()" style="margin-top:8px">SAVE</button>
+<p style="font-size:13px;margin-top:14px">Danger Zone:</p><div style="display:flex;gap:8px;margin-top:8px;flex-wrap:wrap"><button class="btn btn-red" onclick="clearAllData()">🗑️ CLEAR ALL DEMO DATA (Reset Lahat)</button><button class="btn btn-dark" onclick="exportUsers()">📥 EXPORT USERS (Copy)</button></div>
+<p style="font-size:11px;color:#9aa7bd;margin-top:10px;line-height:1.6">🔒 Security Reminder:<br>1. Huwag i-post yung admin.html link sa FB!<br>2. Palitan yung default password na admin123!<br>3. Sa tunay na production, dapat nasa server yung admin check, hindi sa browser lang — kasi makikita ng kahit sino yung code sa GitHub. Itong admin panel na to ay pang-demo / pang-manage mo habang maliit pa yung project mo.</p>
+</div>
+</div>
+
+</div>
+</div>
+
+<script>
+const firebaseConfig={apiKey:"AIzaSyD55Q2Ozl80GAigcavjt4fV87jMylJqgAk",authDomain:"zero-blockchain.firebaseapp.com",projectId:"zero-blockchain",storageBucket:"zero-blockchain.firebasestorage.app",messagingSenderId:"196490717248",appId:"1:196490717248:web:2b0ce95efe8413f6a617a5",measurementId:"G-VXLQFBRDNX"};
+var db=null;try{firebase.initializeApp(firebaseConfig);db=firebase.firestore();}catch(e){}
+var miningEnabled=true,rewardRate=0.0032,announcement="",mainUrl="";
+function showNotif(m){var n=document.getElementById('notif');n.innerText=m;n.style.display='block';setTimeout(function(){n.style.display='none';},3000);}
+function adminLogin(){
+var e=document.getElementById('adminEmail').value.trim().toLowerCase();
+var p=document.getElementById('adminPass').value;
+var err=document.getElementById('adminError');
+var savedAdmin=JSON.parse(localStorage.getItem('zero_admin')||'{"email":"admin@zero.exchange","pass":"admin123","name":"Admin"}');
+if(e===savedAdmin.email && p===savedAdmin.pass){enterAdmin(savedAdmin.name);}else{err.innerText='Mali yung Admin Email o Password!';}
+}
+function demoAdmin(){document.getElementById('adminEmail').value='admin@zero.exchange';document.getElementById('adminPass').value='admin123';adminLogin();}
+function enterAdmin(name){
+document.getElementById('adminName').innerText=name;
+document.getElementById('adminLogin').classList.add('hidden');
+document.getElementById('adminApp').classList.remove('hidden');
+loadAdmin();showNotif('Welcome Admin, '+name+'!');
+}
+function adminLogout(){document.getElementById('adminApp').classList.add('hidden');document.getElementById('adminLogin').classList.remove('hidden');document.getElementById('adminEmail').value='';document.getElementById('adminPass').value='';}
+function showAdminTab(id){var tabs=['overview','users','mining','settings'];for(var i=0;i<tabs.length;i++){document.getElementById('admin-'+tabs[i]).classList.add('hidden');document.getElementById('atab-'+tabs[i]).classList.remove('active');}document.getElementById('admin-'+id).classList.remove('hidden');document.getElementById('atab-'+id).classList.add('active');if(id==='users')renderUsers();}
+function getAllUsers(){
+var users=JSON.parse(localStorage.getItem('zero_all_users')||'{}');
+var list=[];
+for(var email in users){var u=users[email];var key='zero_user_'+email.toLowerCase().replace(/[^a-z0-9]/g,'_');var data=null;try{data=JSON.parse(localStorage.getItem(key)||'null');}catch(e){}list.push({email:email,name:u.name||'User',balance:data?data.balance||0:0,usdtBal:data?data.usdtBal||0.84:0.84,totalMined:data?data.totalMined||0.58:0.58,wallet:data?data.wallet||'-': '-',hist:data?data.histText||'':''});}
+// Demo user kung wala pa
+if(list.length===0){list.push({email:'demo@zero.exchange',name:'Demo User',balance:0,usdtBal:0.84,totalMined:0.58,wallet:'ZERO DEMO',hist:''});}
+return list;
+}
+function loadAdmin(){
+var list=getAllUsers();
+var totalZero=0,totalUsdt=0,totalMined=0;var allHist="";
+for(var i=0;i<list.length;i++){totalZero+=list[i].balance;totalUsdt+=list[i].usdtBal;totalMined+=list[i].totalMined;if(list[i].hist)allHist+= '<b>'+list[i].name+'</b> ('+list[i].email+'): '+list[i].hist.split('<br>').slice(0,3).join('<br>')+'<br>';}
+document.getElementById('statUsers').innerText=list.length;
+document.getElementById('statZero').innerText=totalZero.toFixed(2);
+document.getElementById('statUsdt').innerText=totalUsdt.toFixed(2);
+document.getElementById('statMined').innerText=totalMined.toFixed(4);
+document.getElementById('adminActivity').innerHTML=allHist||'Wala pang activity! Mag-mine muna yung mga user!';
+try{var st=JSON.parse(localStorage.getItem('zero_admin_settings')||'{}');miningEnabled=st.miningEnabled!==false;rewardRate=st.rewardRate||0.0032;announcement=st.announcement||"";mainUrl=st.mainUrl||"";document.getElementById('miningCtrlStatus').innerText=miningEnabled?'ACTIVE':'PAUSED';document.getElementById('adminMiningStatus').innerText=miningEnabled?'ACTIVE':'PAUSED';document.getElementById('rewardRate').innerText=rewardRate.toFixed(4);document.getElementById('currentAnnounce').innerText=announcement||'Wala pa!';document.getElementById('mainUrl').value=mainUrl;document.getElementById('mainLink').innerText=mainUrl||'Hindi pa naka-set';}catch(e){}
+renderUsers();
+}
+function renderUsers(){
+var list=getAllUsers();
+var q=(document.getElementById('userSearch').value||'').toLowerCase();
+var html="";
+for(var i=0;i<list.length;i++){var u=list[i];if(q && !(u.name.toLowerCase().includes(q)||u.email.toLowerCase().includes(q)||u.wallet.toLowerCase().includes(q)))continue;html+='<tr><td><b>'+u.name+'</b><br><small style="color:#9aa7bd">'+u.email+'</small></td><td style="font-size:11px;color:#3ddcff">'+u.wallet+'</td><td><b>'+u.balance.toFixed(2)+'</b></td><td>$'+u.usdtBal.toFixed(2)+'</td><td>'+u.totalMined.toFixed(4)+'</td><td><button class="btn btn-green" onclick="quickBonus(\''+u.email+'\')">+10 ZERO</button> <button class="btn btn-red" onclick="resetUser(\''+u.email+'\')">Reset</button></td></tr>';}
+document.getElementById('usersTable').innerHTML=html||'<tr><td colspan="6">Walang user na match!</td></tr>';
+}
+function saveAdminSettings(){localStorage.setItem('zero_admin_settings',JSON.stringify({miningEnabled:miningEnabled,rewardRate:rewardRate,announcement:announcement,mainUrl:mainUrl}));}
+function giveBonus(){
+var email=document.getElementById('bonusEmail').value.trim().toLowerCase();
+var amt=parseFloat(document.getElementById('bonusAmt').value||0);
+if(!email||!amt){alert('Lagyan mo email at amount!');return;}
+doBonus(email,amt);
+}
+function quickBonus(email){doBonus(email,10);}
+function doBonus(email,amt){
+var key='zero_user_'+email.toLowerCase().replace(/[^a-z0-9]/g,'_');
+var raw=localStorage.getItem(key);if(!raw){alert('Walang user na '+email);return;}
+var d=JSON.parse(raw);d.balance=(d.balance||0)+amt;d.histText='🎁 ADMIN BONUS +'+amt+' ZERO<br>'+(d.histText||'');localStorage.setItem(key,JSON.stringify(d));loadAdmin();showNotif('Binigyan mo si '+email+' ng +'+amt+' ZERO!');alert('BONUS SENT!\n\n'+email+'\n+'+amt+' ZERO');
+}
+function resetUser(email){if(!confirm('I-reset mo si '+email+'? Mawawala balance niya!'))return;var key='zero_user_'+email.toLowerCase().replace(/[^a-z0-9]/g,'_');var raw=localStorage.getItem(key);if(!raw)return;var d=JSON.parse(raw);d.balance=0;d.usdtBal=0.84;d.histText='🔄 RESET BY ADMIN<br>';localStorage.setItem(key,JSON.stringify(d));loadAdmin();showNotif('Na-reset si '+email);}
+function setMining(on){miningEnabled=on;saveAdminSettings();document.getElementById('miningCtrlStatus').innerText=on?'ACTIVE':'PAUSED';document.getElementById('adminMiningStatus').innerText=on?'ACTIVE':'PAUSED';showNotif(on?'Mining ENABLED!':'Mining PAUSED!');alert(on?'Mining ENABLED sa lahat!':'Mining PAUSED sa lahat!');}
+function changeReward(){var v=parseFloat(document.getElementById('newReward').value||0);if(!v||v<=0){alert('Lagyan mo ng valid reward!');return;}rewardRate=v;saveAdminSettings();document.getElementById('rewardRate').innerText=v.toFixed(4);showNotif('Reward binago: '+v+' ZERO');}
+function saveAnnouncement(){announcement=document.getElementById('announceText').value.trim();saveAdminSettings();document.getElementById('currentAnnounce').innerText=announcement||'Wala pa!';showNotif('Announcement saved!');}
+function saveMainUrl(){mainUrl=document.getElementById('mainUrl').value.trim();saveAdminSettings();document.getElementById('mainLink').innerText=mainUrl;showNotif('Main URL saved!');}
+function openMain(){if(!mainUrl){alert('Lagyan mo muna ng Main URL sa Settings!');showAdminTab('settings');return;}window.open(mainUrl,'_blank');}
+function clearAllData(){if(!confirm('Sigurado ka? Buburahin lahat ng demo data!'))return;var keys=Object.keys(localStorage);for(var i=0;i<keys.length;i++){if(keys[i].startsWith('zero_user_'))localStorage.removeItem(keys[i]);}localStorage.removeItem('zero_all_users');loadAdmin();alert('Cleared! Reset na lahat!');}
+function exportUsers(){var list=getAllUsers();var txt=JSON.stringify(list,null,2);if(navigator.clipboard)navigator.clipboard.writeText(txt).then(function(){showNotif('Na-copy na users!');});else alert(txt);}
+document.getElementById('mainLink').innerText='Hindi pa naka-set';
+</script>
+</body>
+</html>
